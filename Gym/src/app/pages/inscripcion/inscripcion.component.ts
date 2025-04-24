@@ -9,10 +9,11 @@ import Swal from 'sweetalert2';
   selector: 'app-inscripcion',
   imports: [CommonModule, FormsModule],
   templateUrl: './inscripcion.component.html',
+  styleUrls: ['./inscripcion.component.css']
 })
 export class InscripcionComponent {
-  clases = ['Zumba', 'Spinning', 'Yoga', 'Pilates', 'CrossFit'];
-  diasDisponibles = ['Lunes', 'Miércoles', 'Viernes'];
+  clases = ['Zumba', 'Spinning', 'Yoga', 'Pilates', 'CrossFit', 'Pesos libres y maquinas'];
+  diasDisponibles = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
   turnosDisponibles = ['Mañana', 'Tarde'];
   diasInvalidos = false;
 
@@ -40,6 +41,15 @@ export class InscripcionComponent {
     }
   }
 
+  toggleDiaVisual(dia: string) {
+    const index = this.inscripcion.dias.indexOf(dia);
+    if (index === -1) {
+      this.inscripcion.dias.push(dia);
+    } else {
+      this.inscripcion.dias.splice(index, 1);
+    }
+  }
+  
   onDiaChange(event: Event, dia: string) {
     const checked = (event.target as HTMLInputElement).checked;
     this.toggleDia(dia, checked);

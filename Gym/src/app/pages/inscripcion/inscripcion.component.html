@@ -1,110 +1,98 @@
-<div class="container mt-5" style="max-width: 650px;">
+<div class="container mt-5" style="max-width: 700px;">
   <div class="text-center mb-4">
     <h2><i class="fas fa-clipboard-check me-2"></i>Inscripción a clases</h2>
     <p class="text-muted">Complete el formulario para unirse a nuestras clases</p>
   </div>
 
-  <form #f="ngForm" (ngSubmit)="guardar(f)" class="card p-4 shadow">
-    <div class="mb-3">
-      <label class="form-label">
-        <i class="fas fa-user me-2"></i>Nombre completo
-      </label>
-      <input name="nombre" [(ngModel)]="inscripcion.nombre" required minlength="3" class="form-control"
-        placeholder="Ingrese su nombre completo" />
-      @if (f.submitted && f.controls['nombre'].invalid) {
-      <div class="text-danger mt-1">
-        <i class="fas fa-exclamation-circle me-1"></i>
-        Nombre requerido (mínimo 3 letras).
+  <form #f="ngForm" (ngSubmit)="guardar(f)" class="card p-5 shadow-lg border-0 rounded-4">
+    <!-- Nombre -->
+    <div class="mb-4 position-relative">
+      <label class="form-label fw-semibold"><i class="fas fa-user me-2"></i>Nombre completo</label>
+      <input type="text" name="nombre" [(ngModel)]="inscripcion.nombre" required minlength="3"
+        class="form-control rounded-3 shadow-sm" placeholder="Ingresa tu nombre completo" />
+      <div *ngIf="f.submitted && f.controls['nombre']?.invalid" class="text-danger mt-1">
+        <i class="fas fa-exclamation-circle me-1"></i>Nombre requerido (mínimo 3 letras).
       </div>
-      }
     </div>
 
-    <div class="mb-3">
-      <label class="form-label">
-        <i class="fas fa-envelope me-2"></i>Correo electrónico
-      </label>
-      <input name="email" [(ngModel)]="inscripcion.email" required email class="form-control"
+    <!-- Email -->
+    <div class="mb-4">
+      <label class="form-label fw-semibold"><i class="fas fa-envelope me-2"></i>Correo electrónico</label>
+      <input type="email" name="email" [(ngModel)]="inscripcion.email" required class="form-control rounded-3 shadow-sm"
         placeholder="ejemplo@correo.com" />
-      @if (f.submitted && f.controls['email'].invalid) {
-      <div class="text-danger mt-1">
-        <i class="fas fa-exclamation-circle me-1"></i>
-        Correo válido requerido.
+      <div *ngIf="f.submitted && f.controls['email']?.invalid" class="text-danger mt-1">
+        <i class="fas fa-exclamation-circle me-1"></i>Correo válido requerido.
       </div>
-      }
     </div>
 
-    <div class="mb-3">
-      <label class="form-label">
-        <i class="fas fa-dumbbell me-2"></i>Clase
-      </label>
-      <select name="clase" [(ngModel)]="inscripcion.clase" required class="form-select text-dark">
+    <!-- Clase -->
+    <div class="mb-4">
+      <label class="form-label fw-semibold"><i class="fas fa-dumbbell me-2"></i>Clase</label>
+      <select name="clase" [(ngModel)]="inscripcion.clase" required
+        class="form-select text-light bg-dark rounded-3 shadow-sm">
         <option value="" disabled selected>Selecciona una clase</option>
         @for (c of clases; track $index) {
         <option [value]="c">{{ c }}</option>
         }
       </select>
-      @if (f.submitted && f.controls['clase'].invalid) {
-      <div class="text-danger mt-1">
-        <i class="fas fa-exclamation-circle me-1"></i>
-        Selecciona una clase.
+      <div *ngIf="f.submitted && f.controls['clase']?.invalid" class="text-danger mt-1 text-light">
+        <i class="fas fa-exclamation-circle me-1 text-light"></i>Selecciona una clase.
       </div>
-      }
     </div>
 
+    <!-- Días -->
     <div class="mb-4">
-      <label class="form-label">
-        <i class="fas fa-calendar-day me-2"></i>Días preferidos
-      </label>
-      <div class="row row-cols-2 g-2">
+      <label class="form-label fw-semibold"><i class="fas fa-calendar-week me-2"></i>Días preferidos</label>
+      <div class="week-day-selector">
         @for (dia of diasDisponibles; track $index) {
-        <div class="col">
-          <div class="form-check">
-            <input type="checkbox" [value]="dia" name="dias" class="form-check-input"
-              [checked]="inscripcion.dias.includes(dia)" (change)="onDiaChange($event, dia)" />
-            <label class="form-check-label">{{ dia }}</label>
-          </div>
-        </div>
+        <button type="button" class="day-box" [class.selected]="inscripcion.dias.includes(dia)"
+          (click)="toggleDiaVisual(dia)">
+          {{ dia }}
+        </button>
         }
       </div>
-      @if (f.submitted && diasInvalidos) {
-      <div class="text-danger mt-1">
-        <i class="fas fa-exclamation-circle me-1"></i>
-        Selecciona al menos un día.
+      <div *ngIf="f.submitted && diasInvalidos" class="text-danger mt-2">
+        <i class="fas fa-exclamation-circle me-1"></i>Selecciona al menos un día.
       </div>
-      }
     </div>
 
+
+    <!-- Turno -->
     <div class="mb-4">
-      <label class="form-label">
-        <i class="fas fa-clock me-2"></i>Turno
-      </label>
-      <div class="row row-cols-2 g-2">
-        @for (turno of turnosDisponibles; track $index) {
-        <div class="col">
-          <div class="form-check">
-            <input type="radio" name="turno" [value]="turno" [(ngModel)]="inscripcion.turno" required
-              class="form-check-input" />
-            <label class="form-check-label">{{ turno }}</label>
-          </div>
+      <label class="form-label fw-semibold"><i class="fas fa-clock me-2"></i>Turno</label>
+      <div class="turno-ilustrado-selector">
+        <div class="ilustracion-card"
+             [class.selected]="inscripcion.turno === 'Mañana'"
+             (click)="inscripcion.turno = 'Mañana'">
+          <div class="ilustracion-img sol-gym-manana"></div>
+          <div class="turno-label">Mañana</div>
         </div>
-        }
+    
+        <div class="ilustracion-card"
+             [class.selected]="inscripcion.turno === 'Tarde'"
+             (click)="inscripcion.turno = 'Tarde'">
+          <div class="ilustracion-img sol-gym-tarde"></div>
+          <div class="turno-label">Tarde</div>
+        </div>
       </div>
     </div>
+    
 
+
+
+
+    <!-- Fecha de inicio -->
     <div class="mb-4">
-      <label class="form-label">
-        <i class="fas fa-calendar-alt me-2"></i>Fecha de inicio
-      </label>
-      <input type="date" name="fecha" [(ngModel)]="inscripcion.fecha" [min]="hoy()" required class="form-control" />
-      @if (f.submitted && f.controls['fecha'].invalid) {
-      <div class="text-danger mt-1">
-        <i class="fas fa-exclamation-circle me-1"></i>
-        Selecciona una fecha válida (no pasada).
+      <label class="form-label fw-semibold"><i class="fas fa-calendar-alt me-2"></i>Fecha de inicio</label>
+      <input type="date" name="fecha" class="form-control rounded-3 shadow-sm" [(ngModel)]="inscripcion.fecha"
+        [min]="hoy()" required />
+      <div *ngIf="f.submitted && f.controls['fecha']?.invalid" class="text-danger mt-1">
+        <i class="fas fa-exclamation-circle me-1"></i>Selecciona una fecha válida.
       </div>
-      }
     </div>
 
-    <button class="btn btn-primary w-100" [disabled]="!esFormularioValido(f)">
+    <!-- Botón -->
+    <button class="btn btn-dark w-100 py-2 fw-bold shadow-sm" [disabled]="!esFormularioValido(f)">
       <i class="fas fa-paper-plane me-2"></i>Enviar inscripción
     </button>
   </form>
