@@ -5,13 +5,14 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   selector: 'app-home',
   imports: [CommonModule,],
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
   clasesDestacadas = [
-    { nombre: 'Zumba', icono: 'fas fa-music', descripcion: 'Cardio con ritmo latino para todos los niveles.' },
-    { nombre: 'CrossFit', icono: 'fas fa-dumbbell', descripcion: 'Entrenamiento funcional de alta intensidad.' },
-    { nombre: 'Yoga', icono: 'fas fa-spa', descripcion: 'Conecta cuerpo y mente con sesiones de yoga guiadas.' }
+    { nombre: 'Zumba', icono: 'fas fa-music', descripcion: 'Cardio con ritmo latino para todos los niveles.', image:'/assets/img/gym1.jpg' },
+    { nombre: 'CrossFit', icono: 'fas fa-dumbbell', descripcion: 'Entrenamiento funcional de alta intensidad.',image:'/assets/img/gym1.jpg' },
+    { nombre: 'Yoga', icono: 'fas fa-spa', descripcion: 'Conecta cuerpo y mente con sesiones de yoga guiadas.',image:'/assets/img/gym1.jpg' }
   ];
 
   galeria = [

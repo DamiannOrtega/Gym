@@ -1,3 +1,4 @@
+
 :root {
     /* Paleta de colores principal */
     --color-primario: #1a1a2e;
@@ -568,3 +569,4 @@ input[type="date"] {
         transform: rotate(1turn);
     }
 }
+

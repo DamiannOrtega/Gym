@@ -12,26 +12,33 @@
 
     <!-- CLASES DESTACADAS -->
     <section class="container mt-5">
+        
         <h2 class="text-center mb-4"><i class="fas fa-star me-2"></i>Clases destacadas</h2>
 
-        
-        <!-- *************ELIMINAAAR*************** -->
-        <h2 class="text-center mb-4"><i class="fas fa-star me-2"></i>AQUI PONGAN UNAS CARDS MAS CHIDAS, CON IMAGENES </h2>
-
-
-
-        <div class="row g-4">
-            @for (clase of clasesDestacadas; track $index) {
-            <div class="col-md-4">
-                <div class="card clase-destacada h-100 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title text-light"><i class="{{ clase.icono }} me-2"></i>{{ clase.nombre }}</h5>
-                        <p class="card-text text-light">{{ clase.descripcion }}</p>
-                    </div>
-                </div>
-            </div>
-            }
+<div class="row  g-4 g-md-3 justify-content-center text-center">
+  @for (clase of clasesDestacadas; track $index) {
+    <div class="col-12 col-sm-12 col-md-4 d-flex justify-content-center">
+      <article class="card h-100">
+        <div class="card-img">
+          <div class="card-imgs" [ngStyle]="{'background-image': 'url(' + clase.image + ')'}"></div>
         </div>
+        <div class="project-info">
+          <div class="d-flex align-items-center mb-2">
+            <i class="{{ clase.icono }} me-2 fs-5 text-primary"></i>
+            <span class="fw-bold">{{ clase.nombre }}</span>
+            <span class="badge bg-secondary ms-auto">GYM</span>
+          </div>
+          <span class="text-body-emphasis" style="text-align: justify;">
+            {{ clase.descripcion }}
+          </span>
+        </div>
+      </article>
+    </div>
+  }
+</div>
+
+
+          
     </section>
 
     <!-- GALERÍA -->
