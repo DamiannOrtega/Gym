@@ -30,10 +30,24 @@ export class InscripcionComponent {
     return new Date().toISOString().split('T')[0];
   }
 
+  toggleDia(dia: string, checked: boolean) {
+    if (checked) {
+      this.inscripcion.dias.push(dia);
+    } else {
+      this.inscripcion.dias = this.inscripcion.dias.filter(d => d !== dia);
+    }
+  }
+
+  onDiaChange(event: Event, dia: string) {
+    const checked = (event.target as HTMLInputElement).checked;
+    this.toggleDia(dia, checked);
+  }
+
   guardar(form: NgForm) {
     const datos = this.storage.get<any>('formularioTemplate');
     datos.push(this.inscripcion);
     this.storage.set('formularioTemplate', datos);
+
     Swal.fire('¡Registro exitoso!', 'Tu inscripción ha sido guardada.', 'success');
     form.resetForm();
   }
