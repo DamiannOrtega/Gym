@@ -1,0 +1,32 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+    <a class="navbar-brand" routerLink="/">🏋️ FitZone</a>
+  
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" routerLink="/">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/clases">Clases</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/inscripcion">Inscripción</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/contacto">Contacto</a></li>
+        @if (authService.isLoggedIn(); as logged) {
+          <li class="nav-item"><a class="nav-link" routerLink="/admin">Administración</a></li>
+        }
+      </ul>
+  
+      <div class="d-flex align-items-center">
+        @if (authService.isLoggedIn(); as logged) {
+          <span class="text-white me-3">
+            Bienvenido, {{ authService.getAdminName() }}
+          </span>
+          <button class="btn btn-danger" (click)="logout()">Logout</button>
+        } @else {
+          <a class="btn btn-outline-light me-2" routerLink="/login">Login</a>
+        }
+      </div>
+    </div>
+  </nav>
+  

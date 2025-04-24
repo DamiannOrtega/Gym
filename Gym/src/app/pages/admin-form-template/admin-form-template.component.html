@@ -1,0 +1,33 @@
+<div class="container mt-5">
+    <h3>Registros del formulario por plantilla</h3>
+  
+    @if (datosArray.length > 0) {
+      <table class="table table-bordered mt-3">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Clase</th>
+            <th>Email</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (d of datosArray; track $index) {
+            <tr>
+              <td>{{ $index + 1 }}</td>
+              <td>{{ d.nombre }}</td>
+              <td>{{ d.clase }}</td>
+              <td>{{ d.email }}</td>
+              <td>
+                <button class="btn btn-danger btn-sm" (click)="eliminar($index)">Eliminar</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <div class="alert alert-info mt-3">No hay registros por mostrar.</div>
+    }
+  </div>
+  

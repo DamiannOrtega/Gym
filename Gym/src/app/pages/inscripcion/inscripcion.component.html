@@ -1,0 +1,66 @@
+<div class="container mt-5" style="max-width: 600px;">
+    <h2 class="mb-4 text-center">Inscripción a clases</h2>
+  
+    <form #f="ngForm" (ngSubmit)="guardar(f)" class="card p-4 bg-light shadow-sm">
+  
+      <div class="mb-3">
+        <label class="form-label">Nombre completo</label>
+        <input name="nombre" [(ngModel)]="inscripcion.nombre" required minlength="3" class="form-control" />
+        @if (f.submitted && f.controls['nombre'].invalid) {
+          <div class="text-danger">Nombre requerido (mínimo 3 letras).</div>
+        }
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Correo electrónico</label>
+        <input name="email" [(ngModel)]="inscripcion.email" required email class="form-control" />
+        @if (f.submitted && f.controls['email'].invalid) {
+          <div class="text-danger">Correo válido requerido.</div>
+        }
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Clase</label>
+        <select name="clase" [(ngModel)]="inscripcion.clase" required class="form-select">
+          <option value="" disabled selected>Selecciona una clase</option>
+          @for (c of clases; track $index) {
+            <option [value]="c">{{ c }}</option>
+          }
+        </select>
+        @if (f.submitted && f.controls['clase'].invalid) {
+          <div class="text-danger">Selecciona una clase.</div>
+        }
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Días preferidos</label><br />
+        @for (dia of diasDisponibles; track $index) {
+          <div class="form-check">
+            <input type="checkbox" [value]="dia" name="dias" [(ngModel)]="inscripcion.dias" class="form-check-input" />
+            <label class="form-check-label">{{ dia }}</label>
+          </div>
+        }
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Turno</label><br />
+        @for (turno of turnosDisponibles; track $index) {
+          <div class="form-check">
+            <input type="radio" name="turno" [value]="turno" [(ngModel)]="inscripcion.turno" required class="form-check-input" />
+            <label class="form-check-label">{{ turno }}</label>
+          </div>
+        }
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Fecha de inicio</label>
+        <input type="date" name="fecha" [(ngModel)]="inscripcion.fecha" [min]="hoy()" required class="form-control" />
+        @if (f.submitted && f.controls['fecha'].invalid) {
+          <div class="text-danger">Selecciona una fecha válida (no pasada).</div>
+        }
+      </div>
+  
+      <button class="btn btn-primary w-100" [disabled]="f.invalid">Enviar inscripción</button>
+    </form>
+  </div>
+  
