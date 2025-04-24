@@ -9,10 +9,13 @@ import { StorageService } from '../../services/storage.service';
   selector: 'app-contacto',
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './contacto.component.html',
+  styleUrls: ['./contacto.component.css']
 })
 export class ContactoComponent implements OnInit {
   motivos = ['Consultas generales', 'Soporte técnico', 'Clases y horarios'];
   medios = ['WhatsApp', 'Correo electrónico'];
+  mediosSeleccionados: string[] = [];
+
 
   form!: ReturnType<FormBuilder['group']>; // declaración fuera del constructor
 
@@ -23,10 +26,14 @@ export class ContactoComponent implements OnInit {
       nombre: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       motivo: ['', Validators.required],
+      urgencia: [''],
       mediosContacto: this.fb.array([], Validators.required),
       promociones: ['', Validators.required],
-      fecha: ['', Validators.required]
+      fecha: ['', Validators.required],
+      comentarios: [''],
+      telefono: [''] 
     });
+    
   }
 
   hoy(): string {
@@ -34,16 +41,19 @@ export class ContactoComponent implements OnInit {
   }
 
   onMedioChange(event: Event, medio: string): void {
-    const check = (event.target as HTMLInputElement).checked;
+    const checked = (event.target as HTMLInputElement).checked;
     const medios = this.form.get('mediosContacto') as FormArray;
-
-    if (check) {
+  
+    if (checked) {
       medios.push(this.fb.control(medio));
+      this.mediosSeleccionados.push(medio);
     } else {
       const i = medios.controls.findIndex(c => c.value === medio);
       if (i !== -1) medios.removeAt(i);
+      this.mediosSeleccionados = this.mediosSeleccionados.filter(m => m !== medio);
     }
   }
+  
 
   guardar(): void {
     const datos = this.storage.get<any>('formularioContacto');
