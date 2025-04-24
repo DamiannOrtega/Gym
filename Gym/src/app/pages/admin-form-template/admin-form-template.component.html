@@ -1,33 +1,59 @@
 <div class="container mt-5">
-    <h3>Registros del formulario por plantilla</h3>
-  
-    @if (datosArray.length > 0) {
-      <table class="table table-bordered mt-3">
-        <thead>
+  <h3>Registros del formulario de inscripción</h3>
+
+  @if (datosArray.length > 0) {
+    <table class="table table-bordered mt-3">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Clase</th>
+          <th>Email</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (d of datosArray; track $index) {
           <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Clase</th>
-            <th>Email</th>
-            <th>Acciones</th>
+            <td>{{ $index + 1 }}</td>
+            <td>{{ d.nombre }}</td>
+            <td>{{ d.clase }}</td>
+            <td>{{ d.email }}</td>
+            <td>
+              <button class="btn btn-sm btn-warning me-2" (click)="editar($index)">Editar</button>
+              <button class="btn btn-sm btn-danger" (click)="eliminar($index)">Eliminar</button>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          @for (d of datosArray; track $index) {
-            <tr>
-              <td>{{ $index + 1 }}</td>
-              <td>{{ d.nombre }}</td>
-              <td>{{ d.clase }}</td>
-              <td>{{ d.email }}</td>
-              <td>
-                <button class="btn btn-danger btn-sm" (click)="eliminar($index)">Eliminar</button>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    } @else {
-      <div class="alert alert-info mt-3">No hay registros por mostrar.</div>
-    }
-  </div>
-  
+        }
+      </tbody>
+    </table>
+  } @else {
+    <div class="alert alert-info mt-3">No hay registros por mostrar.</div>
+  }
+
+  @if (editIndex !== null) {
+    <div class="card mt-4 p-4 bg-light shadow-sm">
+      <h5 class="mb-3">Editar registro #{{ editIndex + 1 }}</h5>
+      <form (ngSubmit)="guardarEdicion()" #f="ngForm">
+        <div class="mb-3">
+          <label class="form-label">Nombre</label>
+          <input name="nombre" [(ngModel)]="editForm.nombre" required minlength="3" class="form-control" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Clase</label>
+          <select name="clase" [(ngModel)]="editForm.clase" required class="form-select">
+            <option *ngFor="let clase of clases" [value]="clase">{{ clase }}</option>
+          </select>
+        </div>        
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input name="email" [(ngModel)]="editForm.email" required email class="form-control" />
+        </div>
+        <div class="d-flex justify-content-end gap-2">
+          <button class="btn btn-success" type="submit" [disabled]="f.invalid">Guardar cambios</button>
+          <button class="btn btn-secondary" type="button" (click)="cancelarEdicion()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  }
+</div>

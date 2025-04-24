@@ -1,0 +1,64 @@
+<div class="container mt-5">
+    <h3>Mensajes de Contacto</h3>
+  
+    @if (datosArray.length > 0) {
+      <table class="table table-bordered mt-3">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Motivo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (contacto of datosArray; track $index) {
+            <tr>
+              <td>{{ $index + 1 }}</td>
+              <td>{{ contacto.nombre }}</td>
+              <td>{{ contacto.email }}</td>
+              <td>{{ contacto.motivo }}</td>
+              <td>
+                <button class="btn btn-warning btn-sm me-2" (click)="editar($index)">Editar</button>
+                <button class="btn btn-danger btn-sm" (click)="eliminar($index)">Eliminar</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <div class="alert alert-info mt-3">No hay mensajes por mostrar.</div>
+    }
+  
+    @if (editIndex !== null) {
+      <div class="card mt-4 p-4 bg-light shadow-sm">
+        <h5 class="mb-3">Editar mensaje #{{ editIndex + 1 }}</h5>
+        <form [formGroup]="form" (ngSubmit)="guardar()">
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input formControlName="nombre" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input formControlName="email" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Motivo</label>
+            <select formControlName="motivo" class="form-select">
+              <option value="" disabled>Selecciona un motivo</option>
+              @for (motivo of motivos; track $index) {
+                <option [value]="motivo">{{ motivo }}</option>
+              }
+            </select>
+          </div>
+          
+          <div class="d-flex justify-content-end gap-2">
+            <button type="submit" class="btn btn-success" [disabled]="form.invalid">Guardar cambios</button>
+            <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    }
+  </div>
+  

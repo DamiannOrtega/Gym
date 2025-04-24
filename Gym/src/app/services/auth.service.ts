@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface AdminUser {
   username: string;
@@ -19,6 +20,8 @@ export class AuthService {
   private readonly key = 'currentAdmin';
   currentAdmin = signal<string | null>(localStorage.getItem(this.key));
 
+  constructor(private router: Router) {}
+
   login(username: string, password: string): boolean {
     const found = ADMINS.find(a => a.username === username && a.password === password);
     if (found) {
@@ -30,8 +33,9 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.key);
+    localStorage.removeItem(this.key); // ❗ Corregido
     this.currentAdmin.set(null);
+    this.router.navigate(['/']); // ✅ Redirige al home
   }
 
   isLoggedIn(): boolean {

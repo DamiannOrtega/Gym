@@ -1,1 +1,135 @@
-/* You can add global styles to this file, and also import other style files */
+/* === Variables globales (modo oscuro) === */
+:root {
+    --fondo-principal: #1e293b;
+    --fondo-oscuro: #0f172a;
+    --fondo-input: #334155;
+    --borde-input: #475569;
+    --borde-tarjeta: rgba(255, 255, 255, 0.05);
+  
+    --texto-principal: #f1f5f9;
+    --texto-secundario: #9ca3af;
+    --enlace-color: #60a5fa;
+    --enlace-hover: #3b82f6;
+  
+    --boton-color: #3b82f6;
+    --boton-hover: #2563eb;
+  
+    --acento-suave: rgba(255, 255, 255, 0.1);
+    --blanco: #ffffff;
+  }
+  
+  /* === Estilos Globales en Modo Oscuro === */
+  body {
+    background-color: var(--fondo-principal);
+    color: var(--texto-principal);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  a {
+    color: var(--enlace-color);
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: var(--enlace-hover);
+    text-decoration: underline;
+  }
+  
+  .btn-primary {
+    background-color: var(--boton-color);
+    border-color: var(--boton-color);
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--boton-hover);
+    border-color: var(--boton-hover);
+  }
+  
+  .card {
+    background-color: var(--fondo-principal);
+    color: var(--texto-principal);
+    border: 1px solid var(--borde-tarjeta);
+  }
+  
+  .form-control,
+  .form-select {
+    background-color: var(--fondo-input);
+    color: var(--blanco);
+    border: 1px solid var(--borde-input);
+  }
+  
+  .form-control::placeholder {
+    color: var(--texto-secundario);
+  }
+  
+  .form-control:focus {
+    border-color: var(--enlace-color);
+    box-shadow: 0 0 0 0.2rem rgba(96, 165, 250, 0.25);
+  }
+  
+  /* === Footer Moderno Oscuro === */
+  .bg-footer {
+    background-color: var(--fondo-oscuro);
+    color: var(--blanco);
+  }
+  
+  .bg-footer a {
+    text-decoration: none;
+  }
+  
+  .footer-dark h5 {
+    font-weight: bold;
+    color: var(--blanco);
+  }
+  
+  .footer-dark p {
+    color: var(--texto-secundario);
+  }
+  
+  .social-icon {
+    background-color: var(--acento-suave);
+    border-radius: 50%;
+    padding: 0.6rem;
+    color: var(--blanco);
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  
+  .social-icon:hover {
+    background-color: var(--blanco);
+    color: var(--fondo-oscuro);
+    transform: scale(1.1);
+  }
+  
+  /* === Navbar oscuro === */
+  .navbar-dark {
+    background-color: var(--fondo-oscuro);
+  }
+  
+  .navbar-dark .navbar-nav .nav-link {
+    color: #cbd5e1;
+  }
+  
+  .navbar-dark .navbar-nav .nav-link:hover {
+    color: var(--blanco);
+  }
+  
+  .dropdown-menu {
+    background-color: var(--fondo-principal);
+    border: 1px solid var(--borde-input);
+  }
+  
+  .dropdown-item {
+    color: var(--texto-principal);
+  }
+  
+  .dropdown-item:hover {
+    background-color: var(--fondo-input);
+    color: var(--blanco);
+  }
+  
