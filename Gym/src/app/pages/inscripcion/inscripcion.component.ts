@@ -14,6 +14,8 @@ export class InscripcionComponent {
   clases = ['Zumba', 'Spinning', 'Yoga', 'Pilates', 'CrossFit'];
   diasDisponibles = ['Lunes', 'Miércoles', 'Viernes'];
   turnosDisponibles = ['Mañana', 'Tarde'];
+  diasInvalidos = false;
+
 
   inscripcion = {
     nombre: '',
@@ -43,12 +45,29 @@ export class InscripcionComponent {
     this.toggleDia(dia, checked);
   }
 
+  esFormularioValido(form: NgForm): boolean {
+    return !!form.valid && this.inscripcion.dias.length > 0;
+  }
+  
+  
+
   guardar(form: NgForm) {
+    if (form.invalid || this.inscripcion.dias.length === 0) {
+      this.diasInvalidos = this.inscripcion.dias.length === 0;
+      return;
+    }
+  
+    this.diasInvalidos = false;
+  
     const datos = this.storage.get<any>('formularioTemplate');
     datos.push(this.inscripcion);
     this.storage.set('formularioTemplate', datos);
-
+  
     Swal.fire('¡Registro exitoso!', 'Tu inscripción ha sido guardada.', 'success');
-    form.resetForm();
+  
+    form.resetForm();           // Limpia el formulario
+    this.inscripcion.dias = []; // Limpia los checkboxes manualmente
   }
+  
+  
 }

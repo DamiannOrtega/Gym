@@ -63,13 +63,13 @@
             <form [formGroup]="form" (ngSubmit)="guardar()">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label">
+                        <label class="form-label text-light">
                             <i class="fas fa-user me-2"></i> Nombre
                         </label>
                         <input formControlName="nombre" class="form-control" placeholder="Nombre completo" />
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label class="form-label">
+                        <label class="form-label text-light">
                             <i class="fas fa-envelope me-2"></i> Email
                         </label>
                         <input formControlName="email" class="form-control" placeholder="correo@ejemplo.com" />
@@ -77,10 +77,10 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">
+                    <label class="form-label text-light">
                         <i class="fas fa-question-circle me-2"></i> Motivo
-                    </label>
-                    <select formControlName="motivo" class="form-select">
+                    </label>    
+                    <select formControlName="motivo" class="form-select text-dark">
                         <option value="" disabled>Selecciona un motivo</option>
                         @for (motivo of motivos; track $index) {
                         <option [value]="motivo">{{ motivo }}</option>

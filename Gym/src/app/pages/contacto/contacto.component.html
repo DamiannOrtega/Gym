@@ -37,7 +37,7 @@
             <label class="form-label">
                 <i class="fas fa-question-circle me-2"></i>Motivo de contacto
             </label>
-            <select formControlName="motivo" class="form-select">
+            <select formControlName="motivo" class="form-select text-dark">
                 <option value="" disabled selected>Selecciona un motivo</option>
                 @for (m of motivos; track $index) {
                 <option [value]="m">{{ m }}</option>

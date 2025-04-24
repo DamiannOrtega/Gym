@@ -13,13 +13,20 @@
     <!-- CLASES DESTACADAS -->
     <section class="container mt-5">
         <h2 class="text-center mb-4"><i class="fas fa-star me-2"></i>Clases destacadas</h2>
+
+        
+        <!-- *************ELIMINAAAR*************** -->
+        <h2 class="text-center mb-4"><i class="fas fa-star me-2"></i>AQUI PONGAN UNAS CARDS MAS CHIDAS, CON IMAGENES </h2>
+
+
+
         <div class="row g-4">
             @for (clase of clasesDestacadas; track $index) {
             <div class="col-md-4">
-                <div class="card h-100 shadow-sm">
+                <div class="card clase-destacada h-100 shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title"><i class="{{ clase.icono }} me-2"></i>{{ clase.nombre }}</h5>
-                        <p class="card-text">{{ clase.descripcion }}</p>
+                        <h5 class="card-title text-light"><i class="{{ clase.icono }} me-2"></i>{{ clase.nombre }}</h5>
+                        <p class="card-text text-light">{{ clase.descripcion }}</p>
                     </div>
                 </div>
             </div>
