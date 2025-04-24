@@ -1,26 +1,42 @@
 <div class="container mt-5" style="max-width: 700px;">
-    <h2 class="text-center mb-4">Formulario de Contacto</h2>
+    <div class="text-center mb-4">
+        <h2><i class="fas fa-headset me-2"></i>Formulario de Contacto</h2>
+        <p class="text-muted">¿Tienes preguntas? Estamos aquí para ayudarte</p>
+    </div>
 
-    <form [formGroup]="form" (ngSubmit)="guardar()" class="card p-4 shadow-sm bg-light">
+    <form [formGroup]="form" (ngSubmit)="guardar()" class="card p-4 shadow">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">
+                    <i class="fas fa-user me-2"></i>Nombre completo
+                </label>
+                <input formControlName="nombre" class="form-control" placeholder="Ingrese su nombre completo" />
+                @if (isInvalid('nombre')) {
+                <div class="text-danger mt-1">
+                    <i class="fas fa-exclamation-circle me-1"></i>
+                    Nombre requerido (mínimo 3 letras).
+                </div>
+                }
+            </div>
 
-        <div class="mb-3">
-            <label class="form-label">Nombre completo</label>
-            <input formControlName="nombre" class="form-control" />
-            @if (isInvalid('nombre')) {
-            <div class="text-danger">Nombre requerido (mínimo 3 letras).</div>
-            }
+            <div class="col-md-6 mb-3">
+                <label class="form-label">
+                    <i class="fas fa-envelope me-2"></i>Correo electrónico
+                </label>
+                <input formControlName="email" this class="form-control" placeholder="ejemplo@correo.com" />
+                @if (isInvalid('email')) {
+                <div class="text-danger mt-1">
+                    <i class="fas fa-exclamation-circle me-1"></i>
+                    Correo válido requerido.
+                </div>
+                }
+            </div>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Correo electrónico</label>
-            <input formControlName="email" class="form-control" />
-            @if (isInvalid('email')) {
-            <div class="text-danger">Correo válido requerido.</div>
-            }
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Motivo de contacto</label>
+            <label class="form-label">
+                <i class="fas fa-question-circle me-2"></i>Motivo de contacto
+            </label>
             <select formControlName="motivo" class="form-select">
                 <option value="" disabled selected>Selecciona un motivo</option>
                 @for (m of motivos; track $index) {
@@ -28,47 +44,77 @@
                 }
             </select>
             @if (isInvalid('motivo')) {
-            <div class="text-danger">Selecciona un motivo.</div>
+            <div class="text-danger mt-1">
+                <i class="fas fa-exclamation-circle me-1"></i>
+                Selecciona un motivo.
+            </div>
             }
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Método de contacto preferido</label><br />
-            @for (medio of medios; track $index) {
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" [value]="medio"
-                    (change)="onMedioChange($event, medio)" />
-                <label class="form-check-label">{{ medio }}</label>
+        <div class="mb-4">
+            <label class="form-label">
+                <i class="fas fa-comments me-2"></i>Método de contacto preferido
+            </label>
+            <div class="row row-cols-2 g-2">
+                @for (medio of medios; track $index) {
+                <div class="col">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" [value]="medio"
+                            (change)="onMedioChange($event, medio)" />
+                        <label class="form-check-label">{{ medio }}</label>
+                    </div>
+                </div>
+                }
             </div>
-            }
             @if (isInvalid('mediosContacto')) {
-            <div class="text-danger">Selecciona al menos un método de contacto.</div>
+            <div class="text-danger mt-1">
+                <i class="fas fa-exclamation-circle me-1"></i>
+                Selecciona al menos un método de contacto.
+            </div>
             }
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">¿Desea recibir promociones?</label><br />
-            <div class="form-check">
-                <input type="radio" class="form-check-input" value="Sí" formControlName="promociones" />
-                <label class="form-check-label">Sí</label>
-            </div>
-            <div class="form-check">
-                <input type="radio" class="form-check-input" value="No" formControlName="promociones" />
-                <label class="form-check-label">No</label>
+        <div class="mb-4">
+            <label class="form-label">
+                <i class="fas fa-gift me-2"></i>¿Desea recibir promociones?
+            </label>
+            <div class="row row-cols-2 g-2">
+                <div class="col">
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" value="Sí" formControlName="promociones" />
+                        <label class="form-check-label">Sí</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" value="No" formControlName="promociones" />
+                        <label class="form-check-label">No</label>
+                    </div>
+                </div>
             </div>
             @if (isInvalid('promociones')) {
-            <div class="text-danger">Selecciona una opción.</div>
+            <div class="text-danger mt-1">
+                <i class="fas fa-exclamation-circle me-1"></i>
+                Selecciona una opción.
+            </div>
             }
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Fecha preferida de contacto</label>
+        <div class="mb-4">
+            <label class="form-label">
+                <i class="fas fa-calendar-alt me-2"></i>Fecha preferida de contacto
+            </label>
             <input type="date" class="form-control" formControlName="fecha" [min]="hoy()" />
             @if (isInvalid('fecha')) {
-            <div class="text-danger">Selecciona una fecha válida.</div>
+            <div class="text-danger mt-1">
+                <i class="fas fa-exclamation-circle me-1"></i>
+                Selecciona una fecha válida.
+            </div>
             }
         </div>
 
-        <button class="btn btn-success w-100" [disabled]="form.invalid">Enviar</button>
+        <button class="btn btn-success w-100" [disabled]="form.invalid">
+            <i class="fas fa-paper-plane me-2"></i>Enviar mensaje
+        </button>
     </form>
 </div>

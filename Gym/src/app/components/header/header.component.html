@@ -1,44 +1,71 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-  <a class="navbar-brand" routerLink="/">🏋️ FitZone</a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<nav class="navbar navbar-expand-lg navbar-dark px-4">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" routerLink="/">
+      <i class="fas fa-dumbbell me-2"></i>
+      <span>FitZone</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/">Inicio</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/clases">Clases</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/inscripcion">Inscripción</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/contacto">Contacto</a>
-      </li>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <i class="fas fa-home me-1"></i> Inicio
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/clases" routerLinkActive="active">
+            <i class="fas fa-calendar-alt me-1"></i> Clases
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/inscripcion" routerLinkActive="active">
+            <i class="fas fa-user-plus me-1"></i> Inscripción
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contacto" routerLinkActive="active">
+            <i class="fas fa-envelope me-1"></i> Contacto
+          </a>
+        </li>
+
+        @if (authService.isLoggedIn()) {
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-shield-alt me-1"></i> Administración
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" routerLink="/admin/form-template">
+                  <i class="fas fa-clipboard-list me-2"></i> Ver inscripciones
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/admin/contacto">
+                  <i class="fas fa-comments me-2"></i> Ver contactos
+                </a>
+              </li>
+            </ul>
+          </li>
+        }
+      </ul>
 
       @if (authService.isLoggedIn()) {
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
-            Administración
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="/admin/form-template">Ver inscripciones</a></li>
-            <li><a class="dropdown-item" routerLink="/admin/contacto">Ver contactos</a></li>
-          </ul>
-        </li>
+        <div class="d-flex align-items-center">
+          <span class="navbar-text me-3">
+            <i class="fas fa-user-circle me-1"></i> Bienvenido, {{ authService.getAdminName() }}
+          </span>
+          <button class="btn btn-outline-light btn-sm" (click)="logout()">
+            <i class="fas fa-sign-out-alt me-1"></i> Cerrar sesión
+          </button>
+        </div>
+      } @else {
+        <a class="btn btn-outline-light btn-sm" routerLink="/login">
+          <i class="fas fa-sign-in-alt me-1"></i> Iniciar sesión
+        </a>
       }
-    </ul>
-
-    @if (authService.isLoggedIn()) {
-      <span class="navbar-text me-3">
-        Bienvenido, {{ authService.getAdminName() }}
-      </span>
-      <button class="btn btn-outline-light btn-sm" (click)="logout()">Logout</button>
-    } @else {
-      <a class="btn btn-outline-light btn-sm" routerLink="/login">Login</a>
-    }
+    </div>
   </div>
 </nav>

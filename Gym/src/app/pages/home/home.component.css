@@ -1,0 +1,76 @@
+:root {
+    /* Paleta de colores principal */
+    --color-primario: #1a1a2e;
+    /* Azul oscuro casi negro */
+    --color-secundario: #16213e;
+    /* Azul marino profundo */
+    --color-acento: #0f52ba;
+    /* Azul brillante */
+    --color-acento-hover: #0a3d8f;
+    /* Azul brillante más oscuro para hover */
+    --color-exito: #00b894;
+    /* Verde para elementos de éxito */
+    --color-advertencia: #fdcb6e;
+    /* Amarillo para advertencias */
+    --color-peligro: #e74c3c;
+    /* Rojo para errores/peligro */
+    --color-texto-claro: #f1f1f1;
+    /* Texto claro para fondos oscuros */
+    --color-texto-oscuro: #333333;
+    /* Texto oscuro para fondos claros */
+    --color-borde: #2d3748;
+    /* Color para bordes */
+    --color-fondo-claro: #f8f9fa;
+    /* Fondo claro para cards y formularios */
+    --color-fondo-oscuro: #121212;
+    /* Fondo oscuro para secciones */
+
+    /* Estilos de sombras */
+    --sombra-suave: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --sombra-media: 0 6px 12px rgba(0, 0, 0, 0.15);
+    --sombra-fuerte: 0 10px 25px rgba(0, 0, 0, 0.2);
+
+    /* Bordes redondeados */
+    --borde-redondo-sm: 4px;
+    --borde-redondo-md: 8px;
+    --borde-redondo-lg: 12px;
+
+    /* Espaciado */
+    --espaciado-xs: 0.25rem;
+    --espaciado-sm: 0.5rem;
+    --espaciado-md: 1rem;
+    --espaciado-lg: 1.5rem;
+    --espaciado-xl: 2rem;
+}
+
+/* Fondo completo de la sección Home */
+.app-home {
+    background-color: var(--color-secundario);
+    color: var(--color-texto-claro);
+  }
+  
+  /* Secciones internas como galería, clases, testimonios */
+  .app-home section {
+    background-color: var(--color-secundario);
+    padding: var(--espaciado-xl) 0;
+  }
+  
+  /* Tarjetas destacadas */
+  .app-home .card {
+    background-color: var(--color-primario);
+    border: 1px solid var(--color-borde);
+    color: var(--color-texto-claro);
+    box-shadow: var(--sombra-media);
+  }
+  
+  /* Carrusel de galería */
+  .app-home .carousel-item {
+    background-color: var(--color-secundario);
+  }
+  
+  /* Ajuste del fondo del título o encabezados */
+  .app-home h2,
+  .app-home h3 {
+    color: var(--color-texto-claro);
+  }
+  

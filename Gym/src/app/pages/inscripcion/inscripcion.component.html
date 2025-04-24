@@ -1,73 +1,105 @@
-<div class="container mt-5" style="max-width: 600px;">
-    <h2 class="mb-4 text-center">Inscripción a clases</h2>
-  
-    <form #f="ngForm" (ngSubmit)="guardar(f)" class="card p-4 bg-light shadow-sm">
-  
-      <div class="mb-3">
-        <label class="form-label">Nombre completo</label>
-        <input name="nombre" [(ngModel)]="inscripcion.nombre" required minlength="3" class="form-control" />
-        @if (f.submitted && f.controls['nombre'].invalid) {
-          <div class="text-danger">Nombre requerido (mínimo 3 letras).</div>
-        }
+<div class="container mt-5" style="max-width: 650px;">
+  <div class="text-center mb-4">
+    <h2><i class="fas fa-clipboard-check me-2"></i>Inscripción a clases</h2>
+    <p class="text-muted">Complete el formulario para unirse a nuestras clases</p>
+  </div>
+
+  <form #f="ngForm" (ngSubmit)="guardar(f)" class="card p-4 shadow">
+    <div class="mb-3">
+      <label class="form-label">
+        <i class="fas fa-user me-2"></i>Nombre completo
+      </label>
+      <input name="nombre" [(ngModel)]="inscripcion.nombre" required minlength="3" class="form-control"
+        placeholder="Ingrese su nombre completo" />
+      @if (f.submitted && f.controls['nombre'].invalid) {
+      <div class="text-danger mt-1">
+        <i class="fas fa-exclamation-circle me-1"></i>
+        Nombre requerido (mínimo 3 letras).
       </div>
-  
-      <div class="mb-3">
-        <label class="form-label">Correo electrónico</label>
-        <input name="email" [(ngModel)]="inscripcion.email" required email class="form-control" />
-        @if (f.submitted && f.controls['email'].invalid) {
-          <div class="text-danger">Correo válido requerido.</div>
-        }
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">
+        <i class="fas fa-envelope me-2"></i>Correo electrónico
+      </label>
+      <input name="email" [(ngModel)]="inscripcion.email" required email class="form-control"
+        placeholder="ejemplo@correo.com" />
+      @if (f.submitted && f.controls['email'].invalid) {
+      <div class="text-danger mt-1">
+        <i class="fas fa-exclamation-circle me-1"></i>
+        Correo válido requerido.
       </div>
-  
-      <div class="mb-3">
-        <label class="form-label">Clase</label>
-        <select name="clase" [(ngModel)]="inscripcion.clase" required class="form-select">
-          <option value="" disabled selected>Selecciona una clase</option>
-          @for (c of clases; track $index) {
-            <option [value]="c">{{ c }}</option>
-          }
-        </select>
-        @if (f.submitted && f.controls['clase'].invalid) {
-          <div class="text-danger">Selecciona una clase.</div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">
+        <i class="fas fa-dumbbell me-2"></i>Clase
+      </label>
+      <select name="clase" [(ngModel)]="inscripcion.clase" required class="form-select">
+        <option value="" disabled selected>Selecciona una clase</option>
+        @for (c of clases; track $index) {
+        <option [value]="c">{{ c }}</option>
         }
+      </select>
+      @if (f.submitted && f.controls['clase'].invalid) {
+      <div class="text-danger mt-1">
+        <i class="fas fa-exclamation-circle me-1"></i>
+        Selecciona una clase.
       </div>
-  
-      <div class="mb-3">
-        <label class="form-label">Días preferidos</label><br />
+      }
+    </div>
+
+    <div class="mb-4">
+      <label class="form-label">
+        <i class="fas fa-calendar-day me-2"></i>Días preferidos
+      </label>
+      <div class="row row-cols-2 g-2">
         @for (dia of diasDisponibles; track $index) {
+        <div class="col">
           <div class="form-check">
-            <input
-              type="checkbox"
-              [value]="dia"
-              name="dias"
-              class="form-check-input"
-              [checked]="inscripcion.dias.includes(dia)"
-              (change)="onDiaChange($event, dia)"
-            />
+            <input type="checkbox" [value]="dia" name="dias" class="form-check-input"
+              [checked]="inscripcion.dias.includes(dia)" (change)="onDiaChange($event, dia)" />
             <label class="form-check-label">{{ dia }}</label>
           </div>
+        </div>
         }
       </div>
-  
-      <div class="mb-3">
-        <label class="form-label">Turno</label><br />
+    </div>
+
+    <div class="mb-4">
+      <label class="form-label">
+        <i class="fas fa-clock me-2"></i>Turno
+      </label>
+      <div class="row row-cols-2 g-2">
         @for (turno of turnosDisponibles; track $index) {
+        <div class="col">
           <div class="form-check">
-            <input type="radio" name="turno" [value]="turno" [(ngModel)]="inscripcion.turno" required class="form-check-input" />
+            <input type="radio" name="turno" [value]="turno" [(ngModel)]="inscripcion.turno" required
+              class="form-check-input" />
             <label class="form-check-label">{{ turno }}</label>
           </div>
+        </div>
         }
       </div>
-  
-      <div class="mb-3">
-        <label class="form-label">Fecha de inicio</label>
-        <input type="date" name="fecha" [(ngModel)]="inscripcion.fecha" [min]="hoy()" required class="form-control" />
-        @if (f.submitted && f.controls['fecha'].invalid) {
-          <div class="text-danger">Selecciona una fecha válida (no pasada).</div>
-        }
+    </div>
+
+    <div class="mb-4">
+      <label class="form-label">
+        <i class="fas fa-calendar-alt me-2"></i>Fecha de inicio
+      </label>
+      <input type="date" name="fecha" [(ngModel)]="inscripcion.fecha" [min]="hoy()" required class="form-control" />
+      @if (f.submitted && f.controls['fecha'].invalid) {
+      <div class="text-danger mt-1">
+        <i class="fas fa-exclamation-circle me-1"></i>
+        Selecciona una fecha válida (no pasada).
       </div>
-  
-      <button class="btn btn-primary w-100" [disabled]="f.invalid">Enviar inscripción</button>
-    </form>
-  </div>
-  
+      }
+    </div>
+
+    <button class="btn btn-primary w-100" [disabled]="f.invalid">
+      <i class="fas fa-paper-plane me-2"></i>Enviar inscripción
+    </button>
+  </form>
+</div>
