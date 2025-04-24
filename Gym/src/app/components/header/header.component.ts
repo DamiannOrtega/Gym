@@ -10,6 +10,8 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {
+
+  logo = 'assets/img/Logo2.png';
   constructor(public authService: AuthService) {}
 
   logout() {

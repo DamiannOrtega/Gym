@@ -9,5 +9,6 @@ import { RouterModule } from '@angular/router';
   templateUrl: './footer.component.html',
 })
 export class FooterComponent {
+  logo = 'assets/img/Logo.png';
   year = new Date().getFullYear();
 }
