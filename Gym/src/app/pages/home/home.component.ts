@@ -1,19 +1,21 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-home',
-  imports: [CommonModule,],
+  imports: [CommonModule,RouterModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
   clasesDestacadas = [
-    { nombre: 'Zumba', icono: 'fas fa-music', descripcion: 'Cardio con ritmo latino para todos los niveles.', image:'/assets/img/gym1.jpg' },
-    { nombre: 'CrossFit', icono: 'fas fa-dumbbell', descripcion: 'Entrenamiento funcional de alta intensidad.',image:'/assets/img/gym1.jpg' },
-    { nombre: 'Yoga', icono: 'fas fa-spa', descripcion: 'Conecta cuerpo y mente con sesiones de yoga guiadas.',image:'/assets/img/gym1.jpg' }
+    { id: 1, nombre: 'Zumba', icono: 'fas fa-music', descripcion: 'Cardio con ritmo latino para todos los niveles.', image: '/assets/img/gym1.jpg' },
+    { id: 2, nombre: 'CrossFit', icono: 'fas fa-dumbbell', descripcion: 'Entrenamiento funcional de alta intensidad.', image: '/assets/img/gym1.jpg' },
+    { id: 3, nombre: 'Yoga', icono: 'fas fa-spa', descripcion: 'Conecta cuerpo y mente con sesiones de yoga guiadas.', image: '/assets/img/gym1.jpg' }
   ];
+  
 
   galeria = [
     '/assets/img/gym1.jpg',
