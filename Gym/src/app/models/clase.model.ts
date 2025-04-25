@@ -1,7 +1,8 @@
-export interface Clase {
+  export interface Clase {
     id: number;
     nombre: string;
+    icono:string;
     descripcion: string;
-    imagen: string;
+    image: string;
   }
   

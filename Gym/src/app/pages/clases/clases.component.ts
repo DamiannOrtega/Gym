@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Clase } from '../../models/clase.model';
+import { ClasesService } from '../../services/clases.service';
 
 @Component({
   selector: 'app-clases',
@@ -10,89 +12,16 @@ import { RouterModule } from '@angular/router';
 
 })
 export class ClasesComponent {
-  clasesDestacadas = [
-    { id: 1, nombre: 'Zumba', icono: 'fas fa-music', descripcion: 'Cardio con ritmo latino para todos los niveles.', image: '/assets/img/zumba.avif' },
-    { id: 2, nombre: 'CrossFit', icono: 'fas fa-dumbbell', descripcion: 'Entrenamiento funcional de alta intensidad.', image: '/assets/img/crossfit.jpg' },
-    { id: 3, nombre: 'Yoga', icono: 'fas fa-spa', descripcion: 'Conecta cuerpo y mente con sesiones de yoga guiadas.', image: '/assets/img/yoga.jpg' },
-    { id: 4, nombre: 'Pilates', icono: 'fas fa-music', descripcion: 'Ejercicios de bajo impacto que se enfocan en la fuerza del core (zona central del cuerpo), la flexibilidad y la postura.', image: '/assets/img/pilates.png' },
-    { id: 5, nombre: 'Spinning', icono: 'fas fa-dumbbell', descripcion: 'Clases en bicicletas estáticas que simulan recorridos en exteriores con intervalos de alta y baja intensidad.', image: '/assets/img/spinning.jpg' },
-    { id: 6, nombre: 'Body Pump', icono: 'fas fa-spa', descripcion: 'Una clase de entrenamiento con pesas que se centra en la tonificación  muscular mediante movimientos de alta repetición', image: '/assets/img/bodypump.jpg' },
-    { id: 7, nombre: 'Boxeo', icono: 'fas fa-music', descripcion: 'Clases de entrenamiento basadas en el boxeo, que incluyen técnicas de golpeo y trabajo de resistencia.', image: '/assets/img/boxeo.jpg' },
-    { id: 8, nombre: 'KickBoxing', icono: 'fas fa-dumbbell', descripcion: 'Combina técnicas de patadas y golpes de boxeo en una clase que también mejora la resistencia y la tonificación muscular.', image: '/assets/img/kickboxing.jpg' },
-    { id: 9, nombre: 'Yoga', icono: 'fas fa-spa', descripcion: 'Conecta cuerpo y mente con sesiones de yoga guiadas.', image: '/assets/img/yoga.jpg' },
-    {
-      id: 10,
-      nombre: 'Press de banca',
-      icono: 'fas fa-dumbbell',
-      descripcion: 'Ejercicio para trabajar pecho, tríceps y hombros utilizando barra o mancuernas.',
-      image: '/assets/img/press-banca.png'
-    },
-    {
-      id: 10,
-      nombre: 'Sentadillas con peso',
-      icono: 'fas fa-weight-hanging',
-      descripcion: 'Fundamental para piernas y glúteos, utilizando barra en la espalda.',
-      image: '/assets/img/sentadillas.png'
-    },
-    {
-      id: 10,
-      nombre: 'Remo en máquina',
-      icono: 'fas fa-arrows-alt-h',
-      descripcion: 'Fortalece la espalda y bíceps con un movimiento controlado de tracción.',
-      image: '/assets/img/remo.jpg'
-    },
-    {
-      id: 10,
-      nombre: 'Cinta de correr',
-      icono: 'fas fa-running',
-      descripcion: 'Ejercicio cardiovascular ideal para quemar grasa y mejorar resistencia.',
-      image: '/assets/img/cinta-correr.png'
-    },
-    {
-      id: 10,
-      nombre: 'Bicicleta estática',
-      icono: 'fas fa-bicycle',
-      descripcion: 'Cardio de bajo impacto para fortalecer piernas y mejorar condición física.',
-      image: '/assets/img/bicis.png'
-    },
-    {
-      id: 10,
-      nombre: 'Abdominales en colchoneta',
-      icono: 'fas fa-heartbeat',
-      descripcion: 'Ejercita el abdomen de forma libre, sin uso de maquinaria pesada.',
-      image: '/assets/img/abdom.png'
-    },
-    {
-      id: 10,
-      nombre: 'Peso muerto',
-      icono: 'fas fa-hiking',
-      descripcion: 'Ejercicio completo para glúteos, espalda baja y piernas.',
-      image: '/assets/img/peso-muerto.png'
-    },
-    {
-      id: 10,
-      nombre: 'Curl de bíceps',
-      icono: 'fas fa-hand-rock',
-      descripcion: 'Aíslate y fortalece tus bíceps usando mancuernas.',
-      image: '/assets/img/curl.png'
-    },
-    {
-      id: 10,
-      nombre: 'Elevaciones laterales',
-      icono: 'fas fa-hand-paper',
-      descripcion: 'Trabaja tus hombros de manera específica con este ejercicio de aislamiento.',
-      image: '/assets/img/elevaciones-laterales.png'
-    },
-    {
-      id: 10,
-      nombre: 'Extensión de tríceps en polea',
-      icono: 'fas fa-chevron-down',
-      descripcion: 'Ejercicio controlado para fortalecer los tríceps con cable.',
-      image: '/assets/img/extension-triceps.png'
-    }
-  ];
- 
+    clasesDestacadas: Clase[] = [];
+
+    constructor(private clasesService: ClasesService) {}
+
+    ngOnInit(): void {
+      this.clasesService.getClases().subscribe((data) => {
+        this.clasesDestacadas = data;
+      });
 
   
 
+  }
 }

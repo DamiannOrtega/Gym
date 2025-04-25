@@ -1,4 +1,6 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
 import { Clase } from '../models/clase.model';
 
 
@@ -6,17 +8,17 @@ import { Clase } from '../models/clase.model';
   providedIn: 'root'
 })
 export class ClasesService {
-  private clases = signal<Clase[]>([
-    { id: 1, nombre: 'Zumba', descripcion: 'Clase de baile con cardio', imagen: 'zumba.jpg' },
-    { id: 2, nombre: 'Yoga', descripcion: 'Posturas, respiración y relajación', imagen: 'yoga.jpg' },
-    { id: 3, nombre: 'CrossFit', descripcion: 'Entrenamiento funcional', imagen: 'crossfit.jpg' },
-  ]);
+  private clasesUrl = '/json/clases.json';
 
-  getClases(): Clase[] {
-    return this.clases();
+  constructor(private http: HttpClient) {}
+
+  getClases(): Observable<Clase[]> {
+    return this.http.get<Clase[]>(this.clasesUrl);
   }
 
-  getClasePorId(id: number): Clase | undefined {
-    return this.clases().find(c => c.id === id);
+  getClasePorId(id: number): Observable<Clase | undefined> {
+    return this.getClases().pipe(
+      map(clases => clases.find(c => c.id === id))
+    );
   }
 }
