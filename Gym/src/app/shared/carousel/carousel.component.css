@@ -1,0 +1,17 @@
+#carouselGaleria .carousel-inner {
+    height: 500px; /* O lo que quieras */
+    overflow: hidden;
+    position: relative;
+    border-radius: 1rem;
+  }
+  
+  #carouselGaleria .carousel-item {
+    height: 100%;
+  }
+  
+  #carouselGaleria .carousel-item img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+  

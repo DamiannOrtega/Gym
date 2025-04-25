@@ -8,9 +8,8 @@ import { Component } from '@angular/core';
 })
 export class CarouselComponent {
   galeria = [
-    '/assets/img/gym1.jpg',
-    '/assets/img/carlitos.jpg',
-    '/assets/img/gym2.jpg',
-    '/assets/img/gym3.jpg',
+    '/assets/img/img01.png',
+    '/assets/img/img02.png',
+    '/assets/img/img03.png',
   ];
 }
