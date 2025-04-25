@@ -1,1 +1,19 @@
-<p>clase-detalle works!</p>
+<div class="container mt-5" *ngIf="clase as c; else noClase">
+    <div class="card shadow p-4 rounded-4 text-light bg-dark">
+      <div class="text-center mb-4">
+        <img [src]="c.image" [alt]="c.nombre" class="img-fluid rounded" style="max-height: 300px; object-fit: cover;">
+      </div>
+      <h2 class="text-center mb-3">{{ c.nombre }}</h2>
+      <p class="lead">{{ c.descripcion }}</p>
+      <hr>
+      <p *ngIf="c.coach"><strong><i class="fas fa-user me-2"></i>Coach:</strong> {{ c.coach }}</p>
+      <p *ngIf="c.dias"><strong><i class="fas fa-calendar-day me-2"></i>Días:</strong> {{ c.dias.join(', ') }}</p>
+      <p *ngIf="c.horario"><strong><i class="fas fa-clock me-2"></i>Horario:</strong> {{ c.horario }}</p>
+      <p *ngIf="c.objetivo"><strong><i class="fas fa-bullseye me-2"></i>Objetivo:</strong> {{ c.objetivo }}</p>
+    </div>
+  </div>
+  
+  <ng-template #noClase>
+    <p class="text-danger">Clase no encontrada.</p>
+  </ng-template>
+  
