@@ -16,44 +16,57 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class RulesComponent {
   reglas = [
     {
-      titulo: 'Diseño Consistente',
-      icono: 'palette',
+      titulo: 'Respeto y Compañerismo',
+      icono: 'groups',
       puntos: [
-        'Usar los mismos colores y tipografías.',
-        'Mantener estructura visual en todas las vistas.',
-        'Adaptabilidad responsive en todo el sitio.'
+        'Trata a todos los miembros con respeto y cortesía.',
+        'Evita lenguaje ofensivo o actitudes negativas en el gimnasio.',
+        'Respeta los turnos en las máquinas y equipos.'
       ]
     },
     {
-      titulo: 'Contenido Relevante',
-      icono: 'notes',
+      titulo: 'Uso Responsable del Equipo',
+      icono: 'fitness_center',
       puntos: [
-        'Cada sección debe tener información útil.',
-        'Evitar contenido irrelevante o vacío.'
+        'Limpia las máquinas y mancuernas después de usarlas.',
+        'Regresa los accesorios a su lugar correspondiente.',
+        'Reporta cualquier daño o mal funcionamiento de los equipos.'
       ]
     },
     {
-      titulo: 'Interacción Clara',
-      icono: 'touch_app',
+      titulo: 'Higiene Personal',
+      icono: 'clean_hands',
       puntos: [
-        'Botones visibles y accesibles.',
-        'Acciones del usuario deben ser intuitivas.'
+        'Usa toalla personal para cubrir máquinas y bancos.',
+        'Lleva ropa y calzado adecuado para entrenar.',
+        'Evita entrenar si presentas síntomas de enfermedad.'
       ]
     },
     {
-      titulo: 'Optimización de Recursos',
-      icono: 'bolt',
+      titulo: 'Control del Volumen',
+      icono: 'volume_up',
       puntos: [
-        'Cargar imágenes optimizadas.',
-        'Minimizar tiempos de carga.'
+        'Mantén tu música personal a un volumen moderado.',
+        'De preferencia usar audifonos para colocar tu musica',
+        'Respeta el ambiente de entrenamiento de los demás.'
       ]
     },
     {
-      titulo: 'Seguridad Básica',
+      titulo: 'Normas de Seguridad',
       icono: 'security',
       puntos: [
-        'Protección de datos básicos del usuario.',
-        'Manejo adecuado de formularios.'
+        'Sigue las instrucciones de los coaches y del personal.',
+        'No realices ejercicios peligrosos sin supervisión.',
+        'Respeta los límites de tu cuerpo para evitar lesiones.'
+      ]
+    },
+    {
+      titulo: 'Cuidado de las Instalaciones',
+      icono: 'delete',
+      puntos: [
+        'Deposita la basura en los contenedores asignados.',
+        'No ingieras alimentos dentro de las áreas de entrenamiento.',
+        'Mantén las áreas comunes limpias y ordenadas.'
       ]
     }
   ];
