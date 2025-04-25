@@ -8,6 +8,7 @@ import { ContactoComponent } from './pages/contacto/contacto.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AdminFormTemplateComponent } from './pages/admin-form-template/admin-form-template.component';
 import { AdminContactoComponent } from './pages/admin-contacto/admin-contacto.component';
+import { RulesComponent } from './pages/rules/rules.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'clases/:id', component: ClaseDetalleComponent },
   { path: 'inscripcion', component: InscripcionComponent },
   { path: 'contacto', component: ContactoComponent },
+  { path: 'reglas', component: RulesComponent},
   { path: 'login', component: LoginComponent },
   { path: 'admin/form-template', component: AdminFormTemplateComponent, canActivate: [authGuard] },
   { path: 'admin/contacto', component: AdminContactoComponent, canActivate: [authGuard] },
