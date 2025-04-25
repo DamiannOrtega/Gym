@@ -1,3 +1,59 @@
-p {
-    color: white;
-}
+.titulo-reglas {
+    color: #ffffff;
+  }
+  
+  .icono-titulo {
+    font-size: 2.5rem;
+    color: #4a90e2; /* azul claro para el ícono */
+    vertical-align: middle;
+  }
+  
+  .linea-azul {
+    width: 80px;
+    height: 4px;
+    background-color: #4a90e2;
+    margin: 0 auto;
+    border-radius: 4px;
+  }
+  
+  .norma-card {
+    background-color: #162f4b; /* Azul oscuro serio */
+    color: #ffffff; /* 👈 Color blanco en toda la tarjeta */
+    border-radius: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .norma-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
+  }
+  
+  .icono-card {
+    font-size: 1.8rem;
+    color: #4a90e2;
+  }
+  
+  .divisor {
+    background-color: #4a90e2;
+    height: 2px;
+    border: none;
+  }
+  
+  .mat-list-item, /* 👈 Para asegurar que mat-list-item también sea blanco */
+  .norma-item span {
+    color: #ffffff; /* 👈 texto blanco en cada punto de la lista */
+    font-size: 1rem;
+  }
+  
+  .norma-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .icono-punto {
+    color: #6c63ff; /* azul para el ícono de check */
+    font-size: 1.2rem;
+  }
+  
