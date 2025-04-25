@@ -1,0 +1,25 @@
+<div class="container mt-5">
+    <h2 class="text-center text-light mb-4">
+      <i class="fas fa-users me-2"></i> Opiniones de quienes entrenan con nosotros
+    </h2>
+  
+    <div class="row">
+      @for (opinion of opiniones; track $index) {
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card h-100 shadow border-0 opinion-card">
+            <div class="card-body">
+              <h5 class="card-title fw-bold">{{ opinion.nombre }}</h5>
+              <p class="card-text">"{{ opinion.mensaje }}"</p>
+              <div class="stars text-warning">
+                @for (_ of crearArray(opinion.estrellas); track $index) {
+                  <i class="fas fa-star"></i>
+                }
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+  

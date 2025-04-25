@@ -1,0 +1,21 @@
+.opinion-card {
+    background-color: #1e2a38;
+    color: #fff;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+  }
+  
+  .opinion-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .stars i {
+    margin-right: 2px;
+  }
+
+  .opinion-card .card-text {
+    color: rgba(255, 255, 255, 0.8); 
+    font-style: italic;
+  }
+  

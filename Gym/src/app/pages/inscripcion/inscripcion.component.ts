@@ -4,11 +4,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { StorageService } from '../../services/storage.service';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
+import { OpinionesComponent } from '../../components/opiniones/opiniones.component';
 
 @Component({
   standalone: true,
   selector: 'app-inscripcion',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, OpinionesComponent],
   templateUrl: './inscripcion.component.html',
   styleUrls: ['./inscripcion.component.css']
 })
