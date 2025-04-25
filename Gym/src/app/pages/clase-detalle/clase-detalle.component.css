@@ -19,8 +19,8 @@
   .clase-detalle-overlay {
     position: relative;
     z-index: 1;
-    background-color: rgba(0, 0, 0, 0.6); /* oscuro translúcido */
-    max-width: 800px;
+
+    max-width: 100%;
     margin: 0 auto;
     border-radius: 1rem;
   }
