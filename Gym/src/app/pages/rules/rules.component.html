@@ -1,1 +1,27 @@
-<p>rules works!</p>
+<div class="container mt-5">
+    <h2 class="text-center text-light mb-4">
+      <mat-icon>gavel</mat-icon> Normas del Sitio
+    </h2>
+  
+    <div class="row">
+      <div class="col-md-6 mb-4" *ngFor="let regla of reglas">
+        <mat-card class="p-3 shadow-sm">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon matTooltip="Regla importante">{{ regla.icono }}</mat-icon> {{ regla.titulo }}
+            </mat-card-title>
+          </mat-card-header>
+  
+          <mat-divider></mat-divider>
+  
+          <mat-card-content class="mt-2">
+            <mat-list>
+              <mat-list-item *ngFor="let punto of regla.puntos">
+                {{ punto }}
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
