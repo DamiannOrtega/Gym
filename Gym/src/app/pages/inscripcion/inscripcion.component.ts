@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { StorageService } from '../../services/storage.service';
 import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -12,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./inscripcion.component.css']
 })
 export class InscripcionComponent {
-  clases = ['Zumba', 'Spinning', 'Yoga', 'Pilates', 'CrossFit', 'Pesos libres y maquinas'];
+  clases = ['Zumba', 'CrossFit', 'Yoga', 'Pilates', 'Spinning','Body Pump','Boxeo','KickBoxing', 'Pesos libres y máquinas'];  
   diasDisponibles = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
   turnosDisponibles = ['Mañana', 'Tarde'];
   diasInvalidos = false;
@@ -27,7 +28,7 @@ export class InscripcionComponent {
     turno: ''
   };
 
-  constructor(private storage: StorageService) {}
+  constructor(private storage: StorageService, private route: ActivatedRoute) {}
 
   hoy(): string {
     return new Date().toISOString().split('T')[0];
@@ -78,6 +79,38 @@ export class InscripcionComponent {
     form.resetForm();           // Limpia el formulario
     this.inscripcion.dias = []; // Limpia los checkboxes manualmente
   }
+
+  ngOnInit(): void {
+    const id = Number(this.route.snapshot.queryParamMap.get('id'));
+  
+    if (!isNaN(id)) {
+      if (id >= 9 && id <= 18) {
+        this.inscripcion.clase = 'Pesos libres y máquinas';
+      } else {
+        const claseSeleccionada = this.clases.find(c => c.toLowerCase().includes(this.obtenerNombreClasePorId(id)));
+        if (claseSeleccionada) {
+          this.inscripcion.clase = claseSeleccionada;
+        }
+      }
+    }
+  }
+  
+  // Método de ayuda para mapear ids a clases comunes
+  obtenerNombreClasePorId(id: number): string {
+    const clasesPorId: { [key: number]: string } = {
+      1: 'zumba',
+      2: 'crossfit',
+      3: 'yoga',
+      4: 'pilates',
+      5: 'spinning',
+      6: 'body pump',
+      7: 'boxeo',
+      8: 'kickboxing'
+    };
+    return clasesPorId[id]?.toLowerCase() ?? '';
+  }
+  
+  
   
   
 }

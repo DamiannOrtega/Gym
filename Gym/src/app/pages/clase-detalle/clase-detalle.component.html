@@ -28,9 +28,17 @@
                 
                 
             </div>
+            <div class="text-center mt-3">
+                <button class="read-more-btn">
+                    <a [routerLink]="['/inscripcion']" [queryParams]="{ id: clase.id }" class=" text-uppercase fw-bold text-decoration-none text-light">
+                        INSCRIBIRSE
+                    </a>
+                </button>
+              </div>
         </div>
       </div>
       <div class="clase-detalle-bg" [ngStyle]="{'background-image': 'url(' + clase.image + ')'}"></div>
+
     } @else {
       <div class="container text-center text-danger">
         <h4>Clase no encontrada</h4>
