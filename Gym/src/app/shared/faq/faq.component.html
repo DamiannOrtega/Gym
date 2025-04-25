@@ -1,0 +1,26 @@
+<section class="container my-5">
+  <h3 class="text-center mb-5 text-light">
+    <i class="fas fa-question-circle me-2"></i> Preguntas Frecuentes
+  </h3>
+
+  <div class="accordion" id="faqAccordion">
+    @for (pregunta of faqs; track $index) {
+      <div class="accordion-item faq-card">
+        <h2 class="accordion-header">
+          <button 
+            class="accordion-button collapsed faq-btn" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            [attr.data-bs-target]="'#faq' + $index">
+            {{ pregunta.pregunta }}
+          </button>
+        </h2>
+        <div [id]="'faq' + $index" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body faq-body">
+            {{ pregunta.respuesta }}
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>

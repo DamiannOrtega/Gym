@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, FormArray } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { StorageService } from '../../services/storage.service';
+import { FaqComponent } from '../../shared/faq/faq.component';
 
 @Component({
   standalone: true,
   selector: 'app-contacto',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,FaqComponent],
   templateUrl: './contacto.component.html',
   styleUrls: ['./contacto.component.css']
 })
@@ -15,7 +16,6 @@ export class ContactoComponent implements OnInit {
   motivos = ['Consultas generales', 'Soporte técnico', 'Clases y horarios'];
   medios = ['WhatsApp', 'Correo electrónico'];
   mediosSeleccionados: string[] = [];
-
 
   form!: ReturnType<FormBuilder['group']>; // declaración fuera del constructor
 
@@ -68,4 +68,6 @@ export class ContactoComponent implements OnInit {
     const c = this.form.get(control);
     return !!(c && c.touched && c.invalid);
   }
+
+  
 }
