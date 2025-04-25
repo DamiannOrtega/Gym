@@ -2,8 +2,15 @@
     @if (clase;) {
       <div class="clase-detalle-overlay text-light p-4 rounded-4">
         <div class="container">
-          <h2 class="text-center mb-3 display-5">{{ clase.nombre }}</h2>
+            <div class="position-relative mb-4">
+                <h2 class="text-center display-5">{{ clase.nombre }}</h2>
+                <a routerLink="/clases" class="btn btn-outline-light position-absolute top-0 end-0">
+                  ← Regresar a Clases
+                </a>
+              </div>
+              
           <p class="lead text-center">{{ clase.descripcion }}</p>
+          
           <hr class="bg-light">
           @if (clase.coach) {
             <p><strong><i class="fas fa-user me-2"></i>Coach:</strong> {{ clase.coach }}</p>
@@ -18,9 +25,7 @@
             <p><strong><i class="fas fa-bullseye me-2"></i>Objetivo:</strong> {{ clase.objetivo }}</p>
           }
   
-          <div class="text-center mt-4">
-            <a routerLink="/clases" class="btn btn-outline-light">← Regresar a Clases</a>
-          </div>
+
         </div>
       </div>
       <div class="clase-detalle-bg" [ngStyle]="{'background-image': 'url(' + clase.image + ')'}"></div>
