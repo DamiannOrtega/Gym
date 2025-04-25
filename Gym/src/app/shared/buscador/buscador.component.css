@@ -1,0 +1,42 @@
+.custom-search-input {
+    background-color: #0d1b2a; /* Azul MUY oscuro sólido */
+    color: #ffffff; /* Letras completamente blancas */
+    border: none;
+    border-radius: 0.75rem;
+    padding: 14px 22px;
+    font-size: 1.1rem;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    transition: all 0.4s ease;
+    width: 100%; /* Para que respete el max-width del div padre */
+  }
+  
+  .custom-search-input::placeholder {
+    color: #a9bcd0;
+    opacity: 1;
+  }
+  
+  .custom-search-input:focus {
+    background-color: #0d1b2a;
+    color: #ffffff;
+    outline: none;
+    box-shadow: 0 0 15px rgba(108, 99, 255, 0.7);
+    transform: scale(1.02);
+  }
+  
+  /* Animación de aparición */
+  .animate-search {
+    animation: fadeSlideIn 1s ease forwards;
+  }
+  
+  /* Keyframes para fade + movimiento */
+  @keyframes fadeSlideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  

@@ -1,18 +1,20 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-buscador',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './buscador.component.html',
-  styleUrl: './buscador.component.css'
+  styleUrls: ['./buscador.component.css']
 })
 export class BuscadorComponent {
+  terminoBusqueda: string = '';
+
   @Output() buscar = new EventEmitter<string>();
 
-  onInput(event: Event) {
-    const texto = (event.target as HTMLInputElement).value;
-    this.buscar.emit(texto);
+  buscarClases(): void {
+    this.buscar.emit(this.terminoBusqueda);
   }
-
 }

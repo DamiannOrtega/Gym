@@ -92,3 +92,18 @@
   background: #102d4a;
   color: #ffffff;
 }
+
+/* Estilos para el mensaje de "no encontrado" */
+.no-results-message {
+  font-size: 1.3rem;
+  color: #ff6b6b;
+  margin-top: 2rem;
+  animation: fadeIn 0.8s ease-in-out;
+  font-weight: bold;
+}
+
+/* Pequeña animación */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
