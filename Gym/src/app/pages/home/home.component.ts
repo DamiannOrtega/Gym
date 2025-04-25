@@ -38,22 +38,22 @@ export class HomeComponent {
       clase: 'CrossFit'
     },
     {
-      nombre: 'Sofía García',
-      mensaje: 'Un ambiente muy cómodo, ideal para empezar en el fitness.',
+      nombre: 'René Descartes',
+      mensaje: 'Hace poco me vi la velada del año IV, me motivé, espero y los entrenadores sean tan buenos para hacer una bestia.',
       foto: '/assets/img/carlitos.jpg',
-      clase: 'Yoga'
+      clase: 'Boxeo'
     },
     {
-      nombre: 'Sofía García',
-      mensaje: 'Un ambiente muy cómodo, ideal para empezar en el fitness.',
+      nombre: 'Mir Blanco',
+      mensaje: 'Hace poco me dejó mi novia, me siento destrozado, pero espero y un nuevo amanecer vuelva a mí,y por eso, entraré a mi prime, te odio Emily.',
       foto: '/assets/img/carlitos.jpg',
-      clase: 'Yoga'
+      clase: 'Pesos libres y máquinas'
     },
     {
-      nombre: 'Sofía García',
-      mensaje: 'Un ambiente muy cómodo, ideal para empezar en el fitness.',
+      nombre: 'Ricardo Magallanes',
+      mensaje: 'Durante estos ultimos 20 años, no he hecho nada de ejercicio, voy a adaptarme de nuevo',
       foto: '/assets/img/carlitos.jpg',
-      clase: 'Yoga'
+      clase: 'Pesos libres y máquinas'
     }
   ];
   
