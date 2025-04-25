@@ -1,23 +1,24 @@
-    <!-- GALERÍA -->
-    <div class="container mt-5">
-        <h2 class="text-center mb-4 text-light"><i class="fas fa-images me-2"></i>Galería de Instalaciones</h2>
-
-        <div id="carouselGaleria" class="carousel slide mt-5" data-bs-ride="carousel" data-bs-interval="3000"
-            data-bs-pause="hover">
-            <div class="carousel-inner">
-                @for (img of galeria; track $index) {
-                <div class="carousel-item" [class.active]="$index === 0">
-                    <img [src]="img" class="d-block w-100 img-fluid" alt="Imagen galería" />
-                </div>
-                }
-            </div>
-
-
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselGaleria" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselGaleria" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </button>
-        </div>
+<!-- GALERÍA -->
+<div class="container mt-5">
+    <h2 class="text-center mb-4 text-light">
+      <i class="fas fa-images me-2"></i>Galería de Instalaciones
+    </h2>
+  
+    <div id="carouselGaleria" class="carousel slide mt-5" data-bs-ride="carousel">
+      <div class="carousel-inner galeria-container">
+        @for (img of galeria; track $index) {
+          <div class="carousel-item" [class.active]="$index === 0">
+            <img [src]="img" alt="Imagen galería" />
+          </div>
+        }
+      </div>
+  
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselGaleria" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselGaleria" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
     </div>
+  </div>
+  
