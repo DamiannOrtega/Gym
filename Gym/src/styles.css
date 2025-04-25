@@ -580,3 +580,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.navbar mat-icon {
+    font-size: 1.1rem;
+    vertical-align: middle;
+    line-height: 1;
+   
+  }
+  
+  
