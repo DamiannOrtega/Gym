@@ -40,10 +40,12 @@ form.card .form-check-input {
   background-color: #0e1c2d;
   border: 1px solid #2a4b6e;
 }
+
 form.card .form-check-input:checked {
   background-color: #4a89dc;
   border-color: #4a89dc;
 }
+
 form.card .form-check-label {
   color: #dcdcdc;
 }
@@ -119,7 +121,7 @@ form.card button:not([disabled]):hover {
   border: 2px solid #73a5e6;
 }
 
-.chip-contacto input:checked + .chip-contacto,
+.chip-contacto input:checked+.chip-contacto,
 .chip-contacto input:checked {
   background-color: #4a89dc;
   color: #fff;
@@ -143,7 +145,7 @@ form.card button:not([disabled]):hover {
   background-color: #193452;
 }
 
-.radio-chip input:checked + span,
+.radio-chip input:checked+span,
 .radio-chip input:checked {
   background-color: #4a89dc;
   color: white;
@@ -176,4 +178,8 @@ form.card button:not([disabled]):hover {
   background-color: #4a89dc;
   border: 2px solid #73a5e6;
   color: #fff;
+}
+
+input[type="date"] {
+  color-scheme: light;
 }

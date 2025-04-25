@@ -87,6 +87,16 @@ form.card button.btn-dark:hover {
     background: #5a95e2;
 }
 
+/* Estado desactivado del botón */
+form.card button.btn-dark:disabled {
+    background-color: #0e1c2d !important;
+    color: #888;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+
 
 .week-day-selector {
     display: flex;
@@ -188,6 +198,11 @@ form.card button.btn-dark:hover {
     font-size: 1.1rem;
     padding-bottom: 10px;
 }
+
+input[type="date"] {
+    color-scheme: light;
+  }
+  
 
 .sol-gym-manana {
     background-image: url('/assets/img/sol-pesas.png');
