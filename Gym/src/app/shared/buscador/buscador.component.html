@@ -2,9 +2,9 @@
     <input
       type="text"
       class="form-control shadow-sm"
-      placeholder="¿Qué estás buscando?"
+      placeholder="¿Qué clase en particular buscas?"
       style="max-width: 400px; border-radius: 0.5rem;"
-    
+      (input)="onInput($event)"
     />
   </div>
   
