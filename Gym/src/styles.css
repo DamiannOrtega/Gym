@@ -101,7 +101,7 @@ body {
 /* HomeComponent - Hero Section */
 .hero-section {
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-        url('/assets/img/carlitos.jpg') center/cover no-repeat;
+        url('/assets/img/instalaciones.png') center/cover no-repeat;
     height: 100vh;
     display: flex;
     align-items: center;

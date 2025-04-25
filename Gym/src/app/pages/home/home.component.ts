@@ -46,7 +46,7 @@ export class HomeComponent {
     {
       nombre: 'Mir Blanco',
       mensaje: 'Hace poco me dejó mi novia, me siento destrozado, pero espero y un nuevo amanecer vuelva a mí,y por eso, entraré a mi prime, te odio Emily.',
-      foto: '/assets/img/carlitos.jpg',
+      foto: '/assets/img/motivacion.png',
       clase: 'Pesos libres y máquinas'
     },
     {
