@@ -82,19 +82,26 @@ export class InscripcionComponent {
   }
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.queryParamMap.get('id'));
+    const idParam = this.route.snapshot.queryParamMap.get('id');
+    
+    if (idParam !== null) {
+      const id = Number(idParam);
   
-    if (!isNaN(id)) {
-      if (id >= 9 && id <= 18) {
-        this.inscripcion.clase = 'Pesos libres y máquinas';
-      } else {
-        const claseSeleccionada = this.clases.find(c => c.toLowerCase().includes(this.obtenerNombreClasePorId(id)));
-        if (claseSeleccionada) {
-          this.inscripcion.clase = claseSeleccionada;
+      if (!isNaN(id)) {
+        if (id >= 9 && id <= 18) {
+          this.inscripcion.clase = 'Pesos libres y máquinas';
+        } else {
+          const claseSeleccionada = this.clases.find(c =>
+            c.toLowerCase().includes(this.obtenerNombreClasePorId(id))
+          );
+          if (claseSeleccionada) {
+            this.inscripcion.clase = claseSeleccionada;
+          }
         }
       }
     }
   }
+  
   
   // Método de ayuda para mapear ids a clases comunes
   obtenerNombreClasePorId(id: number): string {
