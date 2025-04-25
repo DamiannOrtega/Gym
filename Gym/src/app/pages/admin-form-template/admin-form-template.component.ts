@@ -12,20 +12,27 @@ import { StorageService } from '../../services/storage.service';
 export class AdminFormTemplateComponent implements OnInit {
   datosArray: any[] = [];
   editIndex: number | null = null;
-  clases = ['Zumba', 'Spinning', 'Yoga', 'Pilates', 'CrossFit'];
+  clases = ['Zumba', 'CrossFit', 'Yoga', 'Pilates', 'Spinning','Body Pump','Boxeo','KickBoxing', 'Pesos libres y máquinas'];
+  diasDisponibles = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+  turnosDisponibles = ['Mañana', 'Tarde'];
 
-
-  // Formulario de edición
   editForm = {
     nombre: '',
     email: '',
-    clase: ''
+    clase: '',
+    dias: [] as string[],
+    turno: '',
+    fecha: ''
   };
 
   constructor(private storage: StorageService) {}
 
   ngOnInit(): void {
     this.datosArray = this.storage.get<any>('formularioTemplate');
+  }
+
+  hoy(): string {
+    return new Date().toISOString().split('T')[0];
   }
 
   eliminar(index: number) {
@@ -36,9 +43,31 @@ export class AdminFormTemplateComponent implements OnInit {
 
   editar(index: number) {
     const dato = this.datosArray[index];
-    this.editForm = { ...dato };
+    this.editForm = {
+      nombre: dato.nombre,
+      email: dato.email,
+      clase: dato.clase,
+      dias: [...(dato.dias || [])],
+      turno: dato.turno || '',
+      fecha: dato.fecha || ''
+    };
     this.editIndex = index;
   }
+
+  toggleDiaEdit(dia: string, checked: boolean) {
+    if (checked) {
+      this.editForm.dias.push(dia);
+    } else {
+      this.editForm.dias = this.editForm.dias.filter(d => d !== dia);
+    }
+  }
+
+  onDiaCheckboxChange(event: Event, dia: string) {
+    const checked = (event.target as HTMLInputElement).checked;
+    this.toggleDiaEdit(dia, checked);
+  }
+  
+  
 
   guardarEdicion() {
     if (this.editIndex !== null) {
@@ -50,6 +79,13 @@ export class AdminFormTemplateComponent implements OnInit {
 
   cancelarEdicion() {
     this.editIndex = null;
-    this.editForm = { nombre: '', email: '', clase: '' };
+    this.editForm = {
+      nombre: '',
+      email: '',
+      clase: '',
+      dias: [],
+      turno: '',
+      fecha: ''
+    };
   }
 }

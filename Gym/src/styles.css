@@ -539,6 +539,10 @@ input[type="date"] {
     background-color: var(--color-secundario);
 }
 
+input[type="date"] {
+    color-scheme: light;
+  }
+
 /* Responsive adjustments */
 @media (max-width: 767px) {
     .social-links {
