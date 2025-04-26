@@ -1,0 +1,59 @@
+
+  
+
+  
+  .linea-azul {
+    width: 80px;
+    height: 4px;
+    background-color: #4a90e2;
+    margin: 0 auto;
+    border-radius: 4px;
+  }
+  
+  .codigo-card {
+    background-color: #162f4b; 
+    color: #ffffff;
+    border-radius: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .codigo-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3); 
+  }
+  
+  .icono-card {
+    color: #4a90e2;
+  }
+  
+  .divisor {
+    background-color: #4a90e2;
+    height: 2px;
+    border: none;
+    opacity: 1;
+  }
+  
+  .norma-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  
+  .icono-punto {
+    font-size: 1.6rem;
+    color: #6c63ff;
+  }
+  
+  .norma-item span,
+  .norma-item p {
+    color: #ffffff;
+    margin: 0;
+    font-size: 1rem;
+  }
+  
+  .norma-item p {
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+  

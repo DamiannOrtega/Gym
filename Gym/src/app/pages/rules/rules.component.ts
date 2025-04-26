@@ -5,11 +5,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ConductaComponent } from '../../shared/conducta/conducta.component';
 
 @Component({
   selector: 'app-rules',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule, MatListModule, MatDividerModule, MatTooltipModule],
+  imports: [CommonModule, MatCardModule, MatIconModule, MatListModule, MatDividerModule, MatTooltipModule,ConductaComponent],
   templateUrl: './rules.component.html',
   styleUrls: ['./rules.component.css']
 })

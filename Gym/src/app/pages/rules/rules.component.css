@@ -56,3 +56,43 @@
     font-size: 1.2rem;
   }
   
+
+  .codigo-card {
+    background-color: #162f4b; /* Igual al .norma-card */
+    color: #ffffff;
+    border-radius: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .codigo-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3); /* Igual al hover de normas */
+  }
+  
+  /* iconos grandes y azulados */
+  .icono-card {
+    font-size: 1.8rem;
+    color: #4a90e2;
+  }
+  
+  /* misma línea azul */
+  .divisor {
+    background-color: #4a90e2;
+    height: 2px;
+    border: none;
+  }
+  
+  /* íconos de los puntos */
+  .icono-punto {
+    color: #6c63ff; /* mismo color de check en normas */
+    font-size: 1.5rem;
+  }
+  
+  /* texto blanco */
+  .norma-item,
+  .norma-item span,
+  .norma-item p {
+    color: #ffffff;
+    font-size: 1rem;
+  }
+  
