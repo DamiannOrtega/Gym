@@ -14,19 +14,19 @@ export class TestimonioCardComponent {
     {
       nombre: 'Ana Martínez',
       mensaje: '¡Me encantan las clases de Zumba! Siempre salgo con más energía.',
-      foto: '/assets/img/carlitos.jpg',
+      foto: '/assets/img/zeling.jpg',
       clase: 'Zumba'
     },
     {
       nombre: 'Luis Herrera',
       mensaje: 'Los entrenadores son súper profesionales y motivadores.',
-      foto: '/assets/img/carlitos.jpg',
+      foto: '/assets/img/plex.jpg',
       clase: 'CrossFit'
     },
     {
       nombre: 'René Descartes',
       mensaje: 'Hace poco me vi la velada del año IV, me motivé, espero y los entrenadores sean tan buenos para hacer una bestia.',
-      foto: '/assets/img/carlitos.jpg',
+      foto: '/assets/img/Shadi.jpg',
       clase: 'Boxeo'
     },
     {
@@ -38,7 +38,7 @@ export class TestimonioCardComponent {
     {
       nombre: 'Ricardo Magallanes',
       mensaje: 'Durante estos ultimos 20 años, no he hecho nada de ejercicio, voy a adaptarme de nuevo',
-      foto: '/assets/img/carlitos.jpg',
+      foto: '/assets/img/Guibeeru.png',
       clase: 'Pesos libres y máquinas'
     }
   ];
