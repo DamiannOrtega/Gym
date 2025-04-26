@@ -7,17 +7,19 @@
   </div>
 
   <div class="row justify-content-center">
-    <div class="col-md-6 mb-4" *ngFor="let regla of reglas">
-      <mat-card class="norma-card p-3 shadow">
+    @for(regla of reglas; track regla){
+
+      <div class="col-md-6 mb-4">
+        <mat-card class="norma-card p-3 shadow">
         <mat-card-header class="border-0 bg-transparent mb-2">
           <mat-card-title class="d-flex align-items-center gap-2">
             <mat-icon class="icono-card">{{ regla.icono }}</mat-icon> 
             <span class="fw-semibold fs-5">{{ regla.titulo }}</span>
           </mat-card-title>
         </mat-card-header>
-
+        
         <mat-divider class="divisor"></mat-divider>
-
+        
         <mat-card-content class="mt-3">
           <mat-list>
             <mat-list-item *ngFor="let punto of regla.puntos" class="norma-item">
@@ -27,7 +29,8 @@
           </mat-list>
         </mat-card-content>
       </mat-card>
-    </div>
+    </div> 
+  }
   </div>
 </div>
 
