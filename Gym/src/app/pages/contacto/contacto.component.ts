@@ -15,6 +15,7 @@ import { FaqComponent } from '../../shared/faq/faq.component';
 export class ContactoComponent implements OnInit {
   motivos = ['Consultas generales', 'Soporte técnico', 'Clases y horarios'];
   medios = ['WhatsApp', 'Correo electrónico'];
+  direccion = ' Av. Universidad 940, Ciudad Universitaria, Universidad Autónoma de Aguascalientes, 20100 Aguascalientes, Ags.';
   mediosSeleccionados: string[] = [];
 
   form!: ReturnType<FormBuilder['group']>; // declaración fuera del constructor

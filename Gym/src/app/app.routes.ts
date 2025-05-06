@@ -16,10 +16,10 @@ export const routes: Routes = [
   { path: 'clases/:id', component: ClaseDetalleComponent },
   { path: 'inscripcion', component: InscripcionComponent },
   { path: 'contacto', component: ContactoComponent },
+  { path: 'videos', loadComponent: () => import('./pages/videos/videos.component').then(m => m.VideosComponent) },
   { path: 'reglas', component: RulesComponent},
   { path: 'login', component: LoginComponent },
   { path: 'admin/form-template', component: AdminFormTemplateComponent, canActivate: [authGuard] },
   { path: 'admin/contacto', component: AdminContactoComponent, canActivate: [authGuard] },
-
   { path: '**', redirectTo: '' } // ruta comodín por si no encuentra coincidencias
 ];

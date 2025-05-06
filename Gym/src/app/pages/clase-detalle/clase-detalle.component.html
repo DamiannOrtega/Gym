@@ -1,48 +1,51 @@
 <section class="clase-detalle-wrapper mt-5">
-    @if (clase;) {
-      <div class="clase-detalle-overlay text-light p-4 rounded-4">
-        <div class="container">
-            <div class="position-relative mb-4">
-                <h2 class="text-center display-5">{{ clase.nombre }}</h2>
-                <a routerLink="/clases" class="btn btn-outline-light position-absolute top-0 end-0">
-                  ← Regresar a Clases
-                </a>
-              </div>
-              
-          <p class="lead text-center">{{ clase.descripcion }}</p>
-          
-          <div class="container text-center">
-
-              @if (clase.coach) {
-                  <p><strong><i class="fas fa-user me-2"></i>Coach:</strong> {{ clase.coach }}</p>
-                }
-                @if (clase.dias) {
-                    <p><strong><i class="fas fa-calendar-day me-2"></i>Días:</strong> {{ clase.dias.join(', ') }}</p>
-                }
-                @if (clase.horario) {
-                    <p><strong><i class="fas fa-clock me-2"></i>Horario:</strong> {{ clase.horario }}</p>
-                }
-                @if (clase.objetivo) {
-                    <p><strong><i class="fas fa-bullseye me-2"></i>Objetivo:</strong> {{ clase.objetivo }}</p>
-                }
-                
-                
-            </div>
-            <div class="text-center mt-3">
-                <button class="read-more-btn">
-                    <a [routerLink]="['/inscripcion']" [queryParams]="{ id: clase.id }" class=" text-uppercase fw-bold text-decoration-none text-light">
-                        INSCRIBIRSE
-                    </a>
-                </button>
-              </div>
-        </div>
+  @if (clase;) {
+  <div class="clase-detalle-overlay text-light p-4 rounded-4">
+    <div class="container">
+      <div class="position-relative mb-4">
+        <!-- Pipe "Titlecase" para mostrar el nombre de la clase en mayúsculas y minúsculas -->
+        <h2 class="text-center display-5">{{ clase.nombre | titlecase}}</h2>
+        <a routerLink="/clases" class="btn btn-outline-light position-absolute top-0 end-0">
+          ← Regresar a Clases
+        </a>
       </div>
-      <div class="clase-detalle-bg" [ngStyle]="{'background-image': 'url(' + clase.image + ')'}"></div>
 
-    } @else {
-      <div class="container text-center text-danger">
-        <h4>Clase no encontrada</h4>
+      <!-- Pipe para mostrar la descripción de la clase con un límite de 100 caracteres por si es muy largo -->
+      <p class="lead text-center">{{ clase.descripcion | slice:0:100 }}</p>
+
+      <div class="container text-center">
+
+        @if (clase.coach) {
+        <p><strong><i class="fas fa-user me-2"></i>Coach:</strong> {{ clase.coach }}</p>
+        }
+        @if (clase.dias) {
+        <p><strong><i class="fas fa-calendar-day me-2"></i>Días:</strong> {{ clase.dias.join(', ') }}</p>
+        }
+        @if (clase.horario) {
+        <p><strong><i class="fas fa-clock me-2"></i>Horario:</strong> {{ clase.horario }}</p>
+        }
+        @if (clase.objetivo) {
+        <!-- Pipe personalizado "ObjetivoResaltado" para resaltar el objetivo de la clase -->
+        <p><strong><i class="fas fa-bullseye me-2"></i>Objetivo:</strong> {{ clase.objetivo | objetivoResaltado }}</p>
+        }
+
+
       </div>
-    }
-  </section>
-  
+      <div class="text-center mt-3">
+        <button class="read-more-btn">
+          <a [routerLink]="['/inscripcion']" [queryParams]="{ id: clase.id }"
+            class=" text-uppercase fw-bold text-decoration-none text-light">
+            INSCRIBIRSE
+          </a>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="clase-detalle-bg" [ngStyle]="{'background-image': 'url(' + clase.image + ')'}"></div>
+
+  } @else {
+  <div class="container text-center text-danger">
+    <h4>Clase no encontrada</h4>
+  </div>
+  }
+</section>
