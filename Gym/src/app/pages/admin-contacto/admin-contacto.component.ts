@@ -14,7 +14,7 @@ export class AdminContactoComponent implements OnInit {
   editIndex: number | null = null;
   motivos = ['Consultas generales', 'Soporte técnico', 'Clases y horarios'];
 
-  form!: ReturnType<FormBuilder['group']>; // ✅ Declaración segura
+  form!: ReturnType<FormBuilder['group']>; 
 
   constructor(private storage: StorageService, private fb: FormBuilder) {}
 

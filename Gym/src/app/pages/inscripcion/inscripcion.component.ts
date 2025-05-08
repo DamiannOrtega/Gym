@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { StorageService } from '../../services/storage.service';
@@ -18,6 +18,8 @@ export class InscripcionComponent {
   diasDisponibles = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
   turnosDisponibles = ['Mañana', 'Tarde'];
   diasInvalidos = false;
+  @ViewChild('f') formulario!: NgForm;
+
 
 
   inscripcion = {
@@ -64,6 +66,8 @@ export class InscripcionComponent {
   
 
   guardar(form: NgForm) {
+    this.formulario = form;
+  
     if (form.invalid || this.inscripcion.dias.length === 0) {
       this.diasInvalidos = this.inscripcion.dias.length === 0;
       return;
@@ -77,9 +81,10 @@ export class InscripcionComponent {
   
     Swal.fire('¡Registro exitoso!', 'Tu inscripción ha sido guardada.', 'success');
   
-    form.resetForm();           // Limpia el formulario
-    this.inscripcion.dias = []; // Limpia los checkboxes manualmente
+    form.resetForm();
+    this.inscripcion.dias = [];
   }
+  
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.queryParamMap.get('id');
@@ -116,6 +121,11 @@ export class InscripcionComponent {
       8: 'kickboxing'
     };
     return clasesPorId[id]?.toLowerCase() ?? '';
+  }
+  
+  esInvalido(control: string): boolean {
+    const c = this.formulario?.controls?.[control];
+    return !!(c && (c.touched || this.formulario.submitted) && c.invalid);
   }
   
   

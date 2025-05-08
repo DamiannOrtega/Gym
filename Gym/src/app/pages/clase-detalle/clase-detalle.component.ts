@@ -3,11 +3,12 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ClasesService } from '../../services/clases.service';
 import { Clase } from '../../models/clase.model';
 import { CommonModule } from '@angular/common';
+import { ObjetivoResaltadoPipe } from '../../pipes/objetivo-resaltado.pipe';
 
 @Component({
   selector: 'app-clase-detalle',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule,RouterModule, ObjetivoResaltadoPipe],
   templateUrl: './clase-detalle.component.html',
   styleUrl: './clase-detalle.component.css'
 })
