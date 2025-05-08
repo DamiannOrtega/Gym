@@ -56,8 +56,13 @@
       <label class="form-label"><i class="fas fa-comments me-2"></i>Método de contacto preferido</label>
       <div class="medios-selector">
         @for (medio of medios; track $index) {
+
+          <!-- Se usa ngClass para aplicar las clases 'chip-contacto' y 'selected' cuando un método es seleccionado -->
         <label [ngClass]="{'chip-contacto': true, 'selected': mediosSeleccionados.includes(medio)}">
           <input type="checkbox" hidden [value]="medio" (change)="onMedioChange($event, medio)" />
+
+          <!-- Se usa ngClass para aplicar las clases de icono y color según si se eligió medio de contacto whatsapp o correo -->
+
           <i class="me-2" [ngClass]="{
                     'fab fa-whatsapp text-success': medio === 'WhatsApp',
                     'far fa-envelope text-danger': medio === 'Correo electrónico'
@@ -86,6 +91,7 @@
     <div class="mb-4">
       <label class="form-label"><i class="fas fa-gift me-2"></i>¿Desea recibir promociones?</label>
       <div class="promocion-selector">
+        <!-- ngClass para resaltar el botón seleccionado de promociones -->
         <label [ngClass]="{'chip-promo': true, 'selected': form.get('promociones')?.value === 'Sí'}">
           <input type="radio" hidden value="Sí" formControlName="promociones" />
           <i class="fas fa-check-circle me-2 text-success"></i> Sí

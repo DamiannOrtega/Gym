@@ -56,13 +56,22 @@ export class ContactoComponent implements OnInit {
   
 
   guardar(): void {
+    // Recupera los datos existentes del local storage
     const datos = this.storage.get<any>('formularioContacto');
+    
+    // Agrega el nuevo formulario al array de datos
     datos.push(this.form.value);
+    
+    // Guarda el array actualizado en el local storage
     this.storage.set('formularioContacto', datos);
 
+    // Muestra un mensaje de éxito usando SweetAlert
     Swal.fire('¡Gracias por contactarnos!', 'Tu mensaje ha sido registrado.', 'success');
+    
+    // Resetea el formulario para limpiarlo
     this.form.reset();
-  }
+}
+
 
   isInvalid(control: string): boolean {
     const c = this.form.get(control);
