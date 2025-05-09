@@ -13,34 +13,34 @@ export class MyContactoComponent {
     { 
       id: 1, 
       titulo: 'Carlos Enrique Blanco Ortiz', 
-      textoFrente: 'Follow me for more...', 
-      trasera: 'Follow Me', 
+      textoFrente: 'Entrenador Profesional', 
+      trasera: 'Mis redes!', 
       icons: [
-        { class: 'fa-brands fa-instagram' },
-        { class: 'fa-brands fa-twitter' },
-        { class: 'fa-brands fa-whatsapp' }
+        { class: 'fa-brands fa-instagram', url: 'https://www.instagram.com' },
+        { class: 'fa-brands fa-twitter',url: 'https://www.twitter.com' },
+        { class: 'fa-brands fa-whatsapp', url: 'https://wa.me/1234567890' }
       ]
     },
     { 
       id: 2, 
       titulo: 'Alan Gael Gallardo Jimenez', 
-      textoFrente: 'Learn more about me...', 
-      trasera: 'Connect', 
+      textoFrente: 'Entrenador Profesional', 
+      trasera: 'Siguemeeee!', 
       icons: [
-        { class: 'fa-brands fa-instagram' },
-        { class: 'fa-brands fa-twitter' },
-        { class: 'fa-brands fa-whatsapp' }
+        { class: 'fa-brands fa-instagram', url: 'https://www.instagram.com' },
+        { class: 'fa-brands fa-twitter',url: 'https://www.twitter.com' },
+        { class: 'fa-brands fa-whatsapp', url: 'https://wa.me/1234567890' }
       ]
     },
     { 
       id: 3, 
       titulo: 'Juan Damian Ortega de Luna',  
-      textoFrente: 'lorem lorem loremloremvloremvloremloremloremloremloremloremloremloremlorem', 
-      trasera: 'Explore', 
+      textoFrente: 'Entrenador Profesional', 
+      trasera: 'Aqui me encuentras...', 
       icons: [
-        { class: 'fa-brands fa-instagram' },
-        { class: 'fa-brands fa-twitter' },
-        { class: 'fa-brands fa-whatsapp' }
+        { class: 'fa-brands fa-instagram', url: 'https://www.instagram.com' },
+        { class: 'fa-brands fa-twitter',url: 'https://www.twitter.com' },
+        { class: 'fa-brands fa-whatsapp', url: 'https://wa.me/1234567890' }
       ]
     }
   ];

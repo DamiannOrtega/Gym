@@ -16,7 +16,9 @@
             <p class="heading text-light">{{ card.trasera }}</p>
             <div class="icons">
                 @for (icon of card.icons; track icon.class) {
-                    <i [class]="icon.class" style="font-size: 32px; color: #ffffff;"></i>
+                    <a [href]="icon.url" target="_blank">
+                        <i [class]="icon.class" style="font-size: 32px; color: #ffffff;"></i>
+                      </a>
                   }
                 </div>
               </div>
