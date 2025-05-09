@@ -15,6 +15,7 @@ export class MyContactoComponent {
       titulo: 'Carlos Enrique Blanco Ortiz', 
       textoFrente: 'Entrenador Profesional', 
       trasera: 'Mis redes!', 
+      imagen: 'assets/img/Shadi.jpg',
       icons: [
         { class: 'fa-brands fa-instagram', url: 'https://www.instagram.com' },
         { class: 'fa-brands fa-twitter',url: 'https://www.twitter.com' },
@@ -26,6 +27,7 @@ export class MyContactoComponent {
       titulo: 'Alan Gael Gallardo Jimenez', 
       textoFrente: 'Entrenador Profesional', 
       trasera: 'Siguemeeee!', 
+      imagen: 'assets/img/carlitos.jpg',
       icons: [
         { class: 'fa-brands fa-instagram', url: 'https://www.instagram.com' },
         { class: 'fa-brands fa-twitter',url: 'https://www.twitter.com' },
@@ -37,6 +39,7 @@ export class MyContactoComponent {
       titulo: 'Juan Damian Ortega de Luna',  
       textoFrente: 'Entrenador Profesional', 
       trasera: 'Aqui me encuentras...', 
+      imagen: 'assets/img/zeling.jpg',
       icons: [
         { class: 'fa-brands fa-instagram', url: 'https://www.instagram.com' },
         { class: 'fa-brands fa-twitter',url: 'https://www.twitter.com' },
