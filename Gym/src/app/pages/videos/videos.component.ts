@@ -2,16 +2,19 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomseguroPipe } from '../../pipes/domseguro.pipe';
 
 @Component({
   selector: 'app-videos',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DomseguroPipe],
   templateUrl: './videos.component.html',
   styleUrls: ['./videos.component.css']
 })
 export class VideosComponent {
   constructor(public authService: AuthService, private sanitizer: DomSanitizer) {}
+
+  video: string = '_Rh-VjB3ATk?si=F5bY1x1-CDYxayfB';
 
   get isAdmin(): boolean {
     return this.authService.isLoggedIn();
@@ -29,4 +32,5 @@ export class VideosComponent {
   getVideoUrl(src: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(src);
   }
+
 }
