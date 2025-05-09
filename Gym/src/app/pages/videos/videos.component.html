@@ -1,34 +1,32 @@
 <div class="container mt-5">
-    <div class="text-center mb-4 text-light">
-      <h2><i class="fas fa-video me-2"></i>Videos de FitZone</h2>
-    </div>
-  
-    <div class="row">
-        @for (video of videos; track $index) {
-          <div class="col-md-6 mb-4">
-            <div class="video-wrapper position-relative rounded-3 overflow-hidden">
-              <video
-                controls
-                class="video-player w-100 rounded"
-                preload="none"
-                [attr.poster]="video.poster"
-                [class.video-bloqueado]="video.protegido && !isAdmin"
-              >
-                @if (!video.protegido || isAdmin) {
-                  <source [src]="video.src" type="video/mp4" />
-                }
-              </video>
-      
-              @if (video.protegido && !isAdmin) {
-                <div class="video-overlay d-flex flex-column justify-content-center align-items-center text-center">
-                  <i class="fas fa-lock fa-2x mb-2"></i>
-                  <p class="mb-0">Solo administradores pueden ver este video</p>
-                </div>
-              }
-            </div>
-          </div>
-        }
-      </div>
-      
+  <div class="text-center mb-4 text-light">
+    <h2><i class="fas fa-video me-2"></i>Videos de FitZone</h2>
   </div>
-  
+
+  <div class="row">
+    @for (video of videos; track $index) {
+      <div class="col-md-6 mb-4">
+        <div class="video-wrapper position-relative rounded-3 overflow-hidden">
+          <video
+            controls
+            class="video-player w-100 rounded"
+            preload="none"
+            [attr.poster]="video.poster"
+            [class.video-bloqueado]="video.protegido && !isAdmin"
+          >
+            @if (!video.protegido || isAdmin) {
+              <source [src]="getVideoUrl(video.src)" type="video/mp4" />
+            }
+          </video>
+
+          @if (video.protegido && !isAdmin) {
+            <div class="video-overlay d-flex flex-column justify-content-center align-items-center text-center">
+              <i class="fas fa-lock fa-2x mb-2"></i>
+              <p class="mb-0">Solo administradores pueden ver este video</p>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>
