@@ -24,7 +24,7 @@ form.card select {
 /* Placeholder blanco */
 form.card input::placeholder,
 form.card select::placeholder {
-    color: #a9c0db;
+    color: #000000;
     opacity: 0.7;
 }
 

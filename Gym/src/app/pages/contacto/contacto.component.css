@@ -23,7 +23,7 @@ form.card textarea {
 form.card input::placeholder,
 form.card select::placeholder,
 form.card textarea::placeholder {
-  color: #a9c0db;
+  color: #000000;
   opacity: 0.7;
 }
 
