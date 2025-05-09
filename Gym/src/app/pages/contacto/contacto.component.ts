@@ -4,11 +4,12 @@ import { ReactiveFormsModule, FormBuilder, Validators, FormArray } from '@angula
 import Swal from 'sweetalert2';
 import { StorageService } from '../../services/storage.service';
 import { FaqComponent } from '../../shared/faq/faq.component';
+import { MyContactoComponent } from '../../shared/my-contacto/my-contacto.component';
 
 @Component({
   standalone: true,
   selector: 'app-contacto',
-  imports: [CommonModule, ReactiveFormsModule, FaqComponent],
+  imports: [CommonModule, ReactiveFormsModule, FaqComponent,MyContactoComponent],
   templateUrl: './contacto.component.html',
   styleUrls: ['./contacto.component.css']
 })
