@@ -8,6 +8,8 @@ import { StorageService } from '../../services/storage.service';
   selector: 'app-admin-form-template',
   imports: [CommonModule, FormsModule],
   templateUrl: './admin-form-template.component.html',
+  styleUrls: ['./admin-form-template.component.css']
+
 })
 export class AdminFormTemplateComponent implements OnInit {
   datosArray: any[] = [];
