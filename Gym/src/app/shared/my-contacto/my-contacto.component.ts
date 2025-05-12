@@ -39,7 +39,7 @@ export class MyContactoComponent {
       titulo: 'Juan Damian Ortega de Luna',  
       textoFrente: 'Entrenador Profesional', 
       trasera: 'Aqui me encuentras...', 
-      imagen: 'assets/img/zeling.jpg',
+      imagen: 'assets/img/damian.jpg',
       icons: [
         { class: 'fa-brands fa-instagram', url: 'https://www.instagram.com/damiannortega?igsh=cDN5ZnFoYjJhZXRj' },
         { class: 'fa-brands fa-twitter',url: 'https://x.com/Pushezz?t=ldCh7fwYbCVt8S8N8IcVVg&s=09' },
