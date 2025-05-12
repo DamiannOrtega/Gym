@@ -6,28 +6,51 @@ import { Component, OnInit } from '@angular/core';
   import { FaqComponent } from '../../shared/faq/faq.component';
   import { MyContactoComponent } from '../../shared/my-contacto/my-contacto.component';
 
-  @Component({
-    standalone: true,
-    selector: 'app-contacto',
-    imports: [CommonModule, ReactiveFormsModule, FaqComponent,MyContactoComponent],
-    templateUrl: './contacto.component.html',
-    styleUrls: ['./contacto.component.css']
-  })
-  export class ContactoComponent implements OnInit {
-    // Lista de motivos para el campo de selección
-    motivos = ['Consultas generales', 'Soporte técnico', 'Clases y horarios'];
-    
-    // Lista de medios de contacto posibles
-    medios = ['WhatsApp', 'Correo electrónico'];
-    
-    // Dirección del gimnasio para mostrar en el formulario
-    direccion = 'Av. Universidad 940, Ciudad Universitaria, Universidad Autónoma de Aguascalientes, 20100 Aguascalientes, Ags.';
-    
-    // Array para almacenar los medios de contacto seleccionados
-    mediosSeleccionados: string[] = [];
-    
-    // Declaración del formulario reactivo, se inicializa en ngOnInit
-    form!: ReturnType<FormBuilder['group']>; 
+@Component({
+  standalone: true,
+  selector: 'app-contacto',
+  imports: [CommonModule, ReactiveFormsModule, FaqComponent,MyContactoComponent],
+  templateUrl: './contacto.component.html',
+  styleUrls: ['./contacto.component.css']
+})
+export class ContactoComponent implements OnInit {
+  // Lista de motivos para el campo de selección
+  motivos = ['Consultas generales', 'Soporte técnico', 'Clases y horarios'];
+  
+  // Lista de medios de contacto posibles
+  medios = ['WhatsApp', 'Correo electrónico'];
+  
+  // Dirección del gimnasio para mostrar en el formulario
+  direccion = 'Av. Universidad 940, Ciudad Universitaria, Universidad Autónoma de Aguascalientes, 20100 Aguascalientes, Ags.';
+
+  faqsGenerales = [
+    {
+      pregunta: '¿Cuánto tiempo tardan en responder los mensajes?',
+      respuesta: 'Respondemos en menos de 24 horas, ya sea por WhatsApp o correo electrónico.'
+    },
+    {
+      pregunta: '¿Cuál es el horario de atención al público?',
+      respuesta: 'Nuestro horario es de lunes a viernes de 7:00 a.m. a 9:00 p.m. y sábados de 8:00 a.m. a 2:00 p.m.'
+    },
+    {
+      pregunta: '¿Necesito llevar algo para mis clases?',
+      respuesta: 'Solo ropa cómoda, toalla personal y, si deseas, tu botella de agua.'
+    },
+    {
+      pregunta: '¿Puedo asistir a una clase de prueba antes de inscribirme?',
+      respuesta: 'Sí, ofrecemos una clase de prueba gratuita. Solo contáctanos para agendarla.'
+    },
+    {
+      pregunta: '¿Qué pasa si falto a una clase?',
+      respuesta: 'Puedes recuperarla otro día dentro de la misma semana, siempre que haya cupo disponible.'
+    }
+  ];
+  
+  // Array para almacenar los medios de contacto seleccionados
+  mediosSeleccionados: string[] = [];
+  
+  // Declaración del formulario reactivo, se inicializa en ngOnInit
+  form!: ReturnType<FormBuilder['group']>; 
 
     constructor(private fb: FormBuilder, private storage: StorageService) {}
 

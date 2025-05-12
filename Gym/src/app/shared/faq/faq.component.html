@@ -4,7 +4,7 @@
   </h3>
 
   <div class="accordion" id="faqAccordion">
-    @for (pregunta of faqs; track $index) {
+    @for (faq of faqs; track $index) {
       <div class="accordion-item faq-card">
         <h2 class="accordion-header">
           <button 
@@ -12,12 +12,12 @@
             type="button" 
             data-bs-toggle="collapse" 
             [attr.data-bs-target]="'#faq' + $index">
-            {{ pregunta.pregunta }}
+            {{ faq.pregunta }}
           </button>
         </h2>
         <div [id]="'faq' + $index" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
           <div class="accordion-body faq-body">
-            {{ pregunta.respuesta }}
+            {{ faq.respuesta }}
           </div>
         </div>
       </div>
