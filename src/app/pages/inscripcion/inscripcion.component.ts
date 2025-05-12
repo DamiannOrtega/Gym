@@ -92,32 +92,32 @@ export class InscripcionComponent {
   }
 
 
-validarFecha() {
-  if (!this.inscripcion.fecha) {
+  validarFecha() {
     // Si no se ha seleccionado una fecha, mostramos el error correspondiente
-    this.errorFecha = "";
-    this.esDomingo = false; // No es domingo
-  } else {
-    const fechaSeleccionada = new Date(this.inscripcion.fecha);
-    const fechaHoy = new Date();
-    fechaHoy.setHours(0, 0, 0, 0); // Ajustamos la hora para comparar solo las fechas
-
-    // Verificamos si la fecha seleccionada es un domingo (0 = domingo)
-    this.esDomingo = fechaSeleccionada.getUTCDay() === 0;
-
-    // Si es un domingo, mostramos el mensaje de error para domingo
-    if (this.esDomingo) {
-      this.errorFecha = "No se permiten fechas en domingo, no trabajamos ese día.";
-    } else if (fechaSeleccionada < fechaHoy) {
-      // Si la fecha es anterior a hoy, mostramos el mensaje de error correspondiente
-      this.errorFecha = "La fecha no puede ser anterior a hoy.";
+    if (!this.inscripcion.fecha) {
+      this.errorFecha = "Debe seleccionar una fecha.";
     } else {
-      // Si la fecha es válida, limpiamos el mensaje de error
-      this.errorFecha = "";
+      const fechaSeleccionada = new Date(this.inscripcion.fecha);
+      const fechaHoy = new Date();
+      fechaHoy.setHours(0, 0, 0, 0); // Ajustamos la hora para comparar solo las fechas
+  
+      // Verificamos si la fecha seleccionada es un domingo (0 = domingo)
+      this.esDomingo = fechaSeleccionada.getUTCDay() === 0;
+  
+      // Si es un domingo, mostramos el mensaje de error para domingo
+      if (this.esDomingo) {
+        this.errorFecha = "No se permiten fechas en domingo, no trabajamos ese día.";
+      } else if (fechaSeleccionada < fechaHoy) {
+        // Si la fecha es anterior a hoy, mostramos el mensaje de error correspondiente
+        this.errorFecha = "La fecha no puede ser anterior a hoy.";
+      } else {
+        // Si la fecha es válida, limpiamos el mensaje de error
+        this.errorFecha = "";
+      }
     }
   }
-}
-
+  
+  
 
 
   // Método para alternar la selección de días (checkboxes)
