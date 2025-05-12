@@ -88,11 +88,40 @@
                     </select>
                 </div>
 
+                            <!-- Urgencia -->
+            <div class="mb-3">
+                <label class="form-label text-light">
+                    <i class="fas fa-exclamation-triangle me-2"></i> Urgencia
+                </label>
+                <select formControlName="urgencia" class="form-select text-dark">
+                    <option value="" disabled>Selecciona el nivel de urgencia</option>
+                    @for (urgencia of urgencias; track $index) {
+                    <option [value]="urgencia">{{ urgencia }}</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Fecha -->
+            <div class="mb-3">
+                <label class="form-label text-light">
+                    <i class="fas fa-calendar-alt me-2"></i> Fecha de contacto
+                </label>
+                <input formControlName="fecha" type="date" class="form-control" [min]="hoy()" />
+            </div>
+
+            <!-- Comentarios -->
+            <div class="mb-3">
+                <label class="form-label text-light">
+                    <i class="fas fa-comment-dots me-2"></i> Comentarios adicionales (opcional)
+                </label>
+                <textarea formControlName="comentarios" class="form-control" rows="3" placeholder="Escribe tus comentarios..."></textarea>
+            </div>
+
                 <div class="d-flex justify-content-end gap-2">
                     <button type="button" class="btn btn-secondary" (click)="cancelar()">
                         <i class="fas fa-times me-1"></i> Cancelar
                     </button>
-                    <button type="submit" class="btn btn-success" [disabled]="form.invalid">
+                    <button type="submit" class="read-more-btn" [disabled]="form.invalid">
                         <i class="fas fa-save me-1"></i> Guardar cambios
                     </button>
                 </div>
