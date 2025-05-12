@@ -32,6 +32,9 @@ export class InscripcionComponent {
   esDomingo = false;
   fechaInvalida = false;
 
+  errorFecha: string = ''; // Inicializamos como cadena vacía
+
+
 
 
 
@@ -90,20 +93,28 @@ export class InscripcionComponent {
 
 
   validarFecha() {
-    if (this.inscripcion.fecha) {
+    if (!this.inscripcion.fecha) {
+      // Si no se ha seleccionado una fecha, mostramos el error correspondiente
+      this.errorFecha = "Debe seleccionar una fecha.";
+      this.esDomingo = false; // No es domingo
+    } else {
       const fechaSeleccionada = new Date(this.inscripcion.fecha);
       const fechaHoy = new Date();
       fechaHoy.setHours(0, 0, 0, 0); // Ajustamos la hora para comparar solo las fechas
 
-      // Verificar si la fecha seleccionada es un domingo (0 = domingo)
+      // Verificamos si la fecha seleccionada es un domingo (0 = domingo)
       this.esDomingo = fechaSeleccionada.getUTCDay() === 0;
 
-      // Verificar si la fecha seleccionada es anterior a hoy
-      this.fechaInvalida = fechaSeleccionada < fechaHoy;
-    } else {
-      // Si no se ha seleccionado una fecha, reseteamos los errores
-      this.fechaInvalida = false;
-      this.esDomingo = false;
+      // Si es un domingo, mostramos el mensaje de error para domingo
+      if (this.esDomingo) {
+        this.errorFecha = "No se permiten fechas en domingo, no trabajamos ese día.";
+      } else if (fechaSeleccionada < fechaHoy) {
+        // Si la fecha es anterior a hoy, mostramos el mensaje de error correspondiente
+        this.errorFecha = "La fecha no puede ser anterior a hoy.";
+      } else {
+        // Si la fecha es válida, limpiamos el mensaje de error
+        this.errorFecha = "";
+      }
     }
   }
 

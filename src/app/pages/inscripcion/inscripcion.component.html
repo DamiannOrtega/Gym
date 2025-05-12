@@ -129,21 +129,13 @@
       <input type="date" name="fecha" [(ngModel)]="inscripcion.fecha" required (ngModelChange)="validarFecha()"
         #fechaControl="ngModel" class="form-control bg-white text-dark" [min]="hoy()" />
 
-      <!-- Mensaje de error si la fecha es anterior a hoy -->
-      @if (fechaInvalida) {
+      <!-- Mensaje de error si no se selecciona una fecha -->
+      @if (errorFecha) {
       <div class="text-danger mt-1 d-flex align-items-center">
-        <i class="fas fa-exclamation-circle me-2"></i>La fecha no puede ser anterior a hoy.
-      </div>
-      }
-
-      <!-- Mensaje de error si es domingo -->
-      @if (esDomingo) {
-      <div class="text-danger mt-1 d-flex align-items-center">
-        <i class="fas fa-exclamation-circle me-2"></i>No se permiten fechas en domingo, no trabajamos ese día.
+        <i class="fas fa-exclamation-circle me-2"></i>{{ errorFecha }}
       </div>
       }
     </div>
-
 
 
 
