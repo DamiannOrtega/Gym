@@ -10,7 +10,7 @@ import { FaqComponent } from '../../shared/faq/faq.component';
 @Component({
   standalone: true,
   selector: 'app-inscripcion',
-  imports: [CommonModule, FormsModule, OpinionesComponent,FaqComponent],
+  imports: [CommonModule, FormsModule, OpinionesComponent, FaqComponent],
   templateUrl: './inscripcion.component.html',
   styleUrls: ['./inscripcion.component.css']
 })
@@ -29,8 +29,9 @@ export class InscripcionComponent {
 
   // Variable para marcar si los días seleccionados son válidos o no
   diasInvalidos = false;
-  fechaDomingo = false;
-  fechaPasada = false;
+  esDomingo = false;
+  fechaInvalida = false;
+
 
 
 
@@ -61,7 +62,6 @@ export class InscripcionComponent {
   // Decorador @ViewChild para capturar el formulario (NgForm) desde el template
   @ViewChild('f') formulario!: NgForm;
 
-  fechaInvalida = false;
 
 
   // Objeto que almacena los datos de inscripción
@@ -89,32 +89,23 @@ export class InscripcionComponent {
   }
 
 
-  // Método para validar que la fecha seleccionada no sea anterior a hoy
-validarFecha(): void {
-  // Obtén la fecha seleccionada
-  const fechaSeleccionada = new Date(this.inscripcion.fecha);
+  validarFecha() {
+    if (this.inscripcion.fecha) {
+      const fechaSeleccionada = new Date(this.inscripcion.fecha);
+      const fechaHoy = new Date();
+      fechaHoy.setHours(0, 0, 0, 0); // Ajustamos la hora para comparar solo las fechas
 
-  // Obtén el día de la semana (0 = Domingo, 1 = Lunes, ..., 6 = Sábado)
-  const diaSemana = fechaSeleccionada.getDay();
+      // Verificar si la fecha seleccionada es un domingo (0 = domingo)
+      this.esDomingo = fechaSeleccionada.getUTCDay() === 0;
 
-  // Verifica si la fecha seleccionada es un domingo
-  this.fechaDomingo = diaSemana === 0;
-
-  // Obtén la fecha actual sin la parte de la hora (para comparar solo las fechas)
-  const fechaHoy = new Date();
-  fechaHoy.setHours(0, 0, 0, 0);  // Establece la hora a las 00:00:00 para eliminar la parte de la hora
-
-  // Verifica si la fecha seleccionada es anterior a hoy
-  this.fechaPasada = fechaSeleccionada < fechaHoy;
-
-  // Marca la fecha como inválida si es domingo o si es pasada
-  this.fechaInvalida = this.fechaDomingo || this.fechaPasada;
-}
-
-  
-  
-  
-
+      // Verificar si la fecha seleccionada es anterior a hoy
+      this.fechaInvalida = fechaSeleccionada < fechaHoy;
+    } else {
+      // Si no se ha seleccionado una fecha, reseteamos los errores
+      this.fechaInvalida = false;
+      this.esDomingo = false;
+    }
+  }
 
 
 
@@ -133,7 +124,7 @@ validarFecha(): void {
 
   toggleDiaVisual(dia: string, form: NgForm): void {
     const index = this.inscripcion.dias.indexOf(dia);
-  
+
     // Si el día no está en el arreglo, lo agrega
     if (index === -1) {
       this.inscripcion.dias.push(dia);
@@ -141,11 +132,11 @@ validarFecha(): void {
       // Si ya está en el arreglo, lo elimina
       this.inscripcion.dias.splice(index, 1);
     }
-  
+
     // Valida los días seleccionados después de cada cambio
     this.validarDias(form);
   }
-  
+
 
   // Maneja el evento de cambio en los checkboxes de días
   onDiaChange(event: Event, dia: string) {
@@ -243,128 +234,128 @@ validarFecha(): void {
   validarNombre(nombreControl: any): void {
     const nombre = this.inscripcion.nombre || '';
     const errors: { [key: string]: boolean } = {};
-  
+
     if (this.nombreVacio(nombre)) {
       errors['nombreVacio'] = true;
     }
-  
+
     if (this.nombreCorto(nombre)) {
       errors['nombreCorto'] = true;
     }
-  
+
     if (this.nombreSinApellidos(nombre)) {
       errors['nombreSinApellidos'] = true;
     }
-  
+
     // Si hay errores, se los asigna al control, si no, los limpia
     nombreControl.control.setErrors(Object.keys(errors).length ? errors : null);
   }
-    // Validadores individuales
-    nombreVacio(nombre: string): boolean {
-      return nombre.trim().length === 0;
-    }
-
-    nombreCorto(nombre: string): boolean {
-      return nombre.trim().length < 3;
-    }
-
-    nombreSinApellidos(nombre: string): boolean {
-      const palabras = nombre.trim().split(' ');
-      return palabras.length < 2 || palabras.some(p => p.length < 3);
-    }
-        
-    validarCorreo(emailControl: any): void {
-      const email = this.inscripcion.email || '';
-      const errors: { [key: string]: boolean } = {};
-    
-      if (this.correoVacio(email)) {
-        errors['correoVacio'] = true;
-      }
-    
-      if (this.correoFormatoInvalido(email)) {
-        errors['correoFormatoInvalido'] = true;
-      }
-    
-      if (this.correoUsuarioInvalido(email)) {
-        errors['correoUsuarioInvalido'] = true;
-      }
-    
-      if (this.correoDominioInvalido(email)) {
-        errors['correoDominioInvalido'] = true;
-      }
-    
-      // Asigna los errores al control, o los limpia si no hay errores
-      emailControl.control.setErrors(Object.keys(errors).length ? errors : null);
-    }
-    
-    // Validadores individuales
-    correoVacio(email: string): boolean {
-      return email.trim().length === 0;
-    }
-    
-    correoFormatoInvalido(email: string): boolean {
-      const patronCorreo = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      return !patronCorreo.test(email);
-    }
-    
-    correoUsuarioInvalido(email: string): boolean {
-      const usuario = email.split('@')[0];
-      return /[^a-zA-Z0-9._%+-]/.test(usuario);
-    }
-    
-    correoDominioInvalido(email: string): boolean {
-      const dominiosComunes = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com'];
-      
-      // Divide el correo en usuario y dominio
-      const partes = email.split('@');
-    
-      // Verifica que el correo tenga un dominio y que sea uno permitido
-      if (partes.length !== 2) {
-        return true; // Si no tiene exactamente un @, es inválido
-      }
-    
-      const dominio = partes[1].toLowerCase();
-      return !dominiosComunes.includes(dominio);
-    }
-    
-// Validación de días
-validarDias(form: NgForm): void {
-  const diasSeleccionados = this.inscripcion.dias || [];
-
-  // Si no hay días seleccionados
-  if (diasSeleccionados.length === 0) {
-    this.diasInvalidos = true;
-    this.errorDias = "Debes seleccionar al menos dos días preferidos.";
-  } 
-  // Si hay solo un día seleccionado
-  else if (diasSeleccionados.length === 1) {
-    this.diasInvalidos = true;
-    this.errorDias = "Debes seleccionar al menos dos días.";
-  } 
-  // Si hay dos o más días seleccionados, no hay errores
-  else {
-    this.diasInvalidos = false;
-    this.errorDias = "";
+  // Validadores individuales
+  nombreVacio(nombre: string): boolean {
+    return nombre.trim().length === 0;
   }
 
-  // Marca el formulario como inválido si hay errores
-  form.controls['dias']?.setErrors(this.diasInvalidos ? { diasInvalidos: true } : null);
-}
-
-
-
-// Validación del turno
-validarTurno(form: NgForm): void {
-  if (!this.inscripcion.turno) {
-    form.controls['turno']?.setErrors({ turnoRequerido: true });
-  } else {
-    form.controls['turno']?.setErrors(null);
+  nombreCorto(nombre: string): boolean {
+    return nombre.trim().length < 3;
   }
-}
-        
+
+  nombreSinApellidos(nombre: string): boolean {
+    const palabras = nombre.trim().split(' ');
+    return palabras.length < 2 || palabras.some(p => p.length < 3);
+  }
+
+  validarCorreo(emailControl: any): void {
+    const email = this.inscripcion.email || '';
+    const errors: { [key: string]: boolean } = {};
+
+    if (this.correoVacio(email)) {
+      errors['correoVacio'] = true;
+    }
+
+    if (this.correoFormatoInvalido(email)) {
+      errors['correoFormatoInvalido'] = true;
+    }
+
+    if (this.correoUsuarioInvalido(email)) {
+      errors['correoUsuarioInvalido'] = true;
+    }
+
+    if (this.correoDominioInvalido(email)) {
+      errors['correoDominioInvalido'] = true;
+    }
+
+    // Asigna los errores al control, o los limpia si no hay errores
+    emailControl.control.setErrors(Object.keys(errors).length ? errors : null);
+  }
+
+  // Validadores individuales
+  correoVacio(email: string): boolean {
+    return email.trim().length === 0;
+  }
+
+  correoFormatoInvalido(email: string): boolean {
+    const patronCorreo = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return !patronCorreo.test(email);
+  }
+
+  correoUsuarioInvalido(email: string): boolean {
+    const usuario = email.split('@')[0];
+    return /[^a-zA-Z0-9._%+-]/.test(usuario);
+  }
+
+  correoDominioInvalido(email: string): boolean {
+    const dominiosComunes = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com'];
+
+    // Divide el correo en usuario y dominio
+    const partes = email.split('@');
+
+    // Verifica que el correo tenga un dominio y que sea uno permitido
+    if (partes.length !== 2) {
+      return true; // Si no tiene exactamente un @, es inválido
+    }
+
+    const dominio = partes[1].toLowerCase();
+    return !dominiosComunes.includes(dominio);
+  }
+
+  // Validación de días
+  validarDias(form: NgForm): void {
+    const diasSeleccionados = this.inscripcion.dias || [];
+
+    // Si no hay días seleccionados
+    if (diasSeleccionados.length === 0) {
+      this.diasInvalidos = true;
+      this.errorDias = "Debes seleccionar al menos dos días preferidos.";
+    }
+    // Si hay solo un día seleccionado
+    else if (diasSeleccionados.length === 1) {
+      this.diasInvalidos = true;
+      this.errorDias = "Debes seleccionar al menos dos días.";
+    }
+    // Si hay dos o más días seleccionados, no hay errores
+    else {
+      this.diasInvalidos = false;
+      this.errorDias = "";
+    }
+
+    // Marca el formulario como inválido si hay errores
+    form.controls['dias']?.setErrors(this.diasInvalidos ? { diasInvalidos: true } : null);
+  }
 
 
-    
+
+  // Validación del turno
+  validarTurno(form: NgForm): void {
+    if (!this.inscripcion.turno) {
+      form.controls['turno']?.setErrors({ turnoRequerido: true });
+    } else {
+      form.controls['turno']?.setErrors(null);
+    }
+  }
+
+
+
+
 
 
 }
