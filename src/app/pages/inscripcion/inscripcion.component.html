@@ -13,32 +13,54 @@
     <div class="mb-4 position-relative">
       <label class="form-label fw-semibold"><i class="fas fa-user me-2"></i>Nombre completo</label>
       <input type="text" name="nombre" [(ngModel)]="inscripcion.nombre" required minlength="3"
-        class="form-control rounded-3 shadow-sm" placeholder="Ingresa tu nombre completo" />
-      @if (esInvalido('nombre')) {
-      <div class="text-danger mt-1">
-        <i class="fas fa-exclamation-circle me-1"></i>Nombre requerido.
-      </div>
-      }
+        class="form-control rounded-3 shadow-sm" placeholder="Ingresa tu nombre completo" #nombreControl="ngModel"
+        (ngModelChange)="validarNombre(nombreControl)" />
 
-    </div>
-
-    <!-- Email -->
-    <div class="mb-4">
-      <label class="form-label fw-semibold"><i class="fas fa-envelope me-2"></i>Correo electrónico</label>
-      <input type="email" name="email" [(ngModel)]="inscripcion.email" required email #emailControl="ngModel"
-        class="form-control rounded-3 shadow-sm" placeholder="ejemplo@correo.com" />
-
-      @if (emailControl.touched && emailControl.invalid) {
+      @if ((nombreControl.touched || f.submitted) && nombreControl.invalid) {
       <div class="text-danger mt-1">
         <i class="fas fa-exclamation-circle me-1"></i>
-        @if (emailControl.errors?.['required']) {
-        Correo requerido.
-        } @else if (emailControl.errors?.['email']) {
-        Ingresa un correo válido.
+
+        @if (nombreControl.errors?.['nombreVacio']) {
+        El nombre es obligatorio.
+        }
+        @else if (nombreControl.errors?.['nombreCorto']) {
+        El nombre debe tener al menos 3 letras.
+        }
+        @else if (nombreControl.errors?.['nombreSinApellidos']) {
+        El nombre debe tener al menos dos palabras y cada una con al menos 3 letras.
         }
       </div>
       }
     </div>
+
+
+    <!-- Email -->
+    <div class="mb-4">
+      <label class="form-label fw-semibold"><i class="fas fa-envelope me-2"></i>Correo electrónico</label>
+      <input type="email" name="email" [(ngModel)]="inscripcion.email" required #emailControl="ngModel"
+        class="form-control rounded-3 shadow-sm" placeholder="ejemplo@correo.com"
+        (ngModelChange)="validarCorreo(emailControl)" />
+
+      @if (emailControl.touched && emailControl.invalid) {
+      <div class="text-danger mt-1">
+        <i class="fas fa-exclamation-circle me-1"></i>
+
+        @if (emailControl.errors?.['correoVacio']) {
+        El correo es obligatorio.
+        }
+        @else if (emailControl.errors?.['correoFormatoInvalido']) {
+        Ingresa un correo con formato válido (ejemplo&#64;dominio.com).
+        }
+        @else if (emailControl.errors?.['correoUsuarioInvalido']) {
+        El usuario del correo no puede contener caracteres especiales.
+        }
+        @else if (emailControl.errors?.['correoDominioInvalido']) {
+        Solo se permiten dominios como gmail.com, hotmail.com, outlook.com o yahoo.com.
+        }
+      </div>
+      }
+    </div>
+
 
     <!-- Clase -->
     <div class="mb-4">
@@ -63,19 +85,21 @@
       <div class="week-day-selector">
         @for (dia of diasDisponibles; track $index) {
         <button type="button" class="day-box" [class.selected]="inscripcion.dias.includes(dia)"
-          (click)="toggleDiaVisual(dia)">
+          (click)="toggleDiaVisual(dia, f)">
           {{ dia }}
         </button>
         }
       </div>
-      @if (f.submitted && diasInvalidos) {
+
+      <!-- Error cuando no se seleccionan días correctamente -->
+      @if ((f.submitted || f.touched) && diasInvalidos) {
       <div class="text-danger mt-2">
-        <i class="fas fa-exclamation-circle me-1"></i>Selecciona al menos un día.
+        <i class="fas fa-exclamation-circle me-1"></i> {{ errorDias }}
       </div>
       }
     </div>
 
-    <!-- Turno -->
+
     <!-- Turno -->
     <div class="mb-4">
       <label class="form-label fw-semibold"><i class="fas fa-clock me-2"></i>Turno</label>
@@ -105,12 +129,22 @@
       <input type="date" name="fecha" [(ngModel)]="inscripcion.fecha" required (ngModelChange)="validarFecha()"
         #fechaControl="ngModel" class="form-control bg-white text-dark" [min]="hoy()" />
 
-      @if (fechaInvalida) {
+      <!-- Error si la fecha es anterior a hoy -->
+      @if (fechaPasada) {
       <div class="text-danger mt-1">
         <i class="fas fa-exclamation-circle me-1"></i>La fecha no puede ser anterior a hoy.
       </div>
       }
+
+      <!-- Error si la fecha es un domingo -->
+      @if (fechaDomingo) {
+      <div class="text-danger mt-1">
+        <i class="fas fa-exclamation-circle me-1"></i>No se pueden seleccionar los domingos.
+      </div>
+      }
     </div>
+
+
 
     <!-- Botón -->
     <button class="btn btn-dark w-100" [disabled]="!esFormularioValido(f) || fechaInvalida">
