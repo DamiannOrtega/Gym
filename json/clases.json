@@ -1,0 +1,200 @@
+[
+  {
+    "id": 1,
+    "nombre": "Zumba",
+    "descripcion": "Cardio con ritmo latino para todos los niveles.",
+    "image": "/assets/img/zumba.avif",
+    "icono": "fas fa-music",
+    "coach": "Sofía Hernández",
+    "dias": ["Lunes", "Miércoles", "Viernes"],
+    "horario": "8:00 AM - 9:00 AM",
+    "objetivo": "Mejorar coordinación y quemar calorías con música"
+  },
+  {
+    "id": 2,
+    "nombre": "CrossFit",
+    "icono": "fas fa-dumbbell",
+    "descripcion": "Entrenamiento funcional de alta intensidad.",
+    "image": "/assets/img/crossfit.jpg",
+    "coach": "Carlos Méndez",
+    "dias": ["Lunes", "Martes", "Jueves"],
+    "horario": "6:00 PM - 7:00 PM",
+    "objetivo": "Desarrollar fuerza total y mejorar condición física general"
+  },
+  {
+    "id": 3,
+    "nombre": "Yoga",
+    "icono": "fas fa-spa",
+    "descripcion": "Conecta cuerpo y mente con sesiones de yoga guiadas.",
+    "image": "/assets/img/yoga.jpg",
+    "coach": "Paula Ríos",
+    "dias": ["Lunes", "Miércoles", "Viernes"],
+    "horario": "7:00 AM - 8:00 AM",
+    "objetivo": "Mejorar la flexibilidad, respiración y control del estrés"
+  },
+  {
+    "id": 4,
+    "nombre": "Pilates",
+    "icono": "fas fa-music",
+    "descripcion": "Ejercicios de bajo impacto que se enfocan en la fuerza del core, la flexibilidad y la postura.",
+    "image": "/assets/img/pilates.png",
+    "coach": "Verónica Sánchez",
+    "dias": ["Martes", "Jueves"],
+    "horario": "9:00 AM - 10:00 AM",
+    "objetivo": "Fortalecer el core, mejorar postura y equilibrio"
+  },
+  {
+    "id": 5,
+    "nombre": "Spinning",
+    "icono": "fas fa-dumbbell",
+    "descripcion": "Clases en bicicletas estáticas que simulan recorridos con intervalos de alta y baja intensidad.",
+    "image": "/assets/img/spinning.jpg",
+    "coach": "Raúl Torres",
+    "dias": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"],
+    "horario": "6:30 AM - 7:30 AM",
+    "objetivo": "Incrementar resistencia cardiovascular y tonificar piernas"
+  },
+  {
+    "id": 6,
+    "nombre": "Body Pump",
+    "icono": "fas fa-spa",
+    "descripcion": "Entrenamiento con pesas que se centra en tonificación muscular mediante movimientos de alta repetición.",
+    "image": "/assets/img/bodypump.jpg",
+    "coach": "Lucía Díaz",
+    "dias": ["Martes", "Miércoles", "Jueves"],
+    "horario": "7:00 PM - 8:00 PM",
+    "objetivo": "Tonificar todo el cuerpo y quemar calorías con pesas"
+  },
+  {
+    "id": 7,
+    "nombre": "Boxeo",
+    "icono": "fas fa-music",
+    "descripcion": "Entrenamiento de boxeo con técnicas de golpeo y ejercicios de resistencia.",
+    "image": "/assets/img/boxeo.jpg",
+    "coach": "Esteban Ruiz",
+    "dias": ["Lunes", "Miércoles", "Viernes"],
+    "horario": "6:00 PM - 7:00 PM",
+    "objetivo": "Mejorar coordinación, reflejos y resistencia física"
+  },
+  {
+    "id": 8,
+    "nombre": "KickBoxing",
+    "icono": "fas fa-dumbbell",
+    "descripcion": "Combina patadas y golpes de boxeo para mejorar fuerza y resistencia.",
+    "image": "/assets/img/kickboxing.jpg",
+    "coach": "Andrea Morales",
+    "dias": ["Martes", "Jueves"],
+    "horario": "10:00 AM - 11:00 AM",
+    "objetivo": "Desarrollar fuerza, agilidad y técnica de combate"
+  },
+  {
+    "id": 9,
+    "nombre": "Press de banca",
+    "icono": "fas fa-dumbbell",
+    "descripcion": "Ejercicio para trabajar pecho, tríceps y hombros utilizando barra o mancuernas.",
+    "image": "/assets/img/press-banca.png",
+    "coach": "Daniel Fuentes",
+    "dias": ["Lunes","Martes", "Miércoles", "Jueves", "Viernes"],
+    "horario": "5:00 PM - 6:00 PM",
+    "objetivo": "Aumentar la fuerza y volumen del tren superior"
+  },
+  {
+    "id": 10,
+    "nombre": "Sentadillas con peso",
+    "icono": "fas fa-weight-hanging",
+    "descripcion": "Fundamental para piernas y glúteos, utilizando barra en la espalda.",
+    "image": "/assets/img/sentadillas.png",
+    "coach": "Fernanda Silva",
+    "dias": ["Lunes","Martes", "Miércoles", "Jueves", "Viernes"],
+    "horario": "6:00 PM - 7:00 PM",
+    "objetivo": "Fortalecer piernas, glúteos y mejorar técnica de sentadilla"
+  },
+  {
+    "id": 11,
+    "nombre": "Remo en máquina",
+    "icono": "fas fa-arrows-alt-h",
+    "descripcion": "Fortalece la espalda y bíceps con un movimiento controlado de tracción.",
+    "image": "/assets/img/remo.jpg",
+    "coach": "Luis Campos",
+    "dias": ["Lunes","Martes", "Miércoles", "Jueves", "Viernes"],
+    "horario": "9:00 AM - 10:00 AM",
+    "objetivo": "Desarrollar fuerza de espalda y mejorar postura"
+  },
+  {
+    "id": 12,
+    "nombre": "Cinta de correr",
+    "icono": "fas fa-running",
+    "descripcion": "Ejercicio cardiovascular ideal para quemar grasa y mejorar resistencia.",
+    "image": "/assets/img/cinta-correr.png",
+    "coach": "Natalia Gómez",
+    "dias": ["Lunes", "Miércoles", "Viernes"],
+    "horario": "7:00 AM - 8:00 AM",
+    "objetivo": "Mejorar resistencia cardiovascular y quema calórica"
+  },
+  {
+    "id": 13,
+    "nombre": "Bicicleta estática",
+    "icono": "fas fa-bicycle",
+    "descripcion": "Cardio de bajo impacto para fortalecer piernas y mejorar condición física.",
+    "image": "/assets/img/bicis.png",
+    "coach": "Marcelo Rivas",
+    "dias": ["Martes", "Jueves"],
+    "horario": "8:00 AM - 9:00 AM",
+    "objetivo": "Tonificar piernas y fortalecer el sistema cardiovascular"
+  },
+  {
+    "id": 14,
+    "nombre": "Abdominales en colchoneta",
+    "icono": "fas fa-heartbeat",
+    "descripcion": "Ejercita el abdomen de forma libre, sin uso de maquinaria pesada.",
+    "image": "/assets/img/abdom.png",
+    "coach": "Elena Márquez",
+    "dias": ["Lunes","Martes", "Miércoles", "Jueves", "Viernes"],
+    "horario": "3:00 PM - 4:00 PM",
+    "objetivo": "Definir y fortalecer el abdomen de forma práctica"
+  },
+  {
+    "id": 15,
+    "nombre": "Peso muerto",
+    "icono": "fas fa-hiking",
+    "descripcion": "Ejercicio completo para glúteos, espalda baja y piernas.",
+    "image": "/assets/img/peso-muerto.png",
+    "coach": "Rodrigo Salinas",
+    "dias": ["Lunes","Martes", "Miércoles", "Jueves", "Viernes"],
+    "horario": "4:00 PM - 5:00 PM",
+    "objetivo": "Incrementar fuerza general y mejorar postura corporal"
+  },
+  {
+    "id": 16,
+    "nombre": "Curl de bíceps",
+    "icono": "fas fa-hand-rock",
+    "descripcion": "Aíslate y fortalece tus bíceps usando mancuernas.",
+    "image": "/assets/img/curl.png",
+    "coach": "Estefanía Torres",
+    "dias": ["Lunes","Martes", "Miércoles", "Jueves", "Viernes"],
+    "horario": "5:00 PM - 5:45 PM",
+    "objetivo": "Aumentar fuerza y volumen en los brazos"
+  },
+  {
+    "id": 17,
+    "nombre": "Elevaciones laterales",
+    "icono": "fas fa-hand-paper",
+    "descripcion": "Trabaja tus hombros de manera específica con este ejercicio de aislamiento.",
+    "image": "/assets/img/elevaciones-laterales.png",
+    "coach": "Julio Paredes",
+    "dias": ["Lunes","Martes", "Miércoles", "Jueves", "Viernes"],
+    "horario": "6:00 PM - 7:00 PM",
+    "objetivo": "Aumentar fuerza y definición de los deltoides"
+  },
+  {
+    "id": 18,
+    "nombre": "Extensión de tríceps en polea",
+    "icono": "fas fa-chevron-down",
+    "descripcion": "Ejercicio controlado para fortalecer los tríceps con cable.",
+    "image": "/assets/img/extension-triceps.png",
+    "coach": "Daniela Vega",
+    "dias": ["Lunes","Martes", "Miércoles", "Jueves", "Viernes"],
+    "horario": "7:00 PM - 7:45 PM",
+    "objetivo": "Definir y fortalecer los tríceps sin impacto articular"
+  }
+]
