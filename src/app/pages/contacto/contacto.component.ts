@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
   import { CommonModule } from '@angular/common';
-  import { ReactiveFormsModule, FormBuilder, Validators, FormArray } from '@angular/forms';
+  import { ReactiveFormsModule, FormBuilder, Validators, FormArray, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
   import Swal from 'sweetalert2';
   import { StorageService } from '../../services/storage.service';
   import { FaqComponent } from '../../shared/faq/faq.component';
@@ -19,6 +19,7 @@ export class ContactoComponent implements OnInit {
   
   // Lista de medios de contacto posibles
   medios = ['WhatsApp', 'Correo electrónico'];
+  
   
   // Dirección del gimnasio para mostrar en el formulario
   direccion = 'Av. Universidad 940, Ciudad Universitaria, Universidad Autónoma de Aguascalientes, 20100 Aguascalientes, Ags.';
@@ -58,10 +59,11 @@ export class ContactoComponent implements OnInit {
       // Configura el formulario reactivo con los campos requeridos y sus validaciones
       this.form = this.fb.group({
         // Campo de nombre, obligatorio, mínimo 3 caracteres
-        nombre: ['', [Validators.required, Validators.minLength(3)]],
+        nombre: ['', [Validators.required, Validators.minLength(3), this.nombreCompletoValidator]],
         
         // Campo de correo electrónico, obligatorio y con validación de formato de correo
-        email: ['', [Validators.required, Validators.email]],
+        email: ['', [Validators.required, Validators.email, this.emailProfesionalValidator]],
+
         
         // Campo de motivo, obligatorio
         motivo: ['', Validators.required],
@@ -76,7 +78,7 @@ export class ContactoComponent implements OnInit {
         promociones: ['', Validators.required],
         
         // Campo de fecha, obligatorio y debe ser una fecha válida
-        fecha: ['', Validators.required],
+        fecha: ['', [Validators.required, this.fechaValidator()]],
         
         // Campo de comentarios, opcional
         comentarios: [''],
@@ -95,17 +97,28 @@ export class ContactoComponent implements OnInit {
     onMedioChange(event: Event, medio: string): void {
       const checked = (event.target as HTMLInputElement).checked;
       const medios = this.form.get('mediosContacto') as FormArray;
-    
+      const telefonoControl = this.form.get('telefono');
       if (checked) {
-        // Si el checkbox fue marcado, se agrega al array de métodos seleccionados
         medios.push(this.fb.control(medio));
         this.mediosSeleccionados.push(medio);
       } else {
-        // Si fue desmarcado, se elimina del array de métodos seleccionados
-        const i = medios.controls.findIndex(c => c.value === medio);
-        if (i !== -1) medios.removeAt(i);
-        this.mediosSeleccionados = this.mediosSeleccionados.filter(m => m !== medio);
+        const index = medios.controls.findIndex(control => control.value === medio);
+        if (index !== -1) {
+          medios.removeAt(index);
+          this.mediosSeleccionados = this.mediosSeleccionados.filter(m => m !== medio);
+        }
       }
+       // Validar el campo "telefono" si se selecciona "WhatsApp"
+      if (this.mediosSeleccionados.includes('WhatsApp')) {
+        telefonoControl?.setValidators([Validators.required, this.telefonoValidator()]);
+      } else {
+        telefonoControl?.clearValidators();
+      }
+
+    // Actualiza el estado del control para que se reflejen los cambios
+    telefonoControl?.updateValueAndValidity();
+      // Marca el campo como tocado para que se active la validación
+      medios.markAsTouched();
     }
 
     // Guarda los datos del formulario en el local storage
@@ -145,4 +158,92 @@ export class ContactoComponent implements OnInit {
       // Retorna verdadero si el control existe, fue tocado y es inválido
       return !!(c && c.touched && c.invalid);
     }
+    nombreCompletoValidator(control: AbstractControl): ValidationErrors | null {
+      const nombre = control.value || '';
+      const palabras = nombre.trim().split(' ');
+      if (palabras.length < 2 || palabras.some((p: string) => p.length < 3)) {
+        return { nombreIncompleto: true };
+      }
+      return null;
+    }
+
+    emailProfesionalValidator(control: AbstractControl): ValidationErrors | null {
+      const email = control.value || '';
+      
+      // Patrón para correos válidos sin caracteres especiales en el usuario
+      const patronCorreo = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+
+    
+      // Valida longitud mínima y máxima
+      if (email.length < 5 || email.length > 50) {
+        return { longitudInvalida: true };
+      }
+    
+      // Valida caracteres especiales en el usuario del correo
+      const usuario = email.split('@')[0];
+      if (/[^a-zA-Z0-9._%+-]/.test(usuario)) {
+        return { usuarioInvalido: true };
+      }
+ 
+      return null;
+    }
+    
+  //Esta funcion es para verificar las validaciones del num de tel
+    telefonoValidator(): ValidatorFn {
+      return (control: AbstractControl): ValidationErrors | null => {
+        const telefono = control.value || '';
+    
+        // Solo permite exactamente 10 dígitos numéricos
+        const patronTelefono = /^[0-9]{10}$/;
+
+          // Verificamos que no tenga letras
+          if (/[a-zA-Z]/.test(telefono)) {
+            return { letrasNoPermitidas: true };
+          }
+            
+        if (telefono && !patronTelefono.test(telefono)) {
+          return { telefonoInvalido: true };
+        }
+    
+
+        return null;
+      };
+    }
+
+  //Esta funcion es para verificar las validaciones de la fecha
+    fechaValidator(): ValidatorFn {
+      return (control: AbstractControl): ValidationErrors | null => {
+        const fechaSeleccionadaStr = control.value;
+    
+        // Verificamos que se haya seleccionado una fecha
+        if (!fechaSeleccionadaStr) {
+          return { fechaRequerida: true };
+        }
+    
+        // Convertimos  a objeto Date
+        const fechaSeleccionada = new Date(fechaSeleccionadaStr);
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0); // comparamos fechas
+    
+        // Verificamos que no sea un día anterior a hoy
+        if (fechaSeleccionada < hoy) {
+          return { fechaPasada: true };
+        }
+    
+        // Verificamos  que no sea un domingo (0 = domingo)
+        if (fechaSeleccionada.getUTCDay() === 0) {
+          return { domingoNoPermitido: true };
+        }
+    
+        return null;
+      };
+    }
+    
+    
+    
+    
+    
+    
+    
   }

@@ -15,9 +15,18 @@
         <label class="form-label"><i class="fas fa-user me-2"></i>Nombre completo</label>
         <input formControlName="nombre" class="form-control" placeholder="Ingrese su nombre completo" />
         @if (isInvalid('nombre')) {
-        <div class="text-danger mt-1">
-          <i class="fas fa-exclamation-circle me-1"></i>Nombre requerido (mínimo 3 letras).
-        </div>
+          <div class="text-danger mt-1">
+            <i class="fas fa-exclamation-circle me-1"></i>
+            @if (form.get('nombre')?.errors?.['required']) {
+              El nombre es obligatorio.
+            }
+            @else if (form.get('nombre')?.errors?.['nombreIncompleto']) {
+              El nombre debe tener al menos dos palabras y cada una con al menos 3 letras.
+            }
+            @else if (form.get('nombre')?.errors?.['minlength']) {
+              El nombre debe tener al menos 3 letras.
+            }
+          </div>
         }
       </div>
 
@@ -25,10 +34,20 @@
         <label class="form-label"><i class="fas fa-envelope me-2"></i>Correo electrónico</label>
         <input formControlName="email" class="form-control" placeholder="ejemplo@correo.com" />
         @if (isInvalid('email')) {
-        <div class="text-danger mt-1">
-          <i class="fas fa-exclamation-circle me-1"></i>Correo válido requerido.
-        </div>
+          <div class="text-danger mt-1">
+            <i class="fas fa-exclamation-circle me-1"></i>
+            @if (form.get('email')?.errors?.['emailInvalido']) {
+              El correo debe tener un formato válido (ejemplo&#64;dominio.com).
+            }
+            @else if (form.get('email')?.errors?.['longitudInvalida']) {
+              Escribe tu correo.
+            }
+            @else if (form.get('email')?.errors?.['usuarioInvalido']) {
+              El usuario del correo no puede contener caracteres especiales.
+            }
+          </div>
         }
+        
       </div>
     </div>
 
@@ -76,19 +95,33 @@
         </label>
         }
       </div>
-      @if (isInvalid('mediosContacto')) {
-      <div class="text-danger mt-1">
-        <i class="fas fa-exclamation-circle me-1"></i>Selecciona al menos un método de contacto.
-      </div>
+      @if (form.get('mediosContacto')?.invalid && form.get('mediosContacto')?.touched) {
+        <div class="text-danger mt-1">
+          <i class="fas fa-exclamation-circle me-1"></i>Selecciona al menos un método de contacto.
+        </div>
       }
 
       <!-- Campo dinámico si WhatsApp está seleccionado -->
       @if (mediosSeleccionados.includes('WhatsApp')) {
-      <div class="mt-3">
-        <label class="form-label"><i class="fas fa-phone me-2"></i>Número de WhatsApp</label>
-        <input type="tel" class="form-control" formControlName="telefono" placeholder="449 456 7890" />
-      </div>
+        <div class="mt-3">
+          <label class="form-label"><i class="fas fa-phone me-2"></i>Número de WhatsApp</label>
+          <input type="tel" class="form-control" formControlName="telefono" placeholder="449 456 7890" />
+      
+          @if (isInvalid('telefono')) {
+            <div class="text-danger mt-1">
+              <i class="fas fa-exclamation-circle me-1"></i>
+              @if (form.get('telefono')?.errors?.['letrasNoPermitidas']) {
+                El número no debe contener letras.
+              }
+              @else if (form.get('telefono')?.errors?.['telefonoInvalido']) {
+                El número debe tener exactamente 10 dígitos.
+              }
+            </div>
+          }
+        </div>
       }
+      
+      
     </div>
 
 
@@ -126,9 +159,19 @@
       </div>
 
       @if (isInvalid('fecha')) {
-      <div class="text-danger mt-1">
-        <i class="fas fa-exclamation-circle me-1"></i>Selecciona una fecha válida.
-      </div>
+        <div class="text-danger mt-1">
+          <i class="fas fa-exclamation-circle me-1"></i>
+          @if (form.get('fecha')?.errors?.['fechaRequerida']) {
+            Debes seleccionar una fecha.
+          }
+          @else if (form.get('fecha')?.errors?.['domingoNoPermitido']) {
+            No se permiten fechas en domingo, no trabajamos ese día.
+          }
+          @else if (form.get('fecha')?.errors?.['fechaPasada']) {
+            No se permiten días anteriores al actual.
+          }
+
+        </div>
       }
     </div>
 
