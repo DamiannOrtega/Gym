@@ -9,7 +9,7 @@ import { Clase } from '../models/clase.model';
 })
 export class ClasesService {
   // URL del archivo JSON que contiene los datos de las clases
-  private clasesUrl = 'https://run.mocky.io/v3/7c64c463-a17b-46a5-8744-6ea3e76e392e';
+  private clasesUrl = 'https://run.mocky.io/v3/62581fe3-274b-4b50-bad9-81892bdf941c';
 
   // Inyección del servicio HttpClient para realizar solicitudes HTTP
   constructor(private http: HttpClient) {}
