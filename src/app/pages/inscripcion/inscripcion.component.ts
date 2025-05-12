@@ -95,16 +95,15 @@ export class InscripcionComponent {
   validarFecha() {
     if (!this.inscripcion.fecha) {
       // Si no se ha seleccionado una fecha, mostramos el error correspondiente
-      this.errorFecha = "Debe seleccionar una fecha.";
       this.esDomingo = false; // No es domingo
     } else {
       const fechaSeleccionada = new Date(this.inscripcion.fecha);
       const fechaHoy = new Date();
       fechaHoy.setHours(0, 0, 0, 0); // Ajustamos la hora para comparar solo las fechas
-
+  
       // Verificamos si la fecha seleccionada es un domingo (0 = domingo)
       this.esDomingo = fechaSeleccionada.getUTCDay() === 0;
-
+  
       // Si es un domingo, mostramos el mensaje de error para domingo
       if (this.esDomingo) {
         this.errorFecha = "No se permiten fechas en domingo, no trabajamos ese día.";
@@ -117,7 +116,7 @@ export class InscripcionComponent {
       }
     }
   }
-
+  
 
 
   // Método para alternar la selección de días (checkboxes)
