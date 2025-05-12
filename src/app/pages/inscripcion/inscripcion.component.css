@@ -204,11 +204,3 @@ input[type="date"] {
   }
   
 
-.sol-gym-manana {
-    background-image: url('/assets/img/sol-pesas.png');
-
-}
-
-.sol-gym-tarde {
-    background-image: url('/assets/img/sol-vespertino.png');
-}

@@ -76,22 +76,26 @@
     </div>
 
     <!-- Turno -->
+    <!-- Turno -->
     <div class="mb-4">
       <label class="form-label fw-semibold"><i class="fas fa-clock me-2"></i>Turno</label>
-      <div class="turno-ilustrado-selector">
+      <div class="turno-ilustrado-selector d-flex gap-3">
+        <!-- Turno Mañana -->
         <div class="ilustracion-card" [class.selected]="inscripcion.turno === 'Mañana'"
           (click)="inscripcion.turno = 'Mañana'">
-          <div class="ilustracion-img sol-gym-manana"></div>
+          <img src="./assets/img/sol-pesas.png" alt="Mañana" class="ilustracion-img">
           <div class="turno-label">Mañana</div>
         </div>
 
+        <!-- Turno Tarde -->
         <div class="ilustracion-card" [class.selected]="inscripcion.turno === 'Tarde'"
           (click)="inscripcion.turno = 'Tarde'">
-          <div class="ilustracion-img sol-gym-tarde"></div>
+          <img src="./assets/img/sol-vespertino.png" alt="Tarde" class="ilustracion-img">
           <div class="turno-label">Tarde</div>
         </div>
       </div>
     </div>
+
 
     <!-- Fecha -->
     <div class="mb-4">
