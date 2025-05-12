@@ -5,11 +5,12 @@ import { StorageService } from '../../services/storage.service';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { OpinionesComponent } from '../../components/opiniones/opiniones.component';
+import { FaqComponent } from '../../shared/faq/faq.component';
 
 @Component({
   standalone: true,
   selector: 'app-inscripcion',
-  imports: [CommonModule, FormsModule, OpinionesComponent],
+  imports: [CommonModule, FormsModule, OpinionesComponent,FaqComponent],
   templateUrl: './inscripcion.component.html',
   styleUrls: ['./inscripcion.component.css']
 })
@@ -26,6 +27,30 @@ export class InscripcionComponent {
   // Variable para marcar si los días seleccionados son válidos o no
   diasInvalidos = false;
 
+
+  faqsInscripcion = [
+    {
+      pregunta: '¿Puedo cambiar mi clase después de inscribirme?',
+      respuesta: 'Sí, puedes modificar tu inscripción comunicándote con nosotros directamente.'
+    },
+    {
+      pregunta: '¿Cuáles son los requisitos para inscribirme?',
+      respuesta: 'Solo necesitas ser mayor de edad y llenar el formulario de inscripción.'
+    },
+    {
+      pregunta: '¿Puedo cambiar mi horario después de inscribirme?',
+      respuesta: 'Sí, puedes modificar tu horario contactándonos directamente.'
+    },
+    {
+      pregunta: '¿Hay descuentos por inscripción anticipada?',
+      respuesta: 'Sí, ofrecemos descuentos para inscripciones tempranas. Consulta nuestras promociones.'
+    },
+    {
+      pregunta: '¿Qué métodos de pago aceptan para la inscripción?',
+      respuesta: 'Aceptamos pagos en efectivo, tarjeta de crédito, débito y transferencias bancarias.'
+    }
+  ];
+
   // Decorador @ViewChild para capturar el formulario (NgForm) desde el template
   @ViewChild('f') formulario!: NgForm;
 
@@ -38,6 +63,8 @@ export class InscripcionComponent {
     dias: [] as string[],  // Arreglo de días seleccionados
     turno: ''
   };
+
+
 
   // Inyección de servicios de almacenamiento y ruta activa
   constructor(private storage: StorageService, private route: ActivatedRoute) { }
