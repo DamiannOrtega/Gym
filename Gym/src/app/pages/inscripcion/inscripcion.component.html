@@ -14,32 +14,30 @@
       <label class="form-label fw-semibold"><i class="fas fa-user me-2"></i>Nombre completo</label>
       <input type="text" name="nombre" [(ngModel)]="inscripcion.nombre" required minlength="3"
         class="form-control rounded-3 shadow-sm" placeholder="Ingresa tu nombre completo" />
-        @if (esInvalido('nombre')) {
-          <div class="text-danger mt-1">
-            <i class="fas fa-exclamation-circle me-1"></i>Nombre requerido (mínimo 3 letras).
-          </div>
-        }
-        
+      @if (esInvalido('nombre')) {
+      <div class="text-danger mt-1">
+        <i class="fas fa-exclamation-circle me-1"></i>Nombre requerido.
+      </div>
+      }
+
     </div>
 
     <!-- Email -->
     <div class="mb-4">
       <label class="form-label fw-semibold"><i class="fas fa-envelope me-2"></i>Correo electrónico</label>
-      <input type="email" name="email" [(ngModel)]="inscripcion.email" required class="form-control rounded-3 shadow-sm"
-        placeholder="ejemplo@correo.com" />
-        @if (esInvalido('email')) {
-          <div class="text-danger mt-1">
-            <i class="fas fa-exclamation-circle me-1"></i>
-        
-            @if (formulario.controls['email'] && formulario.controls['email'].errors?.['required']) {
-              Correo requerido.
-            } @else if (formulario.controls['email'] && formulario.controls['email'].errors?.['email']) {
-              Ingresa un correo válido.
-            }
-          </div>
+      <input type="email" name="email" [(ngModel)]="inscripcion.email" required email #emailControl="ngModel"
+        class="form-control rounded-3 shadow-sm" placeholder="ejemplo@correo.com" />
+
+      @if (emailControl.touched && emailControl.invalid) {
+      <div class="text-danger mt-1">
+        <i class="fas fa-exclamation-circle me-1"></i>
+        @if (emailControl.errors?.['required']) {
+        Correo requerido.
+        } @else if (emailControl.errors?.['email']) {
+        Ingresa un correo válido.
         }
-        
-        
+      </div>
+      }
     </div>
 
     <!-- Clase -->
@@ -53,9 +51,9 @@
         }
       </select>
       @if (esInvalido('clase')) {
-        <div class="text-danger mt-1">
-          <i class="fas fa-exclamation-circle me-1"></i>Elige una clase.
-        </div>
+      <div class="text-danger mt-1">
+        <i class="fas fa-exclamation-circle me-1"></i>Elige una clase.
+      </div>
       }
     </div>
 
@@ -100,24 +98,22 @@
       <label class="form-label fw-semibold">
         <i class="fas fa-calendar-alt me-2"></i>Fecha de inicio
       </label>
-      <div class="input-group">
-        <input type="date" name="fecha" class="form-control bg-white text-dark" [(ngModel)]="inscripcion.fecha"
-          [min]="hoy()" required />
+      <input type="date" name="fecha" [(ngModel)]="inscripcion.fecha" required (ngModelChange)="validarFecha()"
+        #fechaControl="ngModel" class="form-control bg-white text-dark" [min]="hoy()" />
+
+      @if (fechaInvalida) {
+      <div class="text-danger mt-1">
+        <i class="fas fa-exclamation-circle me-1"></i>La fecha no puede ser anterior a hoy.
       </div>
-      @if (esInvalido('fecha')) {
-        <div class="text-danger mt-1">
-          <i class="fas fa-exclamation-circle me-1"></i>Elige una fecha.
-        </div>
       }
     </div>
 
     <!-- Botón -->
-    <button class="btn btn-dark w-100" [disabled]="!esFormularioValido(f)">
+    <button class="btn btn-dark w-100" [disabled]="!esFormularioValido(f) || fechaInvalida">
       <i class="fas fa-paper-plane me-2"></i>Enviar inscripción
     </button>
   </form>
 </div>
-
 
 <app-opiniones></app-opiniones>
 

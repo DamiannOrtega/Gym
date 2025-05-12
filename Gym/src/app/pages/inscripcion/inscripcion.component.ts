@@ -54,6 +54,9 @@ export class InscripcionComponent {
   // Decorador @ViewChild para capturar el formulario (NgForm) desde el template
   @ViewChild('f') formulario!: NgForm;
 
+  fechaInvalida = false;
+
+
   // Objeto que almacena los datos de inscripción
   inscripcion = {
     nombre: '',
@@ -71,8 +74,30 @@ export class InscripcionComponent {
 
   // Retorna la fecha actual en formato YYYY-MM-DD para usar como fecha mínima en el campo de fecha
   hoy(): string {
-    return new Date().toISOString().split('T')[0];
+    const hoy = new Date();
+    const year = hoy.getFullYear();
+    const month = String(hoy.getMonth() + 1).padStart(2, '0');
+    const day = String(hoy.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
+
+
+  // Método para validar que la fecha seleccionada no sea anterior a hoy
+  validarFecha() {
+    if (this.inscripcion.fecha) {
+      // Obtener la fecha seleccionada como cadena
+      const fechaSeleccionada = this.inscripcion.fecha;
+      const fechaHoy = this.hoy();
+
+      // Solo marcar como inválida si la fecha es estrictamente menor que hoy
+      this.fechaInvalida = fechaSeleccionada < fechaHoy;
+    } else {
+      this.fechaInvalida = false;
+    }
+  }
+
+
+
 
   // Método para alternar la selección de días (checkboxes)
   toggleDia(dia: string, checked: boolean) {
@@ -189,5 +214,7 @@ export class InscripcionComponent {
     // Retorna verdadero si el control es inválido y ha sido tocado o el formulario fue enviado
     return !!(c && (c.touched || this.formulario.submitted) && c.invalid);
   }
+
+
 
 }
