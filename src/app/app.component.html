@@ -1,7 +1,15 @@
-<app-header></app-header>
+@if (loading)
+{
+  <app-loader></app-loader>
+}
 
-<main class="container-fluid px-3 py-4">
-  <router-outlet></router-outlet>
-</main>
-
-<app-footer></app-footer>
+@if (!loading)
+{
+  <div>
+    <app-header></app-header>
+    <main class="container-fluid px-3 py-4">
+      <router-outlet></router-outlet>
+    </main>
+    <app-footer></app-footer>
+  </div>
+}
