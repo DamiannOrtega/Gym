@@ -79,6 +79,7 @@ export class HeaderComponent {
     }
   }
 
+
   setFuente(fuente: string) {
     const body = document.body;
     body.classList.remove('fuente-arial', 'fuente-verdana', 'fuente-roboto');
@@ -87,10 +88,13 @@ export class HeaderComponent {
     }
   }
 
+
   setFontSize(size: string) {
     this.fontSize = +size;
     document.documentElement.style.setProperty('--font-size-base', this.fontSize + 'px');
+    document.body.style.fontSize = this.fontSize + 'px'; // Aplica font-size inline a body para asegurar efecto
   }
+
 
 
   onFuenteChange(event: Event) {
