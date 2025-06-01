@@ -669,30 +669,72 @@ body.contraste-alto a:focus {
     /* resalta enlaces */
 }
 
+body.contraste-alto a,
+body.contraste-alto a:hover,
+body.contraste-alto a:focus,
 body.contraste-alto .btn-primary,
 body.contraste-alto .btn-primary:hover,
-body.contraste-alto .btn-primary:focus {
-    background-color: var(--color-acento) !important;
-    border-color: var(--color-acento) !important;
+body.contraste-alto .btn-primary:focus,
+body.contraste-alto h1,
+body.contraste-alto h2,
+body.contraste-alto h3,
+body.contraste-alto h4,
+body.contraste-alto h5,
+body.contraste-alto h6 {
+    color: white !important; /* O algún color claro visible */
+    background-color: transparent !important;
 }
 
-/* Contraste Bajo */
+body.contraste-alto .card,
+body.contraste-alto .dropdown-menu,
+body.contraste-alto .form-control,
+body.contraste-alto .form-select {
+    background-color: #222 !important;
+    color: white !important;
+    border-color: white !important;
+}
+
+body.contraste-alto .btn,
+body.contraste-alto .btn i,
+body.contraste-alto .material-icons,
+body.contraste-alto mat-icon {
+    color: white !important;
+}
+
+
+/* Bajo contraste: fondo claro con texto oscuro */
 body.contraste-bajo,
-body.contraste-bajo * {
-    background-color: #f7f7f7 !important;
-    color: #222 !important;
-    border-color: #222 !important;
+body.contraste-bajo *,
+body.contraste-bajo .app-home {
+  background-color: #f7f7f7 !important; /* fondo claro */
+  color: #222 !important; /* texto oscuro */
 }
 
+/* Asegura que enlaces y botones tengan buen contraste */
 body.contraste-bajo a,
 body.contraste-bajo a:hover,
-body.contraste-bajo a:focus {
-    color: var(--color-acento) !important;
-}
-
+body.contraste-bajo a:focus,
 body.contraste-bajo .btn-primary,
 body.contraste-bajo .btn-primary:hover,
 body.contraste-bajo .btn-primary:focus {
-    background-color: var(--color-acento) !important;
-    border-color: var(--color-acento) !important;
+  color: var(--color-primario) !important; /* azul oscuro */
+  background-color: transparent !important;
+}
+
+/* Fondos para componentes en modo bajo contraste */
+body.contraste-bajo .card,
+body.contraste-bajo .dropdown-menu,
+body.contraste-bajo .form-control,
+body.contraste-bajo .form-select {
+  background-color: white !important;
+  color: #222 !important;
+  border-color: #ccc !important;
+}
+
+/* Iconos visibles en bajo contraste */
+body.contraste-bajo .btn,
+body.contraste-bajo .btn i,
+body.contraste-bajo .material-icons,
+body.contraste-bajo mat-icon {
+  color: var(--color-primario) !important;
 }
