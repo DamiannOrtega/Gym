@@ -1,0 +1,26 @@
+body.contraste-alto {
+    background-color: black !important;
+    color: white !important;
+}
+
+body.contraste-bajo {
+    background-color: #f7f7f7 !important;
+    color: #222 !important;
+}
+
+body.fuente-arial {
+    font-family: Arial, sans-serif !important;
+}
+
+body.fuente-verdana {
+    font-family: Verdana, sans-serif !important;
+}
+
+body.fuente-roboto {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+body {
+    font-size: var(--font-size-base);
+    transition: all 0.3s ease;
+}
