@@ -41,6 +41,7 @@
     --espaciado-md: 1rem;
     --espaciado-lg: 1.5rem;
     --espaciado-xl: 2rem;
+
 }
 
 /* Estilos globales */
@@ -681,7 +682,8 @@ body.contraste-alto h3,
 body.contraste-alto h4,
 body.contraste-alto h5,
 body.contraste-alto h6 {
-    color: white !important; /* O algún color claro visible */
+    color: white !important;
+    /* O algún color claro visible */
     background-color: transparent !important;
 }
 
@@ -706,8 +708,10 @@ body.contraste-alto mat-icon {
 body.contraste-bajo,
 body.contraste-bajo *,
 body.contraste-bajo .app-home {
-  background-color: #f7f7f7 !important; /* fondo claro */
-  color: #222 !important; /* texto oscuro */
+    background-color: #f7f7f7 !important;
+    /* fondo claro */
+    color: #222 !important;
+    /* texto oscuro */
 }
 
 /* Asegura que enlaces y botones tengan buen contraste */
@@ -717,8 +721,9 @@ body.contraste-bajo a:focus,
 body.contraste-bajo .btn-primary,
 body.contraste-bajo .btn-primary:hover,
 body.contraste-bajo .btn-primary:focus {
-  color: var(--color-primario) !important; /* azul oscuro */
-  background-color: transparent !important;
+    color: var(--color-primario) !important;
+    /* azul oscuro */
+    background-color: transparent !important;
 }
 
 /* Fondos para componentes en modo bajo contraste */
@@ -726,9 +731,9 @@ body.contraste-bajo .card,
 body.contraste-bajo .dropdown-menu,
 body.contraste-bajo .form-control,
 body.contraste-bajo .form-select {
-  background-color: white !important;
-  color: #222 !important;
-  border-color: #ccc !important;
+    background-color: white !important;
+    color: #222 !important;
+    border-color: #ccc !important;
 }
 
 /* Iconos visibles en bajo contraste */
@@ -736,5 +741,205 @@ body.contraste-bajo .btn,
 body.contraste-bajo .btn i,
 body.contraste-bajo .material-icons,
 body.contraste-bajo mat-icon {
-  color: var(--color-primario) !important;
+    color: var(--color-primario) !important;
+}
+
+/* Modos contraste para normas */
+
+/* Contraste alto: fondo oscuro */
+body.contraste-alto .norma-card {
+    background-color: #162f4b;
+    /* azul oscuro */
+    color: #ffffff;
+    /* texto claro */
+    border-radius: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.contraste-alto .norma-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
+}
+
+body.contraste-alto .icono-card {
+    color: #4a90e2;
+}
+
+body.contraste-alto .divisor {
+    background-color: #4a90e2;
+    height: 2px;
+    border: none;
+}
+
+body.contraste-alto .norma-item,
+body.contraste-alto .norma-item span {
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+body.contraste-alto .icono-punto {
+    color: #6c63ff;
+    font-size: 1.2rem;
+}
+
+/* Contraste bajo: fondo claro */
+body.contraste-bajo .norma-card {
+    background-color: #fff;
+    /* fondo blanco */
+    color: #222;
+    /* texto oscuro */
+    border-radius: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #ccc;
+}
+
+body.contraste-bajo .norma-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+body.contraste-bajo .icono-card {
+    color: #0f52ba;
+    /* azul principal */
+}
+
+body.contraste-bajo .divisor {
+    background-color: #0f52ba;
+    height: 2px;
+    border: none;
+}
+
+body.contraste-bajo .norma-item,
+body.contraste-bajo .norma-item span {
+    color: #222;
+    font-size: 1rem;
+}
+
+body.contraste-bajo .icono-punto {
+    color: #4a90e2;
+    font-size: 1.2rem;
+}
+
+/* Contraste Alto - para Normas */
+body.contraste-alto .norma-card {
+    background-color: #162f4b !important;
+    /* azul oscuro */
+    color: #ffffff !important;
+    /* texto blanco */
+    border-radius: 1rem !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.contraste-alto .norma-card:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3) !important;
+}
+
+body.contraste-alto .norma-card,
+body.contraste-alto .norma-card * {
+    color: #ffffff !important;
+    /* forzar color blanco en todo el contenido */
+}
+
+body.contraste-alto .icono-card {
+    color: #4a90e2 !important;
+}
+
+body.contraste-alto .divisor {
+    background-color: #4a90e2 !important;
+    height: 2px;
+    border: none;
+}
+
+body.contraste-alto .norma-item,
+body.contraste-alto .norma-item span {
+    color: #ffffff !important;
+    font-size: 1rem;
+}
+
+body.contraste-alto .icono-punto {
+    color: #6c63ff !important;
+    font-size: 1.2rem;
+}
+
+body.contraste-alto mat-icon {
+    color: #ffffff !important;
+    /* Asegura color de iconos */
+}
+
+/* Contraste Bajo - para Normas */
+body.contraste-bajo .norma-card {
+    background-color: #ffffff !important;
+    /* blanco */
+    color: #222222 !important;
+    /* texto oscuro */
+    border-radius: 1rem !important;
+    border: 1px solid #ccc !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.contraste-bajo .norma-card:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+body.contraste-bajo .norma-card,
+body.contraste-bajo .norma-card * {
+    color: #222222 !important;
+    /* forzar color oscuro en todo el contenido */
+}
+
+body.contraste-bajo .icono-card {
+    color: #0f52ba !important;
+    /* azul principal */
+}
+
+body.contraste-bajo .divisor {
+    background-color: #0f52ba !important;
+    height: 2px;
+    border: none;
+}
+
+body.contraste-bajo .norma-item,
+body.contraste-bajo .norma-item span {
+    color: #222222 !important;
+    font-size: 1rem;
+}
+
+body.contraste-bajo .icono-punto {
+    color: #4a90e2 !important;
+    font-size: 1.2rem;
+}
+
+body.contraste-bajo mat-icon {
+    color: #222222 !important;
+    /* Asegura color de iconos */
+}
+
+/* Contraste Alto - texto e íconos blancos */
+body.contraste-alto .norma-card,
+body.contraste-alto .norma-card *,
+body.contraste-alto .norma-card mat-icon,
+body.contraste-alto .norma-card mat-icon *,
+body.contraste-alto .norma-card mat-list,
+body.contraste-alto .norma-card mat-list *,
+body.contraste-alto .norma-card mat-list-item,
+body.contraste-alto .norma-card mat-list-item *,
+body.contraste-alto .norma-card mat-list-item span {
+    color: #fff !important;
+    fill: #fff !important;
+}
+
+/* Contraste Bajo - texto e íconos oscuros */
+body.contraste-bajo .norma-card,
+body.contraste-bajo .norma-card *,
+body.contraste-bajo .norma-card mat-icon,
+body.contraste-bajo .norma-card mat-icon *,
+body.contraste-bajo .norma-card mat-list,
+body.contraste-bajo .norma-card mat-list *,
+body.contraste-bajo .norma-card mat-list-item,
+body.contraste-bajo .norma-card mat-list-item *,
+body.contraste-bajo .norma-card mat-list-item span {
+    color: #222 !important;
+    fill: #222 !important;
 }
