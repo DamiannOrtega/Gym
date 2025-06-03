@@ -1,108 +1,115 @@
 <div class="container mt-5" style="max-width: 450px;">
 
   @if (!mostrarFormularioAdmin) {
-    <!-- FORMULARIO DE REGISTRO DE USUARIO -->
-    <div class="text-center mb-4 text-light">
-      <i class="fas fa-user-plus fa-3x mb-3 text-accent"></i>
-      <h2>Registro de Usuario</h2>
-      <p class="text-muted">Crea tu cuenta para acceder a FitZone</p>
-    </div>
-  
-    <div class="shadow" style="background-color: #1d3854;">
-      <div class="card-body p-4">
-        <form (ngSubmit)="registrarUsuario()">
-          <div class="mb-3">
-            <label class="form-label text-light">Nombre completo</label>
-            <input [(ngModel)]="registro.nombre" name="nombre" class="form-control" required>
-          </div>
-  
-          <div class="mb-3">
-            <label class="form-label text-light">Correo electrónico</label>
-            <input [(ngModel)]="registro.correo" name="correo" type="email" class="form-control" required>
-          </div>
-  
-          <div class="mb-3">
-            <label class="form-label text-light">Contraseña</label>
-            <input [(ngModel)]="registro.contrasena" name="contrasena" type="password" class="form-control"
-              required minlength="8" pattern="(?=.*[A-Z])(?=.*\\d)(?=.*_)[A-Za-z\\d_]+">
-            <div class="form-text text-light">
-              Mínimo 8 caracteres. Al menos una mayúscula, un número y el carácter "_".
-            </div>
-          </div>
-  
-          <div class="mb-3">
-            <label class="form-label text-light">Confirmar contraseña</label>
-            <input [(ngModel)]="registro.confirmar" name="confirmar" type="password" class="form-control" required>
-          </div>
-  
-          @if (registroError) {
-          <div class="alert alert-danger">
-            <i class="fas fa-exclamation-triangle me-2"></i>
-            {{ registroError }}
-          </div>
-          }
-  
-          <button type="submit" class="btn btn-success w-100 py-2 mb-3">
-            <i class="fas fa-user-check me-2"></i>Registrarse
-          </button>
-        </form>
-  
-        <!--  Iniciar sesión si ya tiene cuenta -->
-        <button class="btn btn-outline-light w-100 mb-3" (click)="mostrarFormularioAdmin = true">
-          <i class="fas fa-sign-in-alt me-2"></i>¿Ya tienes cuenta? Inicia sesión
-        </button>
-  
-        <!--  Iniciar sesión con Google -->
-        <div class="text-center">
-          <button class="btn btn-light rounded-circle p-2" (click)="iniciarSesionConGoogle()" title="Iniciar sesión con Google">
-            <i class="fab fa-google fa-lg text-danger"></i>
-          </button>
-          <p class="text-light mt-2" style="font-size: 0.9rem;">Iniciar sesión con Google</p>
+  <!-- FORMULARIO DE REGISTRO DE USUARIO -->
+  <div class="text-center mb-4 text-light">
+    <i class="fas fa-user-plus fa-3x mb-3 text-accent"></i>
+    <h2>Registro de Usuario</h2>
+    <p class="text-muted">Crea tu cuenta para acceder a FitZone</p>
+  </div>
+
+  <div class="shadow" style="background-color: #1d3854;">
+    <div class="card-body p-4">
+      <form (ngSubmit)="registrarUsuario()">
+        <div class="mb-3">
+          <label class="form-label text-light">Nombre completo</label>
+          <input [(ngModel)]="registro.nombre" name="nombre" class="form-control" required>
         </div>
-  
+
+        <div class="mb-3">
+          <label class="form-label text-light">Correo electrónico</label>
+          <input [(ngModel)]="registro.correo" name="correo" type="email" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label text-light">Contraseña</label>
+          <input [(ngModel)]="registro.contrasena" name="contrasena" type="password" class="form-control" required
+            minlength="8" pattern="(?=.*[A-Z])(?=.*\\d)(?=.*_)[A-Za-z\\d_]+">
+          <div class="form-text text-light">
+            Mínimo 8 caracteres. Al menos una mayúscula, un número y el carácter "_".
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label text-light">Confirmar contraseña</label>
+          <input [(ngModel)]="registro.confirmar" name="confirmar" type="password" class="form-control" required>
+        </div>
+
+        @if (registroError) {
+        <div class="alert alert-danger">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          {{ registroError }}
+        </div>
+        }
+
+        <button type="submit" class="btn btn-success w-100 py-2 mb-3">
+          <i class="fas fa-user-check me-2"></i>Registrarse
+        </button>
+      </form>
+
+      <!--  Iniciar sesión si ya tiene cuenta -->
+      <button class="btn btn-outline-light w-100 mb-3" (click)="mostrarFormularioAdmin = true">
+        <i class="fas fa-sign-in-alt me-2"></i>¿Ya tienes cuenta? Inicia sesión
+      </button>
+
+      <!--  Iniciar sesión con Google -->
+      <div class="text-center">
+        <button class="btn btn-light rounded-circle p-2" (click)="iniciarSesionConGoogle()"
+          title="Iniciar sesión con Google">
+          <i class="fab fa-google fa-lg text-danger"></i>
+        </button>
+        <p class="text-light mt-2" style="font-size: 0.9rem;">Iniciar sesión con Google</p>
       </div>
+
     </div>
-  }   @else {
-    <!-- FORMULARIO DE LOGIN ADMIN -->
-    <div class="text-center mb-4 text-light">
-      <i class="fas fa-dumbbell fa-3x mb-3 text-accent"></i>
-      <h2>Acceso Administrativo</h2>
-      <p class="text-muted">Inicia sesión para gestionar FitZone</p>
+  </div>
+  } @else {
+  <!-- FORMULARIO DE LOGIN ADMIN -->
+  <div class="text-center mb-4 text-light">
+    <i class="fas fa-dumbbell fa-3x mb-3 text-accent"></i>
+    <h2>Acceso Administrativo</h2>
+    <p class="text-muted">Inicia sesión para gestionar FitZone</p>
+  </div>
+
+  <div class="shadow" style="background-color: #1d3854;">
+    <div class="card-body p-4">
+      <form (ngSubmit)="login()">
+        <div class="mb-4">
+          <label for="username" class="form-label text-light">Usuario</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-user"></i></span>
+            <input [(ngModel)]="username" name="username" id="username" class="form-control"
+              placeholder="Nombre de usuario" required autocomplete="username" />
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="password" class="form-label text-light">Contraseña</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+            <input [(ngModel)]="password" type="password" name="password" id="password" class="form-control"
+              placeholder="Contraseña" required autocomplete="current-password" />
+          </div>
+        </div>
+
+        @if (errorMessage) {
+        <div class="alert alert-danger">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          {{ errorMessage }}
+        </div>
+        }
+
+        <!-- CAPTCHA -->
+        <div class="mb-3 text-center">
+          <div class="g-recaptcha" data-sitekey="6LdN91MrAAAAADNDxiuaWHDz2qAkgPTOTDHnuqm5">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 py-2">
+          <i class="fas fa-sign-in-alt me-2"></i>Iniciar sesión
+        </button>
+      </form>
     </div>
-
-    <div class="shadow" style="background-color: #1d3854;">
-      <div class="card-body p-4">
-        <form (ngSubmit)="login()">
-          <div class="mb-4">
-            <label for="username" class="form-label text-light">Usuario</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="fas fa-user"></i></span>
-              <input [(ngModel)]="username" name="username" id="username" class="form-control"
-                placeholder="Nombre de usuario" required autocomplete="username" />
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <label for="password" class="form-label text-light">Contraseña</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="fas fa-lock"></i></span>
-              <input [(ngModel)]="password" type="password" name="password" id="password" class="form-control"
-                placeholder="Contraseña" required autocomplete="current-password" />
-            </div>
-          </div>
-
-          @if (errorMessage) {
-          <div class="alert alert-danger">
-            <i class="fas fa-exclamation-triangle me-2"></i>
-            {{ errorMessage }}
-          </div>
-          }
-
-          <button type="submit" class="btn btn-primary w-100 py-2">
-            <i class="fas fa-sign-in-alt me-2"></i>Iniciar sesión
-          </button>
-        </form>
-      </div>
-    </div>
+  </div>
   }
 </div>
