@@ -1,57 +1,61 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
-// Interfaz que define la estructura de un usuario administrador
 interface AdminUser {
-  username: string; // Nombre de usuario
-  password: string; // Contraseña
-  nombre: string;   // Nombre completo del administrador
+  username: string;
+  password: string;
+  nombre: string;
 }
 
-// Lista de usuarios administradores predefinidos
 const ADMINS: AdminUser[] = [
   { username: 'admin1', password: '1234', nombre: 'Carlos Enrique' },
   { username: 'admin2', password: 'abcd', nombre: 'Juan Damián' },
   { username: 'admin3', password: 'pass', nombre: 'Alan Gael' }
 ];
 
-// Decorador que marca esta clase como un servicio inyectable en Angular
-@Injectable({
-  providedIn: 'root' // Hace que el servicio esté disponible en toda la aplicación
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly key = 'currentAdmin'; // Clave usada para almacenar el nombre del admin en localStorage
-  currentAdmin = signal<string | null>(localStorage.getItem(this.key)); // Signal que almacena el estado del admin actual
+  private readonly key = 'currentAdmin';
+  currentAdmin = signal<string | null>(localStorage.getItem(this.key));
+  usuarioActual = signal<string | null>(localStorage.getItem('nombreUsuario'));
 
-  constructor(private router: Router) {} // Inyecta el servicio Router para manejar la navegación
+  constructor(private router: Router) {}
 
-  // Método para iniciar sesión
   login(username: string, password: string): boolean {
-    // Busca un usuario en la lista de administradores que coincida con el username y password
     const found = ADMINS.find(a => a.username === username && a.password === password);
     if (found) {
-      // Si se encuentra, guarda el nombre del admin en localStorage y actualiza el signal
       localStorage.setItem(this.key, found.nombre);
+      localStorage.setItem('rol', 'admin');
       this.currentAdmin.set(found.nombre);
-      return true; // Retorna true indicando que el login fue exitoso
+      return true;
     }
-    return false; // Retorna false si las credenciales no coinciden
+    return false;
   }
 
-  // Método para cerrar sesión
   logout(): void {
-    localStorage.removeItem(this.key); // Elimina el nombre del admin de localStorage
-    this.currentAdmin.set(null); // Resetea el signal a null
-    this.router.navigate(['/']); // Redirige al usuario a la página de inicio
+    localStorage.removeItem('currentAdmin');
+    localStorage.removeItem('nombreUsuario');
+    localStorage.removeItem('rol');
+    this.currentAdmin.set(null);
+    this.usuarioActual.set(null);
+    this.router.navigate(['/']);
   }
 
-  // Método para verificar si hay un usuario logueado
   isLoggedIn(): boolean {
-    return this.currentAdmin() !== null; // Retorna true si hay un admin en el signal, false si no
+    return this.currentAdmin() !== null || this.usuarioActual() !== null;
   }
 
-  // Método para obtener el nombre del administrador actual
-  getAdminName(): string {
-    return this.currentAdmin() ?? ''; // Retorna el nombre del admin o una cadena vacía si no hay ninguno
+  getNombreMostrado(): string {
+    return this.currentAdmin() ?? this.usuarioActual() ?? '';
+  }
+
+  getRol(): string {
+    return localStorage.getItem('rol') || '';
+  }
+
+  setUsuario(nombre: string): void {
+    localStorage.setItem('nombreUsuario', nombre);
+    localStorage.setItem('rol', 'usuario');
+    this.usuarioActual.set(nombre);
   }
 }

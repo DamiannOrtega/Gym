@@ -9,7 +9,7 @@ import CryptoJS from 'crypto-js';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import Swal from 'sweetalert2';
 
-declare var grecaptcha: any; // ✅ para acceder al captcha global de Google
+declare var grecaptcha: any;
 
 @Component({
   standalone: true,
@@ -19,12 +19,10 @@ declare var grecaptcha: any; // ✅ para acceder al captcha global de Google
 })
 export class LoginComponent {
 
-  // login para admin
   username = '';
   password = '';
   errorMessage = '';
 
-  // registro
   registro = {
     nombre: '',
     correo: '',
@@ -33,10 +31,8 @@ export class LoginComponent {
   };
   registroError = '';
 
-  // control de formularios
   mostrarFormularioAdmin = false;
 
-  // comando oculto
   private inputOculto = '';
   private timeout: any;
 
@@ -46,18 +42,17 @@ export class LoginComponent {
     private router: Router
   ) {}
 
-  // login con validación de captcha
   login(): void {
-    const token = grecaptcha.getResponse(); // ✅ obtiene el token del captcha
+    // const token = grecaptcha.getResponse();
 
-    if (!token) {
-      this.errorMessage = '❌ Completa el reCAPTCHA para continuar.';
-      return;
-    }
+    // if (!token) {
+    //   this.errorMessage = '❌ Completa el reCAPTCHA para continuar.';
+    //   return;
+    // }
 
     if (!this.authService.login(this.username, this.password)) {
       this.errorMessage = '❌ Credenciales incorrectas. Intenta de nuevo.';
-      grecaptcha.reset(); // 🔄 reinicia el captcha visualmente
+      // grecaptcha.reset();
     } else {
       localStorage.setItem('nombreUsuario', this.username);
       localStorage.setItem('rol', 'admin');
@@ -66,7 +61,6 @@ export class LoginComponent {
     }
   }
 
-  // Registro de usuario
   registrarUsuario(): void {
     const { nombre, correo, contrasena, confirmar } = this.registro;
 
@@ -88,6 +82,7 @@ export class LoginComponent {
       correo,
       contrasena: contrasenaHash
     }).then(() => {
+      this.authService.setUsuario(nombre);
       Swal.fire({
         icon: 'success',
         title: 'Registro exitoso',
@@ -97,8 +92,6 @@ export class LoginComponent {
       });
       this.registro = { nombre: '', correo: '', contrasena: '', confirmar: '' };
       this.registroError = '';
-      localStorage.setItem('nombreUsuario', nombre);
-      localStorage.setItem('rol', 'usuario');
     }).catch(() => {
       Swal.fire({
         icon: 'error',
@@ -108,7 +101,6 @@ export class LoginComponent {
     });
   }
 
-  // teclado oculto para cambiar de vista
   @HostListener('document:keydown', ['$event'])
   detectarComando(event: KeyboardEvent) {
     clearTimeout(this.timeout);
@@ -134,15 +126,18 @@ export class LoginComponent {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
+        const nombreGoogle = user.displayName || 'Usuario';
+
+        this.authService.setUsuario(nombreGoogle);
+
         Swal.fire({
           icon: 'success',
           title: 'Inicio de sesión correcto',
-          text: `Bienvenido, ${user.displayName}`,
+          text: `Bienvenido, ${nombreGoogle}`,
           timer: 2000,
           showConfirmButton: false
         });
-        localStorage.setItem('nombreUsuario', user.displayName || 'Usuario');
-        localStorage.setItem('rol', 'usuario');
+
         this.router.navigate(['/']);
       })
       .catch(() => {
