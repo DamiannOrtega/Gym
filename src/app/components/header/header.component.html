@@ -63,6 +63,62 @@
           </ul>
         </li>
         }
+
+        <!-- Accesibilidad -->
+        <li class="nav-item dropdown" [class.show]="showAccMenu">
+          <a class="nav-link dropdown-toggle" href="#" role="button" [attr.aria-expanded]="showAccMenu"
+            (click)="toggleAccMenu()" id="accesibilidadDropdown" aria-haspopup="true"
+            aria-label="Opciones de accesibilidad">
+            <i class="fas fa-universal-access me-2 animate-icon"></i> <span>Accesibilidad</span>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end" [class.show]="showAccMenu"
+            aria-labelledby="accesibilidadDropdown">
+            <li class="px-3 py-2">
+              <!-- Lector de pantalla -->
+              <div class="mb-2">
+                <strong>Lector de pantalla</strong><br />
+                <button class="btn btn-icon me-1" (click)="startOrPauseReading()"
+                  aria-label="Reproducir o pausar lectura">
+                  <i class="fas" [ngClass]="isPaused || !isSpeaking ? 'fa-play' : 'fa-pause'"></i>
+                </button>
+                <button class="btn btn-icon stop" (click)="restartReading()" aria-label="Reiniciar lectura">
+                  <i class="fas fa-redo"></i>
+                </button>
+              </div>
+
+              <!-- Contraste -->
+              <div class="mb-2">
+                <label for="contrasteSelect" class="form-label">Contraste:</label>
+                <select id="contrasteSelect" class="form-select form-select-sm" (change)="onContrasteChange($event)"
+                  aria-label="Selector de contraste">
+                  <option value="normal" selected>Normal</option>
+                  <option value="alto">Alto contraste</option>
+                  <option value="bajo">Bajo contraste</option>
+                </select>
+              </div>
+
+              <!-- Tamaño de texto -->
+              <div class="mb-2">
+                <label for="fontSizeRange" class="form-label">Tamaño texto:</label>
+                <input type="range" id="fontSizeRange" class="form-range" min="12" max="30" [value]="fontSize"
+                  (input)="onFontSizeChange($event)" aria-valuemin="12" aria-valuemax="30"
+                  [attr.aria-valuenow]="fontSize" />
+              </div>
+
+              <!-- Fuente -->
+              <div>
+                <label for="fuenteSelect" class="form-label">Fuente:</label>
+                <select id="fuenteSelect" class="form-select form-select-sm" (change)="onFuenteChange($event)"
+                  aria-label="Selector de fuente">
+                  <option value="arial" selected>Arial</option>
+                  <option value="verdana">Verdana</option>
+                  <option value="roboto">Roboto</option>
+                </select>
+              </div>
+            </li>
+          </ul>
+        </li>
       </ul>
 
       @if (authService.isLoggedIn()) {
@@ -82,58 +138,7 @@
     </div>
   </div>
 
-  <!-- Accesibilidad -->
-  <li class="nav-item dropdown" [class.show]="showAccMenu">
-    <a class="nav-link dropdown-toggle" href="#" role="button" [attr.aria-expanded]="showAccMenu"
-      (click)="toggleAccMenu()" id="accesibilidadDropdown" aria-haspopup="true" aria-label="Opciones de accesibilidad">
-      <i class="fas fa-universal-access me-1"></i> Accesibilidad
-    </a>
 
-    <ul class="dropdown-menu dropdown-menu-end" [class.show]="showAccMenu" aria-labelledby="accesibilidadDropdown">
-      <li class="px-3 py-2">
-        <!-- Lector de pantalla -->
-        <div class="mb-2">
-          <strong>Lector de pantalla</strong><br />
-          <button class="btn btn-sm btn-outline-primary me-1" (click)="startReading()"
-            aria-label="Iniciar lectura">▶️</button>
-          <button class="btn btn-sm btn-outline-primary me-1" (click)="pauseReading()"
-            aria-label="Pausar lectura">⏸️</button>
-          <button class="btn btn-sm btn-outline-primary me-1" (click)="resumeReading()"
-            aria-label="Reanudar lectura">▶️</button>
-          <button class="btn btn-sm btn-outline-danger" (click)="stopReading()" aria-label="Detener lectura">⏹️</button>
-        </div>
-
-        <!-- Contraste -->
-        <div class="mb-2">
-          <label for="contrasteSelect" class="form-label">Contraste:</label>
-          <select id="contrasteSelect" class="form-select form-select-sm" (change)="onContrasteChange($event)"
-            aria-label="Selector de contraste">
-            <option value="normal" selected>Normal</option>
-            <option value="alto">Alto contraste</option>
-            <option value="bajo">Bajo contraste</option>
-          </select>
-        </div>
-
-        <!-- Tamaño de texto -->
-        <div class="mb-2">
-          <label for="fontSizeRange" class="form-label">Tamaño texto:</label>
-          <input type="range" id="fontSizeRange" class="form-range" min="12" max="30" [value]="fontSize"
-            (input)="onFontSizeChange($event)" aria-valuemin="12" aria-valuemax="30" [attr.aria-valuenow]="fontSize" />
-        </div>
-
-        <!-- Fuente -->
-        <div>
-          <label for="fuenteSelect" class="form-label">Fuente:</label>
-          <select id="fuenteSelect" class="form-select form-select-sm" (change)="onFuenteChange($event)"
-            aria-label="Selector de fuente">
-            <option value="arial" selected>Arial</option>
-            <option value="verdana">Verdana</option>
-            <option value="roboto">Roboto</option>
-          </select>
-        </div>
-      </li>
-    </ul>
-  </li>
 
 
 </nav>
