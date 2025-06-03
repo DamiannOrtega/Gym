@@ -34,7 +34,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/contacto" routerLinkActive="active">
+          <a class="nav-link" routerLink="/contacto" routerLinkActive="active" >
             <mat-icon class="me-1">mail</mat-icon> Contacto
           </a>
         </li>
@@ -66,7 +66,7 @@
 
         <!-- Accesibilidad -->
         <li class="nav-item dropdown" [class.show]="showAccMenu">
-          <a class="nav-link dropdown-toggle" href="#" role="button" [attr.aria-expanded]="showAccMenu"
+          <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" [attr.aria-expanded]="showAccMenu"
             (click)="toggleAccMenu()" id="accesibilidadDropdown" aria-haspopup="true"
             aria-label="Opciones de accesibilidad">
             <i class="fas fa-universal-access me-2 animate-icon"></i> <span>Accesibilidad</span>
@@ -131,7 +131,7 @@
         </button>
       </div>
       } @else {
-      <a class="btn btn-outline-light btn-sm" routerLink="/login">
+      <a class="btn btn-outline-light btn-sm" routerLink="/login" (mouseover)="leerElementoConMouse($event)">
         <i class="fas fa-sign-in-alt me-1"></i> Iniciar sesión
       </a>
       }

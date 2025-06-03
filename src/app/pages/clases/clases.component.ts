@@ -34,4 +34,24 @@ export class ClasesComponent {
     }
   }
 
+  leerNombreClase(event: MouseEvent) {
+    const target = event.currentTarget as HTMLElement;
+    const nombre = target.getAttribute('data-nombre');
+
+    // Si ya está pausado o vacío, no leer
+    if (!nombre || speechSynthesis.paused) return;
+
+    const utterance = new SpeechSynthesisUtterance(nombre);
+    const voz = speechSynthesis.getVoices().find(v => v.name === 'Microsoft Sabina') ||
+      speechSynthesis.getVoices().find(v => v.lang.startsWith('es'));
+
+    utterance.voice = voz || null;
+    utterance.rate = 1;
+    utterance.pitch = 1.1;
+
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utterance);
+  }
+
+
 }
