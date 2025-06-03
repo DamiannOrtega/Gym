@@ -11,9 +11,16 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {
-
+  nombre = '';
+  esAdmin = false;
+  
   logo = 'assets/img/Logo2.png';
   constructor(public authService: AuthService) {}
+
+  ngOnInit() {
+    this.nombre = localStorage.getItem('nombreUsuario') || '';
+    this.esAdmin = localStorage.getItem('rol') === 'admin';
+  }
 
   logout() {
     this.authService.logout();
