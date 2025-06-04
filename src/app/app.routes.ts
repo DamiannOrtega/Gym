@@ -9,6 +9,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { AdminFormTemplateComponent } from './pages/admin-form-template/admin-form-template.component';
 import { AdminContactoComponent } from './pages/admin-contacto/admin-contacto.component';
 import { RulesComponent } from './pages/rules/rules.component';
+import { GraficaComponent } from './pages/grafica/grafica.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,6 +20,7 @@ export const routes: Routes = [
   { path: 'videos', loadComponent: () => import('./pages/videos/videos.component').then(m => m.VideosComponent) },
   { path: 'reglas', component: RulesComponent},
   { path: 'login', component: LoginComponent },
+  { path: 'admin/grafica', component: GraficaComponent},
   { path: 'admin/form-template', component: AdminFormTemplateComponent, canActivate: [authGuard] },
   { path: 'admin/contacto', component: AdminContactoComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: '' } // ruta comodín por si no encuentra coincidencias
