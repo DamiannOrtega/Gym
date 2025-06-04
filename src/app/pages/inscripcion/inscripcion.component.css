@@ -231,33 +231,49 @@ select::placeholder {
     color: #bbb !important;
 }
 
-/* Estilos para errores y alertas más visibles y en español */
-.paypal-button-error {
-    color: #ff6b6b !important;
-    font-weight: 700;
-    font-size: 0.9rem;
-    margin-top: 0.3rem;
+/* Estilos para el contenedor del botón de PayPal */
+.paypal-button-container {
+    text-align: center;
+    /* Alinea el botón de PayPal al centro */
+    padding: 20px;
+    /* Da un poco de espacio alrededor del contenedor */
+    border-radius: 8px;
+    /* Esquinas redondeadas */
+    background-color: #f8f9fa;
+    /* Fondo claro para resaltar el botón de PayPal */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra sutil */
 }
 
-/* Botón PayPal: color personalizado para mejor contraste */
-.paypal-button {
-    background-color: #4a89dc !important;
-    color: #fff !important;
-    font-weight: 600;
-    border-radius: 10px !important;
-    padding: 12px 0 !important;
-    font-size: 1rem !important;
-    box-shadow: 0 4px 10px rgba(74, 137, 220, 0.6) !important;
-    transition: background-color 0.3s ease !important;
+/* Estilos para el botón de inscripción */
+.submit-button {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    /* Animación suave para el cambio de fondo */
 }
 
-.paypal-button:hover {
-    background-color: #5a95e2 !important;
+.submit-button:disabled {
+    background-color: #6c757d !important;
+    /* Gris cuando está deshabilitado */
+    cursor: not-allowed;
 }
 
-/* Texto de ayuda y etiquetas dentro del contenedor */
-.paypal-label {
-    color: #c1c1c1 !important;
-    font-size: 0.9rem;
-    font-weight: 500;
+.submit-button:hover:enabled {
+    background-color: #0056b3;
+    /* Color azul más fuerte al pasar el ratón */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra cuando el botón es presionable */
+}
+
+.submit-button i {
+    font-size: 1.1em;
+    /* Hace el icono un poco más grande */
+}
+
+/* Estilos adicionales para mejorar la apariencia general */
+button:focus,
+.paypal-button-container:focus {
+    outline: none;
+    /* Evita el borde predeterminado del foco */
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+    /* Borde de foco azul */
 }

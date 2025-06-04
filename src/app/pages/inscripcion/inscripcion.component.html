@@ -145,18 +145,16 @@
       }
     </div>
 
-
-
-
     @if (mostrandoBotonPaypal) {
-    <div #paypalButtonContainer class="my-3"></div>
+    <div #paypalButtonContainer class="paypal-button-container my-3"></div>
     }
 
     @if (!mostrandoBotonPaypal) {
-    <button class="btn btn-dark w-100" [disabled]="!esFormularioValido(f) || fechaInvalida">
+    <button class="btn btn-dark w-100 submit-button" [disabled]="!esFormularioValido(f) || fechaInvalida">
       <i class="fas fa-paper-plane me-2"></i>Enviar inscripción y pagar
     </button>
     }
+
   </form>
 </div>
 
