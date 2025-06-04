@@ -7,19 +7,22 @@ import { FirebaseService } from '../../services/firebase.service';
 import CryptoJS from 'crypto-js';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import Swal from 'sweetalert2';
-
+import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
 declare var grecaptcha: any;
 
 @Component({
   standalone: true,
   selector: 'app-login',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RecaptchaModule],
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
   username = '';
   password = '';
   errorMessage = '';
+  captchaResponse: string = '';  // Almacena la respuesta del reCaptcha
+  captchaCompleted = false;      // Bandera para saber si el reCaptcha ha sido completado
+
 
   registro = {
     nombre: '',
@@ -40,7 +43,7 @@ export class LoginComponent {
     private authService: AuthService,
     private firebase: FirebaseService,
     private router: Router
-  ) {}
+  ) { }
 
   get icono(): string {
     if (this.modoRegistro) return 'fa-user-plus';
@@ -52,25 +55,38 @@ export class LoginComponent {
     return this.mostrarFormularioAdmin ? 'Inicio de Sesión de Administrador' : 'Inicio de Sesión de Usuario';
   }
 
+  resolved(captchaResponse: string | null): void {
+    this.captchaResponse = captchaResponse ?? '';  // Si es null, lo asignamos como cadena vacía
+    this.captchaCompleted = true;
+  }
+
+
+
   registrarUsuario(): void {
     const { nombre, usuario, correo, contrasena, confirmar } = this.registro;
-  
+
     const patron = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d_]{8,12}$/;
-    
+
+    // Verifica si el reCaptcha ha sido completado
+    if (!this.captchaCompleted) {
+      this.registroError = '❌ Debes completar el reCaptcha.';
+      return;
+    }
+
     // Verifica si la contraseña cumple con el patrón
     if (!patron.test(contrasena)) {
       this.registroError = '❌ La contraseña debe tener entre 8 y 12 caracteres, al menos una mayúscula, un número y solo letras, números y el carácter "_".';
       return;
     }
-  
+
     // Verifica si las contraseñas coinciden
     if (contrasena !== confirmar) {
       this.registroError = '❌ Las contraseñas no coinciden.';
       return;
     }
-  
+
     const coleccion = this.mostrarFormularioAdmin ? 'admins' : 'usuarios';
-  
+
     // Primero obtenemos los datos para validar que el usuario sea único
     this.firebase.obtenerDatos(coleccion).subscribe(usuarios => {
       const existeUsuario = usuarios.some(u => u.usuario === usuario);
@@ -78,12 +94,12 @@ export class LoginComponent {
         this.registroError = '❌ El nombre de usuario ya está en uso. Elige otro.';
         return;
       }
-  
+
       // Si es único, proceder a agregar
       const contrasenaHash = CryptoJS.SHA256(contrasena).toString();
       this.firebase.agregarDato(coleccion, {
         nombre,
-        usuario,   
+        usuario,
         correo,
         contrasena: contrasenaHash
       }).then(() => {
@@ -92,7 +108,7 @@ export class LoginComponent {
         } else {
           this.authService.setUsuario(nombre);
         }
-  
+
         Swal.fire({
           icon: 'success',
           title: 'Registro exitoso',
@@ -100,7 +116,7 @@ export class LoginComponent {
           timer: 2000,
           showConfirmButton: false
         });
-  
+
         this.registro = { nombre: '', usuario: '', correo: '', contrasena: '', confirmar: '' };
         this.registroError = '';
         this.router.navigate(['/']);
@@ -113,31 +129,36 @@ export class LoginComponent {
       });
     });
   }
-  
 
-login(): void {
-  const coleccion = this.mostrarFormularioAdmin ? 'admins' : 'usuarios';
-  const passwordHash = CryptoJS.SHA256(this.password).toString();
 
-  this.firebase.obtenerDatos(coleccion).subscribe(usuarios => {
-    const usuario = usuarios.find(u =>
-      u.usuario === this.username && u.contrasena === passwordHash
-    );
+  login(): void {
+    const coleccion = this.mostrarFormularioAdmin ? 'admins' : 'usuarios';
+    const passwordHash = CryptoJS.SHA256(this.password).toString();
 
-    if (usuario) {
-      if (this.mostrarFormularioAdmin) {
-        this.authService.setAdmin(usuario.nombre);
-      } else {
-        this.authService.setUsuario(usuario.nombre);
-      }
-
-      this.errorMessage = '';
-      this.router.navigate(['/']);
-    } else {
-      this.errorMessage = '❌ Credenciales incorrectas.';
+    if (!this.captchaCompleted) {
+      this.errorMessage = '❌ Debes completar el reCaptcha.';
+      return;
     }
-  });
-}
+
+    this.firebase.obtenerDatos(coleccion).subscribe(usuarios => {
+      const usuario = usuarios.find(u =>
+        u.usuario === this.username && u.contrasena === passwordHash
+      );
+
+      if (usuario) {
+        if (this.mostrarFormularioAdmin) {
+          this.authService.setAdmin(usuario.nombre);
+        } else {
+          this.authService.setUsuario(usuario.nombre);
+        }
+
+        this.errorMessage = '';
+        this.router.navigate(['/']);
+      } else {
+        this.errorMessage = '❌ Credenciales incorrectas.';
+      }
+    });
+  }
 
   iniciarSesionConGoogle() {
     const auth = getAuth();
@@ -153,12 +174,12 @@ login(): void {
         } else {
           this.authService.setUsuario(nombreGoogle);
         }
-        
+
 
         Swal.fire({
           icon: 'success',
           title: 'Inicio de sesión correcto',
-          text:  `Bienvenido, ${nombreGoogle} `,
+          text: `Bienvenido, ${nombreGoogle} `,
           timer: 2000,
           showConfirmButton: false
         });
@@ -178,21 +199,21 @@ login(): void {
   detectarComando(event: KeyboardEvent) {
     clearTimeout(this.timeout);
     this.inputOculto += event.key.toLowerCase();
-  
+
     if (this.inputOculto.includes('useradmin')) {
       this.mostrarFormularioAdmin = true;
       this.inputOculto = '';
     }
-  
+
     if (this.inputOculto.includes('useruser')) {
       this.mostrarFormularioAdmin = false;
       this.inputOculto = '';
     }
-  
+
     this.timeout = setTimeout(() => this.inputOculto = '', 1500);
   }
-      toggleModoRegistro(): void {
-        this.modoRegistro = !this.modoRegistro;
-      }
-    
+  toggleModoRegistro(): void {
+    this.modoRegistro = !this.modoRegistro;
+  }
+
 }
