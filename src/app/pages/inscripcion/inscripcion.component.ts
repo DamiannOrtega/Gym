@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { StorageService } from '../../services/storage.service';
@@ -63,7 +63,11 @@ export class InscripcionComponent {
   ];
 
   // Decorador @ViewChild para capturar el formulario (NgForm) desde el template
+  @ViewChild('paypalButtonContainer', { static: false }) paypalElement!: ElementRef;
   @ViewChild('f') formulario!: NgForm;
+
+  pagoCompletado = false;
+  mostrandoBotonPaypal = false;
 
 
 
@@ -77,7 +81,36 @@ export class InscripcionComponent {
     turno: ''
   };
 
+  // Precio según clase (ajusta según tus datos)
+  get precio(): number {
+    switch (this.inscripcion.clase) {
+      case 'Zumba': return 400;
+      case 'CrossFit': return 600;
+      case 'Yoga': return 500;
+      case 'Pilates': return 450;
+      case 'Spinning': return 350;
+      case 'Body Pump': return 550;
+      case 'Boxeo': return 500;
+      case 'KickBoxing': return 500;
+      case 'Pesos libres y máquinas': return 700;
+      default: return 500;
+    }
+  }
 
+  get precioSeleccionado(): number {
+    switch (this.inscripcion.clase) {
+      case 'Zumba': return 400;
+      case 'CrossFit': return 600;
+      case 'Yoga': return 500;
+      case 'Pilates': return 450;
+      case 'Spinning': return 350;
+      case 'Body Pump': return 550;
+      case 'Boxeo': return 500;
+      case 'KickBoxing': return 500;
+      case 'Pesos libres y máquinas': return 700;
+      default: return 0;
+    }
+  }
 
   // Inyección de servicios de almacenamiento y ruta activa
   constructor(private storage: StorageService, private route: ActivatedRoute) { }
@@ -100,10 +133,10 @@ export class InscripcionComponent {
       const fechaSeleccionada = new Date(this.inscripcion.fecha);
       const fechaHoy = new Date();
       fechaHoy.setHours(0, 0, 0, 0); // Ajustamos la hora para comparar solo las fechas
-  
+
       // Verificamos si la fecha seleccionada es un domingo (0 = domingo)
       this.esDomingo = fechaSeleccionada.getUTCDay() === 0;
-  
+
       // Si es un domingo, mostramos el mensaje de error para domingo
       if (this.esDomingo) {
         this.errorFecha = "No se permiten fechas en domingo, no trabajamos ese día.";
@@ -116,8 +149,8 @@ export class InscripcionComponent {
       }
     }
   }
-  
-  
+
+
 
 
   // Método para alternar la selección de días (checkboxes)
@@ -185,13 +218,61 @@ export class InscripcionComponent {
     // Guarda el array actualizado en el local storage
     this.storage.set('formularioTemplate', datos);
 
-    // Muestra un mensaje de éxito usando SweetAlert
-    Swal.fire('¡Registro exitoso!', 'Tu inscripción ha sido guardada.', 'success');
+    if (this.pagoCompletado) {
+      // Guardar datos (localStorage o backend)
+      const datos = this.storage.get<any>('formularioTemplate') || [];
+      datos.push(this.inscripcion);
+      this.storage.set('formularioTemplate', datos);
+      // Muestra un mensaje de éxito usando SweetAlert
+      Swal.fire('¡Registro exitoso!', 'Tu inscripción ha sido guardada.', 'success');
+      // Resetea el formulario para limpiarlo y reinicia la lista de días seleccionados
+      form.resetForm();
+      this.inscripcion.dias = [];
+      this.pagoCompletado = false;
+      this.mostrandoBotonPaypal = false;
+      return;
+    }
+    // Si no ha pagado, mostramos el botón PayPal
+    this.mostrandoBotonPaypal = true;
 
-    // Resetea el formulario para limpiarlo y reinicia la lista de días seleccionados
-    form.resetForm();
-    this.inscripcion.dias = [];
+    setTimeout(() => this.renderizarBotonPaypal(), 0);
   }
+
+  renderizarBotonPaypal() {
+    if (!this.paypalElement) return;
+
+    this.paypalElement.nativeElement.innerHTML = ''; // Limpia si había botón
+
+    // @ts-ignore
+    paypal.Buttons({
+      createOrder: (data: any, actions: any) => {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: this.precio.toString()
+            }
+          }]
+        });
+      },
+      onApprove: (data: any, actions: any) => {
+        return actions.order.capture().then((details: any) => {
+          Swal.fire('Pago completado', `Gracias, ${details.payer.name.given_name}!`, 'success');
+          this.pagoCompletado = true;
+          this.mostrandoBotonPaypal = false;
+          this.guardar(this.formulario); // Guardar inscripción después de pagar
+        });
+      },
+      onCancel: () => {
+        Swal.fire('Pago cancelado', 'El pago fue cancelado, inténtalo de nuevo.', 'info');
+        this.mostrandoBotonPaypal = false;
+      },
+      onError: (err: any) => {
+        Swal.fire('Error', 'Ocurrió un error con el pago: ' + err, 'error');
+        this.mostrandoBotonPaypal = false;
+      }
+    }).render(this.paypalElement.nativeElement);
+  }
+
 
   // Método que se ejecuta al inicializar el componente
   ngOnInit(): void {

@@ -201,6 +201,63 @@ form.card button.btn-dark:disabled {
 
 input[type="date"] {
     color-scheme: light;
-  }
-  
+}
 
+/* Contenedor PayPal más limpio y centrado */
+#paypal-button-container {
+    max-width: 400px;
+    margin: 1.5rem auto;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    background-color: #1d3854;
+    /* Igual que tu form.card para armonía */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+    color: #f1f1f1;
+    /* Texto claro para etiquetas externas */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Evita sombras internas muy oscuras en inputs */
+input,
+select {
+    background-color: #0e1c2d !important;
+    border-color: #2a4b6e !important;
+    color: #f1f1f1 !important;
+}
+
+/* Cambiar placeholder a gris claro */
+input::placeholder,
+select::placeholder {
+    color: #bbb !important;
+}
+
+/* Estilos para errores y alertas más visibles y en español */
+.paypal-button-error {
+    color: #ff6b6b !important;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+}
+
+/* Botón PayPal: color personalizado para mejor contraste */
+.paypal-button {
+    background-color: #4a89dc !important;
+    color: #fff !important;
+    font-weight: 600;
+    border-radius: 10px !important;
+    padding: 12px 0 !important;
+    font-size: 1rem !important;
+    box-shadow: 0 4px 10px rgba(74, 137, 220, 0.6) !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.paypal-button:hover {
+    background-color: #5a95e2 !important;
+}
+
+/* Texto de ayuda y etiquetas dentro del contenedor */
+.paypal-label {
+    color: #c1c1c1 !important;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
