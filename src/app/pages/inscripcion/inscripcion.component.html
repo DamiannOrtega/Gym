@@ -148,6 +148,18 @@
   </form>
 </div>
 
+<!--Notificacion para cuando te inscribes a una clase -->
+@if (notificacion()) {
+  <div class="toast-notificacion shadow rounded p-3 d-flex align-items-center">
+    <div class="flex-grow-1 ">
+      {{ notificacion() }}
+    </div>
+    <button type="button" class="btn-close ms-3" aria-label="Cerrar" (click)="cerrarNotificacion()"></button>
+  </div>
+}
+
+
+
 <app-opiniones></app-opiniones>
 
 <!-- Sección de Preguntas Frecuentes sobre Inscripción -->
