@@ -52,65 +52,68 @@ export class LoginComponent {
     return this.mostrarFormularioAdmin ? 'Inicio de Sesión de Administrador' : 'Inicio de Sesión de Usuario';
   }
 
-registrarUsuario(): void {
-  const { nombre, usuario, correo, contrasena, confirmar } = this.registro;
-
-  const patron = /^(?=.[A-Z])(?=.\d)(?=.*)[A-Za-z\d]{8,}$/;
-  if (!patron.test(contrasena)) {
-    this.registroError = '❌ La contraseña debe tener al menos una mayúscula, un número y el carácter "_".';
-    return;
-  }
-
-  if (contrasena !== confirmar) {
-    this.registroError = '❌ Las contraseñas no coinciden.';
-    return;
-  }
-
-  const coleccion = this.mostrarFormularioAdmin ? 'admins' : 'usuarios';
-
-  // Primero obtener datos para validar que usuario sea único
-  this.firebase.obtenerDatos(coleccion).subscribe(usuarios => {
-    const existeUsuario = usuarios.some(u => u.usuario === usuario);
-    if (existeUsuario) {
-      this.registroError = '❌ El nombre de usuario ya está en uso. Elige otro.';
+  registrarUsuario(): void {
+    const { nombre, usuario, correo, contrasena, confirmar } = this.registro;
+  
+    const patron = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d_]{8,12}$/;
+    
+    // Verifica si la contraseña cumple con el patrón
+    if (!patron.test(contrasena)) {
+      this.registroError = '❌ La contraseña debe tener entre 8 y 12 caracteres, al menos una mayúscula, un número y solo letras, números y el carácter "_".';
       return;
     }
-
-    // Si es único, proceder a agregar
-    const contrasenaHash = CryptoJS.SHA256(contrasena).toString();
-    this.firebase.agregarDato(coleccion, {
-      nombre,
-      usuario,   // <-- guarda el usuario aquí
-      correo,
-      contrasena: contrasenaHash
-    }).then(() => {
-      if (this.mostrarFormularioAdmin) {
-        this.authService.setAdmin(nombre);
-      } else {
-        this.authService.setUsuario(nombre);
+  
+    // Verifica si las contraseñas coinciden
+    if (contrasena !== confirmar) {
+      this.registroError = '❌ Las contraseñas no coinciden.';
+      return;
+    }
+  
+    const coleccion = this.mostrarFormularioAdmin ? 'admins' : 'usuarios';
+  
+    // Primero obtenemos los datos para validar que el usuario sea único
+    this.firebase.obtenerDatos(coleccion).subscribe(usuarios => {
+      const existeUsuario = usuarios.some(u => u.usuario === usuario);
+      if (existeUsuario) {
+        this.registroError = '❌ El nombre de usuario ya está en uso. Elige otro.';
+        return;
       }
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Registro exitoso',
-        text:  `${this.mostrarFormularioAdmin ? 'Administrador' : 'Usuario'} registrado correctamente `,
-        timer: 2000,
-        showConfirmButton: false
-      });
-
-      this.registro = { nombre: '', usuario: '', correo: '', contrasena: '', confirmar: '' };
-      this.registroError = '';
-      this.router.navigate(['/']);
-    }).catch(() => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error al registrar',
-        text: '❌ No se pudo registrar'
+  
+      // Si es único, proceder a agregar
+      const contrasenaHash = CryptoJS.SHA256(contrasena).toString();
+      this.firebase.agregarDato(coleccion, {
+        nombre,
+        usuario,   
+        correo,
+        contrasena: contrasenaHash
+      }).then(() => {
+        if (this.mostrarFormularioAdmin) {
+          this.authService.setAdmin(nombre);
+        } else {
+          this.authService.setUsuario(nombre);
+        }
+  
+        Swal.fire({
+          icon: 'success',
+          title: 'Registro exitoso',
+          text: `${this.mostrarFormularioAdmin ? 'Administrador' : 'Usuario'} registrado correctamente `,
+          timer: 2000,
+          showConfirmButton: false
+        });
+  
+        this.registro = { nombre: '', usuario: '', correo: '', contrasena: '', confirmar: '' };
+        this.registroError = '';
+        this.router.navigate(['/']);
+      }).catch(() => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al registrar',
+          text: '❌ No se pudo registrar'
+        });
       });
     });
-  });
-}
-
+  }
+  
 
 login(): void {
   const coleccion = this.mostrarFormularioAdmin ? 'admins' : 'usuarios';
