@@ -23,6 +23,7 @@ export class LoginComponent {
 
   registro = {
     nombre: '',
+    usuario: '',
     correo: '',
     contrasena: '',
     confirmar: ''
@@ -51,50 +52,35 @@ export class LoginComponent {
     return this.mostrarFormularioAdmin ? 'Inicio de Sesión de Administrador' : 'Inicio de Sesión de Usuario';
   }
 
-  login(): void {
-    const coleccion = this.mostrarFormularioAdmin ? 'admins' : 'usuarios';
-    const passwordHash = CryptoJS.SHA256(this.password).toString();
-  
-    this.firebase.obtenerDatos(coleccion).subscribe(usuarios => {
-      const usuario = usuarios.find(u =>
-        u.correo === this.username && u.contrasena === passwordHash
-      );
-  
-      if (usuario) {
-        if (this.mostrarFormularioAdmin) {
-          this.authService.setAdmin(usuario.nombre);
-        } else {
-          this.authService.setUsuario(usuario.nombre);
-        }
-  
-        this.errorMessage = '';
-        this.router.navigate(['/']);
-      } else {
-        this.errorMessage = '❌ Credenciales incorrectas.';
-      }
-    });
+registrarUsuario(): void {
+  const { nombre, usuario, correo, contrasena, confirmar } = this.registro;
+
+  const patron = /^(?=.[A-Z])(?=.\d)(?=.*)[A-Za-z\d]{8,}$/;
+  if (!patron.test(contrasena)) {
+    this.registroError = '❌ La contraseña debe tener al menos una mayúscula, un número y el carácter "_".';
+    return;
   }
-  
 
-  registrarUsuario(): void {
-    const { nombre, correo, contrasena, confirmar } = this.registro;
+  if (contrasena !== confirmar) {
+    this.registroError = '❌ Las contraseñas no coinciden.';
+    return;
+  }
 
-    const patron = /^(?=.*[A-Z])(?=.*\d)(?=.*_)[A-Za-z\d_]{8,}$/;
-    if (!patron.test(contrasena)) {
-      this.registroError = '❌ La contraseña debe tener al menos una mayúscula, un número y el carácter "_".';
+  const coleccion = this.mostrarFormularioAdmin ? 'admins' : 'usuarios';
+
+  // Primero obtener datos para validar que usuario sea único
+  this.firebase.obtenerDatos(coleccion).subscribe(usuarios => {
+    const existeUsuario = usuarios.some(u => u.usuario === usuario);
+    if (existeUsuario) {
+      this.registroError = '❌ El nombre de usuario ya está en uso. Elige otro.';
       return;
     }
 
-    if (contrasena !== confirmar) {
-      this.registroError = '❌ Las contraseñas no coinciden.';
-      return;
-    }
-
+    // Si es único, proceder a agregar
     const contrasenaHash = CryptoJS.SHA256(contrasena).toString();
-    const coleccion = this.mostrarFormularioAdmin ? 'admins' : 'usuarios';
-
     this.firebase.agregarDato(coleccion, {
       nombre,
+      usuario,   // <-- guarda el usuario aquí
       correo,
       contrasena: contrasenaHash
     }).then(() => {
@@ -107,12 +93,12 @@ export class LoginComponent {
       Swal.fire({
         icon: 'success',
         title: 'Registro exitoso',
-        text: `${this.mostrarFormularioAdmin ? 'Administrador' : 'Usuario'} registrado correctamente`,
+        text:  `${this.mostrarFormularioAdmin ? 'Administrador' : 'Usuario'} registrado correctamente `,
         timer: 2000,
         showConfirmButton: false
       });
 
-      this.registro = { nombre: '', correo: '', contrasena: '', confirmar: '' };
+      this.registro = { nombre: '', usuario: '', correo: '', contrasena: '', confirmar: '' };
       this.registroError = '';
       this.router.navigate(['/']);
     }).catch(() => {
@@ -122,7 +108,33 @@ export class LoginComponent {
         text: '❌ No se pudo registrar'
       });
     });
-  }
+  });
+}
+
+
+login(): void {
+  const coleccion = this.mostrarFormularioAdmin ? 'admins' : 'usuarios';
+  const passwordHash = CryptoJS.SHA256(this.password).toString();
+
+  this.firebase.obtenerDatos(coleccion).subscribe(usuarios => {
+    const usuario = usuarios.find(u =>
+      u.usuario === this.username && u.contrasena === passwordHash
+    );
+
+    if (usuario) {
+      if (this.mostrarFormularioAdmin) {
+        this.authService.setAdmin(usuario.nombre);
+      } else {
+        this.authService.setUsuario(usuario.nombre);
+      }
+
+      this.errorMessage = '';
+      this.router.navigate(['/']);
+    } else {
+      this.errorMessage = '❌ Credenciales incorrectas.';
+    }
+  });
+}
 
   iniciarSesionConGoogle() {
     const auth = getAuth();
@@ -143,7 +155,7 @@ export class LoginComponent {
         Swal.fire({
           icon: 'success',
           title: 'Inicio de sesión correcto',
-          text: `Bienvenido, ${nombreGoogle}`,
+          text:  `Bienvenido, ${nombreGoogle} `,
           timer: 2000,
           showConfirmButton: false
         });
