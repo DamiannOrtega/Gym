@@ -39,11 +39,6 @@ export class InscripcionComponent {
 
   errorFecha: string = ''; // Inicializamos como cadena vacía
 
-
-
-
-
-
   faqsInscripcion = [
     {
       pregunta: '¿Puedo cambiar mi clase después de inscribirme?',
@@ -73,8 +68,6 @@ export class InscripcionComponent {
 
   pagoCompletado = false;
   mostrandoBotonPaypal = false;
-
-
 
   // Objeto que almacena los datos de inscripción
   inscripcion = {
@@ -200,46 +193,83 @@ export class InscripcionComponent {
   }
 
   // Método para guardar los datos del formulario en local storage
+   // Método para guardar los datos del formulario
   guardar(form: NgForm) {
-    // Asigna el formulario al campo ViewChild para su uso posterior
-    this.formulario = form;
-
     // Verifica si el formulario es inválido o si no se seleccionaron días
     if (form.invalid || this.inscripcion.dias.length === 0) {
-      // Marca los días como inválidos si no se seleccionaron
-      this.diasInvalidos = this.inscripcion.dias.length === 0;
       return;
     }
 
-    // Marca los días como válidos
-    this.diasInvalidos = false;
+    // Si el pago ya se completó, muestra la notificación y guarda los datos
+    if (this.pagoCompletado) {
+      const datos = this.storage.get<any>('formularioTemplate') || [];
+      datos.push(this.inscripcion);
+      this.storage.set('formularioTemplate', datos);
 
-    // Recupera los datos existentes del local storage (o inicializa como array vacío si no existen)
-    const datos = this.storage.get<any>('formularioTemplate') || [];
+      Swal.fire('¡Registro exitoso!', 'Tu inscripción ha sido guardada.', 'success');
+      form.resetForm();
+      this.inscripcion.dias = [];
+      this.pagoCompletado = false;
+      this.mostrandoBotonPaypal = false;
+      return;
+    }
 
-    // Agrega los datos de la nueva inscripción al array
-    datos.push(this.inscripcion);
+    // Si no ha pagado, mostramos el botón PayPal
+    this.mostrandoBotonPaypal = true;
+    setTimeout(() => this.renderizarBotonPaypal(), 0);
+  }
 
-    // Guarda el array actualizado en el local storage
-    this.storage.set('formularioTemplate', datos);
+  // Función que maneja el pago a través de PayPal
+  renderizarBotonPaypal() {
+    if (!this.paypalElement) return;
 
-    // Muestra el mensaje de notificación con la clase inscrita
+    this.paypalElement.nativeElement.innerHTML = ''; // Limpia si ya había botón
+
+    // @ts-ignore
+    paypal.Buttons({
+      createOrder: (data: any, actions: any) => {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: this.precio.toString()
+            }
+          }]
+        });
+      },
+      onApprove: (data: any, actions: any) => {
+        return actions.order.capture().then((details: any) => {
+          Swal.fire('Pago completado', `Gracias, ${details.payer.name.given_name}!`, 'success');
+          
+          // Mostrar la notificación solo después de que se haya completado el pago
+          this.notificacionInscripcion();
+
+          this.pagoCompletado = true;
+          this.mostrandoBotonPaypal = false;
+          this.guardar(this.formulario); // Guardar inscripción después de pagar
+        });
+      },
+      onCancel: () => {
+        Swal.fire('Pago cancelado', 'El pago fue cancelado, inténtalo de nuevo.', 'info');
+        this.mostrandoBotonPaypal = false;
+      },
+      onError: (err: any) => {
+        Swal.fire('Error', 'Ocurrió un error con el pago: ' + err, 'error');
+        this.mostrandoBotonPaypal = false;
+      }
+    }).render(this.paypalElement.nativeElement);
+  }
+
+  // Notificación que se muestra al inscribirse
+  notificacionInscripcion() {
     this.notificacion.set(`¡Te inscribiste correctamente a ${this.inscripcion.clase}!`);
-
-    // Limpia timeout anterior si existe
+    // Limpiar la notificación después de 5 segundos
     if (this.timeoutId) {
       clearTimeout(this.timeoutId);
     }
-
     this.timeoutId = setTimeout(() => {
       this.notificacion.set('');
       this.timeoutId = undefined;
     }, 5000);
-
-
-    // Resetea el formulario para limpiarlo y reinicia la lista de días seleccionados
-    form.resetForm();
-    this.inscripcion.dias = [];
   }
 
   // Método que se ejecuta al inicializar el componente
@@ -417,10 +447,6 @@ export class InscripcionComponent {
   cerrarNotificacion() {
     this.notificacion.set('');
   }
-
-
-
-
 
 
 }
