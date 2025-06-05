@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Signal, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { StorageService } from '../../services/storage.service';
@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { OpinionesComponent } from '../../components/opiniones/opiniones.component';
 import { FaqComponent } from '../../shared/faq/faq.component';
+
 
 @Component({
   standalone: true,
@@ -15,6 +16,10 @@ import { FaqComponent } from '../../shared/faq/faq.component';
   styleUrls: ['./inscripcion.component.css']
 })
 export class InscripcionComponent {
+  // Señal para el mensaje de notificación (vacío = no mostrar)
+  notificacion = signal<string>('');
+  private timeoutId?: ReturnType<typeof setTimeout>;
+
 
   errorDias = "";
 
@@ -100,10 +105,10 @@ export class InscripcionComponent {
       const fechaSeleccionada = new Date(this.inscripcion.fecha);
       const fechaHoy = new Date();
       fechaHoy.setHours(0, 0, 0, 0); // Ajustamos la hora para comparar solo las fechas
-  
+
       // Verificamos si la fecha seleccionada es un domingo (0 = domingo)
       this.esDomingo = fechaSeleccionada.getUTCDay() === 0;
-  
+
       // Si es un domingo, mostramos el mensaje de error para domingo
       if (this.esDomingo) {
         this.errorFecha = "No se permiten fechas en domingo, no trabajamos ese día.";
@@ -116,8 +121,8 @@ export class InscripcionComponent {
       }
     }
   }
-  
-  
+
+
 
 
   // Método para alternar la selección de días (checkboxes)
@@ -185,8 +190,19 @@ export class InscripcionComponent {
     // Guarda el array actualizado en el local storage
     this.storage.set('formularioTemplate', datos);
 
-    // Muestra un mensaje de éxito usando SweetAlert
-    Swal.fire('¡Registro exitoso!', 'Tu inscripción ha sido guardada.', 'success');
+    // Muestra el mensaje de notificación con la clase inscrita
+    this.notificacion.set(`¡Te inscribiste correctamente a ${this.inscripcion.clase}!`);
+
+    // Limpia timeout anterior si existe
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+
+    this.timeoutId = setTimeout(() => {
+      this.notificacion.set('');
+      this.timeoutId = undefined;
+    }, 5000);
+
 
     // Resetea el formulario para limpiarlo y reinicia la lista de días seleccionados
     form.resetForm();
@@ -362,6 +378,11 @@ export class InscripcionComponent {
     } else {
       form.controls['turno']?.setErrors(null);
     }
+  }
+
+  //Notificacion de inscripcion de clase
+  cerrarNotificacion() {
+    this.notificacion.set('');
   }
 
 

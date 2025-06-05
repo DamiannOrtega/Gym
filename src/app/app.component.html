@@ -5,3 +5,24 @@
 </main>
 
 <app-footer></app-footer>
+
+<!-- Notificaciones de ofertas fijas en esquina inferior izquierda -->
+<div class="notificaciones-ofertas-container">
+  @for (oferta of OfertasService.ofertas(); track $index) {
+    @if (oferta.visible) {
+      <div class="toast-notificacion-oferta shadow rounded p-3 mb-2 d-flex align-items-center">
+        <div class="flex-grow-1" style="color: #14325c;">
+          {{ oferta.texto }}
+          @if (oferta.texto.includes('Inscripción gratis en Body Pump')) {
+            <div class="text-muted" style="font-size: 0.8em;">
+              Tiempo restante: {{ formatContador(OfertasService.contadorSignal()) }}
+            </div>
+          }
+        </div>
+        <button type="button" class="btn-close ms-3" aria-label="Cerrar"
+          (click)="OfertasService.ocultarOferta($index)"></button>
+      </div>
+    }
+  }
+</div>
+

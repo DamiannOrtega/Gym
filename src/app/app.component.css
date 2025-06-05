@@ -1,0 +1,22 @@
+/*diseño para las notificaciones*/
+.notificaciones-ofertas-container {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1050;
+  min-width: 280px;
+}
+
+.toast-notificacion-oferta {
+  background-color: rgba(249, 251, 253, 0.9);
+  box-shadow: 0 4px 12px rgba(20, 50, 92, 0.2);
+  /* El color del texto está inline, si prefieres lo puedes pasar aquí también */
+}
+
+.toast-notificacion-oferta .btn-close {
+  filter: invert(29%) sepia(80%) saturate(3490%) hue-rotate(199deg) brightness(92%) contrast(89%);
+  opacity: 1;
+}
+
