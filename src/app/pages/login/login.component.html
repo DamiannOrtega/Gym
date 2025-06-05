@@ -35,18 +35,33 @@
         </div>
 
         <!-- CONTRASEÑA -->
+        <!-- CONTRASEÑA -->
         <div class="mb-3">
           <label class="form-label text-light">Contraseña</label>
           <input [(ngModel)]="registro.contrasena" name="contrasena" type="password" class="form-control" required
-            minlength="8" pattern="(?=.*[A-Z])(?=.*\d)(?=.*)[A-Za-z\d_]+" />
+            minlength="8" />
           <div class="form-text text-light">
-            Mínimo 8 caracteres, una mayúscula, un número y el carácter "_".
+            Mínimo 8 caracteres, máximo 12, una mayúscula, un número y el carácter "_".
           </div>
+          <!-- Mensaje de error de validación -->
+          @if (!contrasenaValida) {
+          <div class="text-danger">
+            La contraseña debe tener entre 8 y 12 caracteres, al menos una mayúscula, un número y solo letras, números y
+            el carácter "_".
+          </div>
+          }
         </div>
 
+        <!-- CONFIRMAR CONTRASEÑA -->
         <div class="mb-3">
           <label class="form-label text-light">Confirmar contraseña</label>
           <input [(ngModel)]="registro.confirmar" name="confirmar" type="password" class="form-control" required />
+          <!-- Mensaje de error si las contraseñas no coinciden -->
+          @if (!contrasenaCoinciden) {
+          <div class="text-danger">
+            Las contraseñas no coinciden.
+          </div>
+          }
         </div>
         }
 

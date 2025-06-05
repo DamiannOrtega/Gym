@@ -22,7 +22,8 @@ export class LoginComponent {
   errorMessage = '';
   captchaResponse: string = '';  // Almacena la respuesta del reCaptcha
   captchaCompleted = false;      // Bandera para saber si el reCaptcha ha sido completado
-
+  contrasenaValida: boolean = true;
+  contrasenaCoinciden: boolean = true;
 
   registro = {
     nombre: '',
@@ -65,23 +66,21 @@ export class LoginComponent {
   registrarUsuario(): void {
     const { nombre, usuario, correo, contrasena, confirmar } = this.registro;
 
-    const patron = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d_]{8,12}$/;
+    this.validarContrasenas();
 
-    // Verifica si el reCaptcha ha sido completado
-    if (!this.captchaCompleted) {
-      this.registroError = '❌ Debes completar el reCaptcha.';
-      return;
-    }
-
-    // Verifica si la contraseña cumple con el patrón
-    if (!patron.test(contrasena)) {
+    if (!this.contrasenaValida) {
       this.registroError = '❌ La contraseña debe tener entre 8 y 12 caracteres, al menos una mayúscula, un número y solo letras, números y el carácter "_".';
       return;
     }
 
-    // Verifica si las contraseñas coinciden
-    if (contrasena !== confirmar) {
+    if (!this.contrasenaCoinciden) {
       this.registroError = '❌ Las contraseñas no coinciden.';
+      return;
+    }
+
+    // Verifica si el reCaptcha ha sido completado
+    if (!this.captchaCompleted) {
+      this.registroError = '❌ Debes completar el reCaptcha.';
       return;
     }
 
@@ -129,6 +128,13 @@ export class LoginComponent {
       });
     });
   }
+
+    // Método para validar contraseña
+    validarContrasenas() {
+      const patron = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d_]{8,12}$/;
+      this.contrasenaValida = patron.test(this.registro.contrasena);
+      this.contrasenaCoinciden = this.registro.contrasena === this.registro.confirmar;
+    }
 
 
   login(): void {
