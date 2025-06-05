@@ -4,6 +4,14 @@ body.fuente-arial *:not(mat-icon):not(i.fa):not(span.fa) {
   font-family: Arial, sans-serif !important;
 }
 
+.fas {
+  font-size: 0.8rem;
+}
+
+.nav-link {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem; 
+}
 body.fuente-verdana,
 body.fuente-verdana *:not(mat-icon):not(i.fa):not(span.fa) {
   font-family: Verdana, sans-serif !important;
@@ -58,21 +66,7 @@ body[class*="fuente-"] span.fa {
 }
 
 
-/* Reducir el tamaño de los íconos */
-.fas {
-  font-size: 0.5rem; /* Ajusta este valor según sea necesario */
-}
 
-/* Reducir el tamaño de los enlaces */
-.nav-link {
-  font-size: 0.9rem; /* Disminuir el tamaño del texto */
-  padding: 0.5rem 1rem; /* Reducir el padding */
-}
-
-/* Ajuste adicional a la marca de la navbar */
-.navbar-brand {
-  font-size: 1.2rem; /* Hacer la marca un poco más pequeña */
-}
 
 .dropdown-menu .btn-icon:hover {
   background-color: #4a90e2;
