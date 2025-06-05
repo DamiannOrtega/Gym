@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, Signal, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { StorageService } from '../../services/storage.service';
@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { OpinionesComponent } from '../../components/opiniones/opiniones.component';
 import { FaqComponent } from '../../shared/faq/faq.component';
+
 
 @Component({
   standalone: true,
@@ -15,6 +16,10 @@ import { FaqComponent } from '../../shared/faq/faq.component';
   styleUrls: ['./inscripcion.component.css']
 })
 export class InscripcionComponent {
+  // Señal para el mensaje de notificación (vacío = no mostrar)
+  notificacion = signal<string>('');
+  private timeoutId?: ReturnType<typeof setTimeout>;
+
 
   errorDias = "";
 
@@ -218,61 +223,24 @@ export class InscripcionComponent {
     // Guarda el array actualizado en el local storage
     this.storage.set('formularioTemplate', datos);
 
-    if (this.pagoCompletado) {
-      // Guardar datos (localStorage o backend)
-      const datos = this.storage.get<any>('formularioTemplate') || [];
-      datos.push(this.inscripcion);
-      this.storage.set('formularioTemplate', datos);
-      // Muestra un mensaje de éxito usando SweetAlert
-      Swal.fire('¡Registro exitoso!', 'Tu inscripción ha sido guardada.', 'success');
-      // Resetea el formulario para limpiarlo y reinicia la lista de días seleccionados
-      form.resetForm();
-      this.inscripcion.dias = [];
-      this.pagoCompletado = false;
-      this.mostrandoBotonPaypal = false;
-      return;
+    // Muestra el mensaje de notificación con la clase inscrita
+    this.notificacion.set(`¡Te inscribiste correctamente a ${this.inscripcion.clase}!`);
+
+    // Limpia timeout anterior si existe
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
     }
-    // Si no ha pagado, mostramos el botón PayPal
-    this.mostrandoBotonPaypal = true;
 
-    setTimeout(() => this.renderizarBotonPaypal(), 0);
+    this.timeoutId = setTimeout(() => {
+      this.notificacion.set('');
+      this.timeoutId = undefined;
+    }, 5000);
+
+
+    // Resetea el formulario para limpiarlo y reinicia la lista de días seleccionados
+    form.resetForm();
+    this.inscripcion.dias = [];
   }
-
-  renderizarBotonPaypal() {
-    if (!this.paypalElement) return;
-
-    this.paypalElement.nativeElement.innerHTML = ''; // Limpia si había botón
-
-    // @ts-ignore
-    paypal.Buttons({
-      createOrder: (data: any, actions: any) => {
-        return actions.order.create({
-          purchase_units: [{
-            amount: {
-              value: this.precio.toString()
-            }
-          }]
-        });
-      },
-      onApprove: (data: any, actions: any) => {
-        return actions.order.capture().then((details: any) => {
-          Swal.fire('Pago completado', `Gracias, ${details.payer.name.given_name}!`, 'success');
-          this.pagoCompletado = true;
-          this.mostrandoBotonPaypal = false;
-          this.guardar(this.formulario); // Guardar inscripción después de pagar
-        });
-      },
-      onCancel: () => {
-        Swal.fire('Pago cancelado', 'El pago fue cancelado, inténtalo de nuevo.', 'info');
-        this.mostrandoBotonPaypal = false;
-      },
-      onError: (err: any) => {
-        Swal.fire('Error', 'Ocurrió un error con el pago: ' + err, 'error');
-        this.mostrandoBotonPaypal = false;
-      }
-    }).render(this.paypalElement.nativeElement);
-  }
-
 
   // Método que se ejecuta al inicializar el componente
   ngOnInit(): void {
@@ -443,6 +411,11 @@ export class InscripcionComponent {
     } else {
       form.controls['turno']?.setErrors(null);
     }
+  }
+
+  //Notificacion de inscripcion de clase
+  cerrarNotificacion() {
+    this.notificacion.set('');
   }
 
 

@@ -2,6 +2,7 @@ import { Component, computed, signal } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, RouteConfigLoadEnd, RouteConfigLoadStart, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { OfertasService } from './shared/ofertas/ofertas.service';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoadingService } from './services/loading.service';
@@ -15,12 +16,14 @@ import { LoadingService } from './services/loading.service';
 export class AppComponent {
   title = 'Gym';
 
+
+ 
   loading;
 
-  constructor(private loadingService: LoadingService, private router: Router) {
+  constructor(private loadingService: LoadingService, private router: Router,public OfertasService: OfertasService) {
 
     this.loading = this.loadingService.loading;
-
+    this.OfertasService.iniciarContador();
     // Suscripción a eventos de router
     this.router.events.subscribe(event => {
       if (event instanceof RouteConfigLoadStart) {
@@ -40,6 +43,13 @@ export class AppComponent {
       }
     });
   }
+
+  formatContador(segundos: number): string {
+    const minutos = Math.floor(segundos / 60);
+    const segundosRestantes = segundos % 60;
+    return `${minutos}m ${segundosRestantes}s`;
+  }
+
 
   ngAfterViewInit() {
     // Quita el loader estático de index.html una vez Angular cargue el componente

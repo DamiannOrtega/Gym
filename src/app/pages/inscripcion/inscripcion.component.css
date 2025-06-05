@@ -203,6 +203,23 @@ input[type="date"] {
     color-scheme: light;
 }
 
+/*Para la notificacion de inscripcion*/
+.toast-notificacion {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(249, 251, 253, 0.9); /* blanco casi transparente */
+  min-width: 280px;
+  z-index: 1050;
+  color: #14325c; /* color texto */
+  box-shadow: 0 4px 12px rgba(20, 50, 92, 0.2);
+}
+
+.toast-notificacion .btn-close {
+  filter: invert(29%) sepia(80%) saturate(3490%) hue-rotate(199deg) brightness(92%) contrast(89%);
+  /* filtro para que la X sea color #14325c */
+  opacity: 1; /* que no se vea transparente */
+}
 /* Contenedor PayPal más limpio y centrado */
 #paypal-button-container {
     max-width: 400px;
