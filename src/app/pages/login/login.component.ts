@@ -24,7 +24,8 @@ export class LoginComponent {
   captchaCompleted = false;      // Bandera para saber si el reCaptcha ha sido completado
   contrasenaValida: boolean = true;
   contrasenaCoinciden: boolean = true;
-
+  modoTelefono: boolean = false; 
+  telefono: string = ''; 
   registro = {
     nombre: '',
     usuario: '',
@@ -32,6 +33,15 @@ export class LoginComponent {
     contrasena: '',
     confirmar: ''
   };
+
+  
+  registrotel = {
+    usuario: '',
+    contrasena: '',
+    telefono:''
+  };
+
+
   registroError = '';
 
   modoRegistro = true;
@@ -39,6 +49,7 @@ export class LoginComponent {
 
   private inputOculto = '';
   private timeout: any;
+  telefonoValido!: boolean;
 
   constructor(
     private authService: AuthService,
@@ -222,4 +233,22 @@ export class LoginComponent {
     this.modoRegistro = !this.modoRegistro;
   }
 
+  toggleModoTelefono() {
+    this.modoTelefono = !this.modoTelefono;
+    this.modoRegistro = false; // Asegúrate de que el registro esté desactivado
+  }
+
+  // Función para manejar el inicio de sesión con teléfono
+  iniciarSesionConTelefono() {
+    if (this.registrotel.telefono) {
+      // Lógica para enviar código de verificación al número
+      console.log('Enviando código al teléfono:', this.registrotel.telefono);
+    }
+  }
+
+
+  validarTelefono() {
+    // Validar con una expresión regular que permita lada internacional
+    this.telefonoValido = /^\+?[1-9]\d{1,14}$/.test(this.registrotel.telefono);
+  }
 }
