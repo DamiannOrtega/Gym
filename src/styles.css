@@ -1,4 +1,3 @@
-
 :root {
     /* Paleta de colores principal */
     --color-primario: #162f4b;
@@ -42,6 +41,7 @@
     --espaciado-md: 1rem;
     --espaciado-lg: 1.5rem;
     --espaciado-xl: 2rem;
+
 }
 
 /* Estilos globales */
@@ -156,14 +156,19 @@ img.img-fluid.rounded:hover {
 }
 
 .carousel-inner img {
-    height: 450px; /* Ajusta según lo que necesites */
-    object-fit: cover; /* Mantiene proporción y cubre todo el espacio */
-    object-position: center top; /* Muestra más la parte inferior de la imagen */
+    height: 450px;
+    /* Ajusta según lo que necesites */
+    object-fit: cover;
+    /* Mantiene proporción y cubre todo el espacio */
+    object-position: center top;
+    /* Muestra más la parte inferior de la imagen */
     width: 100%;
-    border-radius: var(--borde-redondo-md); /* Opcional: estiliza bordes */
-    box-shadow: var(--sombra-media); /* Opcional: sombra suave */
-  }
-  
+    border-radius: var(--borde-redondo-md);
+    /* Opcional: estiliza bordes */
+    box-shadow: var(--sombra-media);
+    /* Opcional: sombra suave */
+}
+
 
 .carousel-item {
     transition: transform 0.6s ease-in-out;
@@ -174,20 +179,20 @@ img.img-fluid.rounded:hover {
     position: relative;
     width: 100%;
     margin-top: var(--espaciado-xl);
-  }
-  
-  .testimonios-track {
+}
+
+.testimonios-track {
     display: flex;
     width: fit-content;
     gap: 2rem;
     animation: mover-testimonios 25s linear infinite;
-  }
-  
-  .testimonios-carousel:hover .testimonios-track {
+}
+
+.testimonios-carousel:hover .testimonios-track {
     animation-play-state: paused;
-  }
-  
-  .testimonio-card {
+}
+
+.testimonio-card {
     flex: 0 0 auto;
     width: 300px;
     background-color: var(--color-primario);
@@ -197,18 +202,19 @@ img.img-fluid.rounded:hover {
     box-shadow: var(--sombra-suave);
     padding: 1.5rem;
     margin-right: 2rem;
-  }
-  
-  /* Movimiento horizontal continuo */
-  @keyframes mover-testimonios {
+}
+
+/* Movimiento horizontal continuo */
+@keyframes mover-testimonios {
     0% {
-      transform: translateX(0%);
+        transform: translateX(0%);
     }
+
     100% {
-      transform: translateX(-50%);
+        transform: translateX(-50%);
     }
-  }
-  
+}
+
 /* Responsive hero */
 @media (max-width: 768px) {
     .hero-section {
@@ -235,22 +241,22 @@ img.img-fluid.rounded:hover {
 
 .form-control,
 .form-select {
-  background-color: #ffffff !important;
-  color: var(--color-texto-oscuro) !important;
-  border: 1px solid var(--color-borde) !important;
+    background-color: #ffffff !important;
+    color: var(--color-texto-oscuro) !important;
+    border: 1px solid var(--color-borde) !important;
 }
 
-.form-label p{
+.form-label p {
     color: var(--color-texto-claro);
 }
 
 .form-control:focus,
 .form-select:focus {
-  background-color: #ffffff !important;
-  color: var(--color-texto-oscuro) !important;
-  border-color: var(--color-borde) !important;
-  box-shadow: none !important;
-  outline: none !important;
+    background-color: #ffffff !important;
+    color: var(--color-texto-oscuro) !important;
+    border-color: var(--color-borde) !important;
+    box-shadow: none !important;
+    outline: none !important;
 }
 
 
@@ -531,7 +537,7 @@ input[type="date"] {
 
 input[type="date"] {
     color-scheme: light;
-  }
+}
 
 /* Responsive adjustments */
 @media (max-width: 767px) {
@@ -565,18 +571,375 @@ input[type="date"] {
 }
 
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 
 .navbar mat-icon {
     font-size: 1.1rem;
     vertical-align: middle;
     line-height: 1;
-   
-  }
-  
-  
+
+}
+
+/* Fuentes */
+body.fuente-arial,
+body.fuente-arial *,
+body.fuente-arial .app-home {
+    font-family: Arial, sans-serif !important;
+}
+
+body.fuente-verdana,
+body.fuente-verdana *,
+body.fuente-verdana .app-home {
+    font-family: Verdana, sans-serif !important;
+}
+
+body.fuente-roboto,
+body.fuente-roboto *,
+body.fuente-roboto .app-home {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+/* Excluir iconos FontAwesome */
+body.fuente-arial i[class*="fa"],
+body.fuente-verdana i[class*="fa"],
+body.fuente-roboto i[class*="fa"],
+body.fuente-arial span[class*="fa"],
+body.fuente-verdana span[class*="fa"],
+body.fuente-roboto span[class*="fa"] {
+    font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands", "Font Awesome 5 Pro" !important;
+}
+
+/* Excluir Material Icons */
+body.fuente-arial .material-icons,
+body.fuente-verdana .material-icons,
+body.fuente-roboto .material-icons,
+body.fuente-arial mat-icon,
+body.fuente-verdana mat-icon,
+body.fuente-roboto mat-icon {
+    font-family: 'Material Icons' !important;
+}
+
+body.fuente-arial,
+body.fuente-verdana,
+body.fuente-roboto {
+    line-height: 1.4 !important;
+    letter-spacing: normal !important;
+}
+
+.navbar .nav-link,
+.btn,
+input,
+select,
+textarea {
+    line-height: 1.4 !important;
+}
+
+
+
+/* Contraste Alto */
+body.contraste-alto,
+body.contraste-alto * {
+    background-color: black !important;
+    color: white !important;
+    border-color: white !important;
+}
+
+body.contraste-alto a,
+body.contraste-alto a:hover,
+body.contraste-alto a:focus {
+    color: var(--color-acento) !important;
+    /* resalta enlaces */
+}
+
+body.contraste-alto a,
+body.contraste-alto a:hover,
+body.contraste-alto a:focus,
+body.contraste-alto .btn-primary,
+body.contraste-alto .btn-primary:hover,
+body.contraste-alto .btn-primary:focus,
+body.contraste-alto h1,
+body.contraste-alto h2,
+body.contraste-alto h3,
+body.contraste-alto h4,
+body.contraste-alto h5,
+body.contraste-alto h6 {
+    color: white !important;
+    /* O algún color claro visible */
+    background-color: transparent !important;
+}
+
+body.contraste-alto .card,
+body.contraste-alto .dropdown-menu,
+body.contraste-alto .form-control,
+body.contraste-alto .form-select {
+    background-color: #222 !important;
+    color: white !important;
+    border-color: white !important;
+}
+
+body.contraste-alto .btn,
+body.contraste-alto .btn i,
+body.contraste-alto .material-icons,
+body.contraste-alto mat-icon {
+    color: white !important;
+}
+
+
+/* Bajo contraste: fondo claro con texto oscuro */
+body.contraste-bajo,
+body.contraste-bajo *,
+body.contraste-bajo .app-home {
+    background-color: #f7f7f7 !important;
+    /* fondo claro */
+    color: #222 !important;
+    /* texto oscuro */
+}
+
+/* Asegura que enlaces y botones tengan buen contraste */
+body.contraste-bajo a,
+body.contraste-bajo a:hover,
+body.contraste-bajo a:focus,
+body.contraste-bajo .btn-primary,
+body.contraste-bajo .btn-primary:hover,
+body.contraste-bajo .btn-primary:focus {
+    color: var(--color-primario) !important;
+    /* azul oscuro */
+    background-color: transparent !important;
+}
+
+/* Fondos para componentes en modo bajo contraste */
+body.contraste-bajo .card,
+body.contraste-bajo .dropdown-menu,
+body.contraste-bajo .form-control,
+body.contraste-bajo .form-select {
+    background-color: white !important;
+    color: #222 !important;
+    border-color: #ccc !important;
+}
+
+/* Iconos visibles en bajo contraste */
+body.contraste-bajo .btn,
+body.contraste-bajo .btn i,
+body.contraste-bajo .material-icons,
+body.contraste-bajo mat-icon {
+    color: var(--color-primario) !important;
+}
+
+/* Modos contraste para normas */
+
+/* Contraste alto: fondo oscuro */
+body.contraste-alto .norma-card {
+    background-color: #162f4b;
+    /* azul oscuro */
+    color: #ffffff;
+    /* texto claro */
+    border-radius: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.contraste-alto .norma-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
+}
+
+body.contraste-alto .icono-card {
+    color: #4a90e2;
+}
+
+body.contraste-alto .divisor {
+    background-color: #4a90e2;
+    height: 2px;
+    border: none;
+}
+
+body.contraste-alto .norma-item,
+body.contraste-alto .norma-item span {
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+body.contraste-alto .icono-punto {
+    color: #6c63ff;
+    font-size: 1.2rem;
+}
+
+/* Contraste bajo: fondo claro */
+body.contraste-bajo .norma-card {
+    background-color: #fff;
+    /* fondo blanco */
+    color: #222;
+    /* texto oscuro */
+    border-radius: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #ccc;
+}
+
+body.contraste-bajo .norma-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+body.contraste-bajo .icono-card {
+    color: #0f52ba;
+    /* azul principal */
+}
+
+body.contraste-bajo .divisor {
+    background-color: #0f52ba;
+    height: 2px;
+    border: none;
+}
+
+body.contraste-bajo .norma-item,
+body.contraste-bajo .norma-item span {
+    color: #222;
+    font-size: 1rem;
+}
+
+body.contraste-bajo .icono-punto {
+    color: #4a90e2;
+    font-size: 1.2rem;
+}
+
+/* Contraste Alto - para Normas */
+body.contraste-alto .norma-card {
+    background-color: #162f4b !important;
+    /* azul oscuro */
+    color: #ffffff !important;
+    /* texto blanco */
+    border-radius: 1rem !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.contraste-alto .norma-card:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3) !important;
+}
+
+body.contraste-alto .norma-card,
+body.contraste-alto .norma-card * {
+    color: #ffffff !important;
+    /* forzar color blanco en todo el contenido */
+}
+
+body.contraste-alto .icono-card {
+    color: #4a90e2 !important;
+}
+
+body.contraste-alto .divisor {
+    background-color: #4a90e2 !important;
+    height: 2px;
+    border: none;
+}
+
+body.contraste-alto .norma-item,
+body.contraste-alto .norma-item span {
+    color: #ffffff !important;
+    font-size: 1rem;
+}
+
+body.contraste-alto .icono-punto {
+    color: #6c63ff !important;
+    font-size: 1.2rem;
+}
+
+body.contraste-alto mat-icon {
+    color: #ffffff !important;
+    /* Asegura color de iconos */
+}
+
+/* Contraste Bajo - para Normas */
+body.contraste-bajo .norma-card {
+    background-color: #ffffff !important;
+    /* blanco */
+    color: #222222 !important;
+    /* texto oscuro */
+    border-radius: 1rem !important;
+    border: 1px solid #ccc !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.contraste-bajo .norma-card:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+body.contraste-bajo .norma-card,
+body.contraste-bajo .norma-card * {
+    color: #222222 !important;
+    /* forzar color oscuro en todo el contenido */
+}
+
+body.contraste-bajo .icono-card {
+    color: #0f52ba !important;
+    /* azul principal */
+}
+
+body.contraste-bajo .divisor {
+    background-color: #0f52ba !important;
+    height: 2px;
+    border: none;
+}
+
+body.contraste-bajo .norma-item,
+body.contraste-bajo .norma-item span {
+    color: #222222 !important;
+    font-size: 1rem;
+}
+
+body.contraste-bajo .icono-punto {
+    color: #4a90e2 !important;
+    font-size: 1.2rem;
+}
+
+body.contraste-bajo mat-icon {
+    color: #222222 !important;
+    /* Asegura color de iconos */
+}
+
+/* Contraste Alto - texto e íconos blancos */
+body.contraste-alto .norma-card,
+body.contraste-alto .norma-card *,
+body.contraste-alto .norma-card mat-icon,
+body.contraste-alto .norma-card mat-icon *,
+body.contraste-alto .norma-card mat-list,
+body.contraste-alto .norma-card mat-list *,
+body.contraste-alto .norma-card mat-list-item,
+body.contraste-alto .norma-card mat-list-item *,
+body.contraste-alto .norma-card mat-list-item span {
+    color: #fff !important;
+    fill: #fff !important;
+}
+
+/* Contraste Bajo - texto e íconos oscuros */
+body.contraste-bajo .norma-card,
+body.contraste-bajo .norma-card *,
+body.contraste-bajo .norma-card mat-icon,
+body.contraste-bajo .norma-card mat-icon *,
+body.contraste-bajo .norma-card mat-list,
+body.contraste-bajo .norma-card mat-list *,
+body.contraste-bajo .norma-card mat-list-item,
+body.contraste-bajo .norma-card mat-list-item *,
+body.contraste-bajo .norma-card mat-list-item span {
+    color: #222 !important;
+    fill: #222 !important;
+}

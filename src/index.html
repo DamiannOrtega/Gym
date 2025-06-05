@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Gym</title>
@@ -12,11 +13,20 @@
   
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-  
+
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://www.paypal.com/sdk/js?client-id=Aef51U3AM3oK8_XDSBrHs5CWBRK_wpsWZVkdD_HkKEHVRIVCDoJamQ6auGYGhL-F1LVZH-1bpOhRCF2D&currency=MXN&locale=es_MX"></script>
+
 </head>
+
 <body class="mat-typography">
   <app-root></app-root>
+  <!-- Loader inicial visible estático -->
+  <div id="initial-loader" class="loader-backdrop">
+    <div class="spinner"></div>
+    <p>Cargando toda la página, por favor espera...</p>
+  </div>
 </body>
+
 </html>

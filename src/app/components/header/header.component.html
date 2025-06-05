@@ -4,8 +4,8 @@
       <img [src]="logo" style="height: 50px; margin-right: 10px;" alt="Logo FitZone" class="logo" />
       <span>FitZone</span>
     </a>
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -27,13 +27,14 @@
             <mat-icon class="me-1">video_library</mat-icon> Videos
           </a>
         </li>
+        
         <li class="nav-item">
           <a class="nav-link" routerLink="/inscripcion" routerLinkActive="active">
-            <mat-icon class="me-1">person_add</mat-icon> Inscripción
+             <mat-icon class="me-1">person_add</mat-icon> Inscripción
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/contacto" routerLinkActive="active">
+          <a class="nav-link" routerLink="/contacto" routerLinkActive="active" >
             <mat-icon class="me-1">mail</mat-icon> Contacto
           </a>
         </li>
@@ -68,6 +69,62 @@
             </ul>
           </li>
         }
+
+        <!-- Accesibilidad -->
+        <li class="nav-item dropdown" [class.show]="showAccMenu">
+          <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" [attr.aria-expanded]="showAccMenu"
+            (click)="toggleAccMenu()" id="accesibilidadDropdown" aria-haspopup="true"
+            aria-label="Opciones de accesibilidad">
+            <i class="fas fa-universal-access me-2 animate-icon"></i> <span>Accesibilidad</span>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end" [class.show]="showAccMenu"
+            aria-labelledby="accesibilidadDropdown">
+            <li class="px-3 py-2">
+              <!-- Lector de pantalla -->
+              <div class="mb-2">
+                <strong>Lector de pantalla</strong><br />
+                <button class="btn btn-icon me-1" (click)="startOrPauseReading()"
+                  aria-label="Reproducir o pausar lectura">
+                  <i class="fas" [ngClass]="isPaused || !isSpeaking ? 'fa-play' : 'fa-pause'"></i>
+                </button>
+                <button class="btn btn-icon stop" (click)="restartReading()" aria-label="Reiniciar lectura">
+                  <i class="fas fa-redo"></i>
+                </button>
+              </div>
+
+              <!-- Contraste -->
+              <div class="mb-2">
+                <label for="contrasteSelect" class="form-label">Contraste:</label>
+                <select id="contrasteSelect" class="form-select form-select-sm" (change)="onContrasteChange($event)"
+                  aria-label="Selector de contraste">
+                  <option value="normal" selected>Normal</option>
+                  <option value="alto">Alto contraste</option>
+                  <option value="bajo">Bajo contraste</option>
+                </select>
+              </div>
+
+              <!-- Tamaño de texto -->
+              <div class="mb-2">
+                <label for="fontSizeRange" class="form-label">Tamaño texto:</label>
+                <input type="range" id="fontSizeRange" class="form-range" min="12" max="30" [value]="fontSize"
+                  (input)="onFontSizeChange($event)" aria-valuemin="12" aria-valuemax="30"
+                  [attr.aria-valuenow]="fontSize" />
+              </div>
+
+              <!-- Fuente -->
+              <div>
+                <label for="fuenteSelect" class="form-label">Fuente:</label>
+                <select id="fuenteSelect" class="form-select form-select-sm" (change)="onFuenteChange($event)"
+                  aria-label="Selector de fuente">
+                  <option value="arial" selected>Arial</option>
+                  <option value="verdana">Verdana</option>
+                  <option value="roboto">Roboto</option>
+                </select>
+              </div>
+            </li>
+          </ul>
+        </li>
       </ul>
 
       <!-- SALUDO / LOGIN -->
@@ -81,10 +138,14 @@
           </button>
         </div>
       } @else {
-        <a class="btn btn-outline-light btn-sm" routerLink="/login">
-          <i class="fas fa-sign-in-alt me-1"></i> Iniciar sesión
-        </a>
+      <a class="btn btn-outline-light btn-sm" routerLink="/login" (mouseover)="leerElementoConMouse($event)">
+        <i class="fas fa-sign-in-alt me-1"></i> Iniciar sesión
+      </a>
       }
     </div>
   </div>
+
+
+
+
 </nav>

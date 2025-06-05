@@ -8,4 +8,6 @@ export interface Clase {
   dias?: string[];
   horario?: string;
   objetivo?: string;
+  precioMensual?: number;
+
 }

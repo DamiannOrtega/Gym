@@ -201,6 +201,79 @@ form.card button.btn-dark:disabled {
 
 input[type="date"] {
     color-scheme: light;
-  }
-  
+}
 
+/* Contenedor PayPal más limpio y centrado */
+#paypal-button-container {
+    max-width: 400px;
+    margin: 1.5rem auto;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    background-color: #1d3854;
+    /* Igual que tu form.card para armonía */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+    color: #f1f1f1;
+    /* Texto claro para etiquetas externas */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Evita sombras internas muy oscuras en inputs */
+input,
+select {
+    background-color: #0e1c2d !important;
+    border-color: #2a4b6e !important;
+    color: #f1f1f1 !important;
+}
+
+/* Cambiar placeholder a gris claro */
+input::placeholder,
+select::placeholder {
+    color: #bbb !important;
+}
+
+/* Estilos para el contenedor del botón de PayPal */
+.paypal-button-container {
+    text-align: center;
+    /* Alinea el botón de PayPal al centro */
+    padding: 20px;
+    /* Da un poco de espacio alrededor del contenedor */
+    border-radius: 8px;
+    /* Esquinas redondeadas */
+    background-color: #f8f9fa;
+    /* Fondo claro para resaltar el botón de PayPal */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra sutil */
+}
+
+/* Estilos para el botón de inscripción */
+.submit-button {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    /* Animación suave para el cambio de fondo */
+}
+
+.submit-button:disabled {
+    background-color: #6c757d !important;
+    /* Gris cuando está deshabilitado */
+    cursor: not-allowed;
+}
+
+.submit-button:hover:enabled {
+    background-color: #0056b3;
+    /* Color azul más fuerte al pasar el ratón */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra cuando el botón es presionable */
+}
+
+.submit-button i {
+    font-size: 1.1em;
+    /* Hace el icono un poco más grande */
+}
+
+/* Estilos adicionales para mejorar la apariencia general */
+button:focus,
+.paypal-button-container:focus {
+    outline: none;
+    /* Evita el borde predeterminado del foco */
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+    /* Borde de foco azul */
+}

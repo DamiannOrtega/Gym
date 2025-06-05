@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ClasesService } from '../../services/clases.service';
 import { Clase } from '../../models/clase.model';
@@ -12,12 +12,15 @@ import { ObjetivoResaltadoPipe } from '../../pipes/objetivo-resaltado.pipe';
   templateUrl: './clase-detalle.component.html',
   styleUrl: './clase-detalle.component.css'
 })
-export class ClaseDetalleComponent {
+export class ClaseDetalleComponent implements AfterViewInit {
   idClase: string | null = null;
   clase: Clase | undefined;
   
 
   constructor(private route: ActivatedRoute, private clasesService: ClasesService) {}
+  ngAfterViewInit(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));

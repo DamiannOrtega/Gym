@@ -72,12 +72,20 @@
         <option [value]="c">{{ c }}</option>
         }
       </select>
+
+      @if (precioSeleccionado > 0) {
+      <p class="mt-2 text-info fw-semibold">
+        Precio mensual: ${{ precioSeleccionado }}
+      </p>
+      }
+
       @if (esInvalido('clase')) {
       <div class="text-danger mt-1">
         <i class="fas fa-exclamation-circle me-1"></i>Elige una clase.
       </div>
       }
     </div>
+
 
     <!-- Días -->
     <div class="mb-4">
@@ -121,30 +129,32 @@
     </div>
 
 
-<!-- Fecha -->
-<div class="mb-4">
-  <label class="form-label fw-semibold">
-    <i class="fas fa-calendar-alt me-2"></i>Fecha de inicio
-  </label>
-  <input type="date" name="fecha" [(ngModel)]="inscripcion.fecha" required 
-         (ngModelChange)="validarFecha()" (blur)="validarFecha()"
-         #fechaControl="ngModel" class="form-control bg-white text-dark" [min]="hoy()" />
+    <!-- Fecha -->
+    <div class="mb-4">
+      <label class="form-label fw-semibold">
+        <i class="fas fa-calendar-alt me-2"></i>Fecha de inicio
+      </label>
+      <input type="date" name="fecha" [(ngModel)]="inscripcion.fecha" required (ngModelChange)="validarFecha()"
+        (blur)="validarFecha()" #fechaControl="ngModel" class="form-control bg-white text-dark" [min]="hoy()" />
 
-  <!-- Mensaje de error si no se selecciona una fecha -->
-  @if (errorFecha) {
-    <div class="text-danger mt-1 d-flex align-items-center">
-      <i class="fas fa-exclamation-circle me-2"></i>{{ errorFecha }}
+      <!-- Mensaje de error si no se selecciona una fecha -->
+      @if (errorFecha) {
+      <div class="text-danger mt-1 d-flex align-items-center">
+        <i class="fas fa-exclamation-circle me-2"></i>{{ errorFecha }}
+      </div>
+      }
     </div>
-  }
-</div>
 
+    @if (mostrandoBotonPaypal) {
+    <div #paypalButtonContainer class="paypal-button-container my-3"></div>
+    }
 
-
-
-    <!-- Botón -->
-    <button class="btn btn-dark w-100" [disabled]="!esFormularioValido(f) || fechaInvalida">
-      <i class="fas fa-paper-plane me-2"></i>Enviar inscripción
+    @if (!mostrandoBotonPaypal) {
+    <button class="btn btn-dark w-100 submit-button" [disabled]="!esFormularioValido(f) || fechaInvalida">
+      <i class="fas fa-paper-plane me-2"></i>Enviar inscripción y pagar
     </button>
+    }
+
   </form>
 </div>
 

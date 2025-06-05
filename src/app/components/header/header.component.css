@@ -1,0 +1,108 @@
+/* === FUENTES ACCESIBILIDAD === */
+body.fuente-arial,
+body.fuente-arial *:not(mat-icon):not(i.fa):not(span.fa) {
+  font-family: Arial, sans-serif !important;
+}
+
+body.fuente-verdana,
+body.fuente-verdana *:not(mat-icon):not(i.fa):not(span.fa) {
+  font-family: Verdana, sans-serif !important;
+}
+
+body.fuente-roboto,
+body.fuente-roboto *:not(mat-icon):not(i.fa):not(span.fa) {
+  font-family: 'Roboto', sans-serif !important;
+}
+
+body[class*="fuente-"] mat-icon,
+body[class*="fuente-"] i.fa,
+body[class*="fuente-"] span.fa {
+  font-family: 'Material Icons', 'Font Awesome 6 Free', sans-serif !important;
+  font-weight: normal !important;
+}
+
+/* === CONTENEDOR DEL MENÚ DE ACCESIBILIDAD === */
+.dropdown-menu[aria-labelledby="accesibilidadDropdown"] {
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid #4a90e2;
+  border-radius: 16px;
+  padding: 20px;
+  min-width: 280px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+  animation: fadeIn 0.3s ease-in-out;
+  z-index: 1050;
+  color: #f1f1f1;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* === ENCABEZADO DEL BLOQUE === */
+.dropdown-menu strong {
+  display: block;
+  color: #4a90e2;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+/* === BOTONES DE LECTOR DE PANTALLA === */
+.dropdown-menu .btn-icon {
+  background-color: transparent;
+  border: 2px solid #4a90e2;
+  color: #4a90e2;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  padding: 6px 10px;
+  margin: 0 5px 10px 0;
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu .btn-icon:hover {
+  background-color: #4a90e2;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.dropdown-menu .btn-icon.stop {
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+
+.dropdown-menu .btn-icon.stop:hover {
+  background-color: #e74c3c;
+  color: white;
+}
+
+/* === SELECTS Y SLIDER === */
+.dropdown-menu .form-label {
+  color: #9ec8ff;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.dropdown-menu select,
+.dropdown-menu input[type="range"] {
+  background-color: #252525;
+  color: #f1f1f1;
+  border: 1px solid #4a90e2;
+  border-radius: 8px;
+  padding: 6px;
+  width: 100%;
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+
+.dropdown-menu input[type="range"] {
+  accent-color: #4a90e2;
+}
+
+/* === ANIMACIÓN SUAVE === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
