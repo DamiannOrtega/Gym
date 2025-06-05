@@ -14,6 +14,7 @@ body.fuente-roboto *:not(mat-icon):not(i.fa):not(span.fa) {
   font-family: 'Roboto', sans-serif !important;
 }
 
+
 body[class*="fuente-"] mat-icon,
 body[class*="fuente-"] i.fa,
 body[class*="fuente-"] span.fa {
@@ -54,6 +55,23 @@ body[class*="fuente-"] span.fa {
   padding: 6px 10px;
   margin: 0 5px 10px 0;
   transition: all 0.3s ease;
+}
+
+
+/* Reducir el tamaño de los íconos */
+.fas {
+  font-size: 0.5rem; /* Ajusta este valor según sea necesario */
+}
+
+/* Reducir el tamaño de los enlaces */
+.nav-link {
+  font-size: 0.9rem; /* Disminuir el tamaño del texto */
+  padding: 0.5rem 1rem; /* Reducir el padding */
+}
+
+/* Ajuste adicional a la marca de la navbar */
+.navbar-brand {
+  font-size: 1.2rem; /* Hacer la marca un poco más pequeña */
 }
 
 .dropdown-menu .btn-icon:hover {

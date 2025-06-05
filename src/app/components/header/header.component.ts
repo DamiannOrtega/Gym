@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-header',
   imports: [CommonModule, RouterModule, MatIconModule],
   templateUrl: './header.component.html',
+   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
   logo = 'assets/img/Logo2.png';
