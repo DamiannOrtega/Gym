@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark px-4">
-  <div class="container-fluid">
+  <div class="container-fluid navbar-container"> <!-- Aquí agregamos la clase navbar-container -->
     <a class="navbar-brand d-flex align-items-center" routerLink="/">
       <img [src]="logo" style="height: 50px; margin-right: 10px;" alt="Logo FitZone" class="logo" />
       <span>FitZone</span>
@@ -14,60 +14,59 @@
         <!-- ENLACES PRINCIPALES -->
         <li class="nav-item">
           <a class="nav-link me-2" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            <i class="fas fa-home me-1"></i> Inicio
+            <mat-icon class="me-1">home</mat-icon> Inicio
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/clases" routerLinkActive="active">
-            <i class="fas fa-calendar-alt me-1"></i> Clases
+            <mat-icon class="me-1">calendar_month</mat-icon> Clases
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/videos" routerLinkActive="active">
-            <i class="fas fa-video me-1"></i> Videos
+            <mat-icon class="me-1">video_library</mat-icon> Videos
           </a>
         </li>
-        
         <li class="nav-item">
           <a class="nav-link" routerLink="/inscripcion" routerLinkActive="active">
-             <i class="fas fa-user-plus me-1"></i> Inscripción
+            <mat-icon class="me-1">person_add</mat-icon> Inscripción
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/contacto" routerLinkActive="active">
-            <i class="fas fa-envelope me-1"></i> Contacto
+            <mat-icon class="me-1">mail</mat-icon> Contacto
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/reglas" routerLinkActive="active">
-            <i class="fas fa-gavel me-1"></i> Reglas
+            <mat-icon class="me-1">gavel</mat-icon> Reglas
           </a>
         </li>
 
         <!-- ENLACES ADMIN -->
         @if (esAdmin) {
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fas fa-shield-alt me-1"></i> Administración
-            </a>
-            <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item" routerLink="/admin/form-template">
-                  <i class="fas fa-clipboard-list me-2"></i> Ver inscripciones
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/admin/contacto">
-                  <i class="fas fa-comments me-2"></i> Ver contactos
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/admin/grafica">
-                  <i class="fas fa-chart-line me-2"></i> Ver Gráficas
-                </a>
-              </li>
-            </ul>
-          </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-shield-alt me-1"></i> Administración
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" routerLink="/admin/form-template">
+                <i class="fas fa-clipboard-list me-2"></i> Ver inscripciones
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/admin/contacto">
+                <i class="fas fa-comments me-2"></i> Ver contactos
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/admin/grafica">
+                <i class="fas fa-chart-line me-2"></i> Ver Gráficas
+              </a>
+            </li>
+          </ul>
+        </li>
         }
 
         <!-- Accesibilidad -->
@@ -129,14 +128,14 @@
 
       <!-- SALUDO / LOGIN -->
       @if (estaLogueado) {
-        <div class="d-flex align-items-center">
-          <span class="navbar-text me-3">
-            <i class="fas fa-user-circle me-1"></i> Bienvenido, {{ nombreUsuario }}
-          </span>
-          <button class="btn btn-outline-light btn-sm" (click)="logout()">
-            <i class="fas fa-sign-out-alt me-1"></i> Cerrar sesión
-          </button>
-        </div>
+      <div class="d-flex align-items-center">
+        <span class="navbar-text me-3">
+          <i class="fas fa-user-circle me-1"></i> Bienvenido, {{ nombreUsuario }}
+        </span>
+        <button class="btn btn-outline-light btn-sm" (click)="logout()">
+          <i class="fas fa-sign-out-alt me-1"></i> Cerrar sesión
+        </button>
+      </div>
       } @else {
       <a class="btn btn-outline-light btn-sm" routerLink="/login" (mouseover)="leerElementoConMouse($event)">
         <i class="fas fa-sign-in-alt me-1"></i> Iniciar sesión
