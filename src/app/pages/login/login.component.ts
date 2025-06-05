@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FirebaseService } from '../../services/firebase.service';
 import CryptoJS from 'crypto-js';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber, signInWithPopup, UserCredential } from 'firebase/auth';
 import Swal from 'sweetalert2';
 import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
 declare var grecaptcha: any;
@@ -18,6 +18,7 @@ declare var grecaptcha: any;
 })
 export class LoginComponent {
   username = '';
+  confirmationResult: any;
   password = '';
   errorMessage = '';
   captchaResponse: string = '';  // Almacena la respuesta del reCaptcha
@@ -31,13 +32,15 @@ export class LoginComponent {
     usuario: '',
     correo: '',
     contrasena: '',
-    confirmar: ''
+    confirmar: '',
+    
   };
 
   
   registrotel = {
+    nombre: '',
     usuario: '',
-    contrasena: '',
+    codigo: '',
     telefono:''
   };
 
@@ -235,17 +238,55 @@ export class LoginComponent {
 
   toggleModoTelefono() {
     this.modoTelefono = !this.modoTelefono;
-    this.modoRegistro = false; // Asegúrate de que el registro esté desactivado
+    this.modoRegistro = false; 
   }
 
   // Función para manejar el inicio de sesión con teléfono
-  iniciarSesionConTelefono() {
-    if (this.registrotel.telefono) {
-      // Lógica para enviar código de verificación al número
-      console.log('Enviando código al teléfono:', this.registrotel.telefono);
-    }
+// Esta función es para enviar el código de verificación
+// Enviar el código de verificación
+enviarCodigo() {
+  const auth = getAuth();
+  this.validarTelefono();
+  if (!this.telefonoValido) {
+    this.registroError = '❌ Número de teléfono inválido';
+    return;
   }
 
+  signInWithPhoneNumber(auth, this.registrotel.telefono)
+    .then((confirmationResult) => {
+      this.confirmationResult = confirmationResult; // Almacena el resultado de confirmación
+      this.registroError = 'Código enviado. Por favor, verifica tu teléfono.';
+    })
+    .catch((error) => {
+      console.error('Error al enviar el código de verificación:', error);
+      this.registroError = '❌ Error al enviar el código de verificación';
+    });
+}
+
+// Confirmar el código de verificación
+// Confirmar el código de verificación
+confirmarCodigo() {
+  if (!this.confirmationResult) {
+    this.registroError = '❌ Debes enviar el código primero.';
+    return;
+  }
+  this.confirmationResult.confirm(this.registrotel.codigo)
+    .then((result: UserCredential) => {
+      this.registroError = '';
+      Swal.fire({
+        icon: 'success',
+        title: 'Inicio de sesión exitoso',
+        text: `Bienvenido ${result.user?.phoneNumber}`,
+        timer: 2000,
+        showConfirmButton: false
+      });
+      this.router.navigate(['/']);
+    })
+    .catch((error: any) => {
+      console.error('Error al confirmar el código:', error);
+      this.registroError = '❌ El código es incorrecto o ha expirado';
+    });
+}
 
   validarTelefono() {
     // Validar con una expresión regular que permita lada internacional
