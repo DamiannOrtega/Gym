@@ -249,8 +249,6 @@ export class LoginComponent {
     this.modoRegistro = false; 
   }
 
-  // Función para manejar el inicio de sesión con teléfono
-// Esta función es para enviar el código de verificación
 // Enviar el código de verificación
 enviarCodigo() {
   const auth = getAuth();
@@ -311,6 +309,8 @@ confirmarCodigo() {
         });
       });
     } else {
+      const usuario = datos[0].usuario || 'usuario'; 
+      this.authService.setUsuario(usuario); 
       Swal.fire({
         icon: 'success',
         title: 'Inicio de sesión exitoso',
