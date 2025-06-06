@@ -1,56 +1,61 @@
 <div class="container mt-5 text-light">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="mb-0">
-            <i class="fas fa-envelope me-2"></i>Mensajes de Contacto
-        </h3>
-        <span class="badge bg-primary">{{ datosArray.length }} mensajes</span>
-    </div>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="mb-0">
+      <i class="fas fa-envelope me-2"></i>Mensajes de Contacto
+    </h3>
+    <span class="badge bg-primary">{{ datosArray.length }} mensajes</span>
+  </div>
 
-    @if (datosArray.length > 0) {
+  @if (datosArray.length > 0) {
     <div class="shadow-sm">
-        <div class="table-responsive">
-            <table class="table table-hover mb-0">
-                <thead class="table-dark">
-                    <tr>
-                        <th class="text-center" width="50">#</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Motivo</th>
-                        <th class="text-center" width="180">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (contacto of datosArray; track $index) {
-                    <tr>
-                        <td class="text-center">{{ $index + 1 }}</td>
-                        <td>{{ contacto.nombre }}</td>
-                        <td>
-                            <a href="mailto:{{ contacto.email }}" class="text-accent">
-                                {{ contacto.email }}
-                            </a>
-                        </td>
-                        <td>{{ contacto.motivo }}</td>
-                        <td>
-                            <div class="d-flex justify-content-center gap-2">
-                                <button class="btn btn-sm btn-warning" (click)="editar($index)">
-                                    <i class="fas fa-edit me-1"></i> Editar
-                                </button>
-                                <button class="btn btn-sm btn-danger" (click)="eliminar($index)">
-                                    <i class="fas fa-trash-alt me-1"></i> Eliminar
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-dark">
+            <tr>
+              <th class="text-center" width="50">#</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Motivo</th>
+              <th class="text-center" width="180">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+           @for (contacto of datosArray; track contacto.id) {
+              <tr>
+                <td class="text-center">{{ $index + 1 }}</td>
+                <td>{{ contacto.nombre }}</td>
+                <td>
+                  <a href="mailto:{{ contacto.email }}" class="text-accent">
+                    {{ contacto.email }}
+                  </a>
+                </td>
+                <td>{{ contacto.motivo }}</td>
+                <td>
+                  <div class="d-flex justify-content-center gap-2">
+                    <button class="btn btn-sm btn-warning" (click)="editar($index)">
+                      <i class="fas fa-edit me-1"></i> Editar
+                    </button>
+                    <button class="btn btn-sm btn-danger" (click)="eliminar($index)">
+                      <i class="fas fa-trash-alt me-1"></i> Eliminar
+                    </button>
+                    @if (contacto.mediosContacto.includes('Correo electrónico')) {
+                      <button class="btn btn-sm btn-info" (click)="responderCorreo($index)">
+                        <i class="fas fa-reply me-1"></i> Responder correo
+                      </button>
                     }
-                </tbody>
-            </table>
-        </div>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
-    } @else {
+  } @else {
     <div class="alert alert-info">
-        <i class="fas fa-info-circle me-2"></i> No hay mensajes por mostrar.
+      <i class="fas fa-info-circle me-2"></i> No hay mensajes por mostrar.
     </div>
-    }
+  }
 
     @if (editIndex !== null) {
     <div class="card mt-4 shadow">
@@ -79,43 +84,41 @@
                 <div class="mb-3">
                     <label class="form-label text-light">
                         <i class="fas fa-question-circle me-2"></i> Motivo
-                    </label>    
+                    </label>
                     <select formControlName="motivo" class="form-select text-dark">
                         <option value="" disabled>Selecciona un motivo</option>
-                        @for (motivo of motivos; track $index) {
-                        <option [value]="motivo">{{ motivo }}</option>
-                        }
+                        <option value="Consultas generales">Consultas generales</option>
+                        <option value="Soporte técnico">Soporte técnico</option>
+                        <option value="Clases y horarios">Clases y horarios</option>
                     </select>
                 </div>
 
-                            <!-- Urgencia -->
-            <div class="mb-3">
-                <label class="form-label text-light">
-                    <i class="fas fa-exclamation-triangle me-2"></i> Urgencia
-                </label>
-                <select formControlName="urgencia" class="form-select text-dark">
-                    <option value="" disabled>Selecciona el nivel de urgencia</option>
-                    @for (urgencia of urgencias; track $index) {
-                    <option [value]="urgencia">{{ urgencia }}</option>
-                    }
-                </select>
-            </div>
+                <div class="mb-3">
+                    <label class="form-label text-light">
+                        <i class="fas fa-exclamation-triangle me-2"></i> Urgencia
+                    </label>
+                    <select formControlName="urgencia" class="form-select text-dark">
+                        <option value="" disabled>Selecciona el nivel de urgencia</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Urgente">Urgente</option>
+                        <option value="Muy urgente">Muy urgente</option>
+                    </select>
+                </div>
 
-            <!-- Fecha -->
-            <div class="mb-3">
-                <label class="form-label text-light">
-                    <i class="fas fa-calendar-alt me-2"></i> Fecha de contacto
-                </label>
-                <input formControlName="fecha" type="date" class="form-control" [min]="hoy()" />
-            </div>
+                <div class="mb-3">
+                    <label class="form-label text-light">
+                        <i class="fas fa-calendar-alt me-2"></i> Fecha de contacto
+                    </label>
+                    <input formControlName="fecha" type="date" class="form-control" [min]="hoy()" />
+                </div>
 
-            <!-- Comentarios -->
-            <div class="mb-3">
-                <label class="form-label text-light">
-                    <i class="fas fa-comment-dots me-2"></i> Comentarios adicionales (opcional)
-                </label>
-                <textarea formControlName="comentarios" class="form-control" rows="3" placeholder="Escribe tus comentarios..."></textarea>
-            </div>
+                <div class="mb-3">
+                    <label class="form-label text-light">
+                        <i class="fas fa-comment-dots me-2"></i> Comentarios adicionales (opcional)
+                    </label>
+                    <textarea formControlName="comentarios" class="form-control" rows="3"
+                        placeholder="Escribe tus comentarios..."></textarea>
+                </div>
 
                 <div class="d-flex justify-content-end gap-2">
                     <button type="button" class="btn btn-secondary" (click)="cancelar()">
@@ -123,6 +126,65 @@
                     </button>
                     <button type="submit" class="read-more-btn" [disabled]="form.invalid">
                         <i class="fas fa-save me-1"></i> Guardar cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    }
+
+    @if (respuestaIndex !== null) {
+    <div class="card mt-4 shadow">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">
+                <i class="fas fa-reply me-2"></i> Responder al mensaje
+            </h5>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="form" (ngSubmit)="guardar()">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-light">
+                            <i class="fas fa-user me-2"></i> Nombre
+                        </label>
+                        <input formControlName="nombre" class="form-control" placeholder="Nombre completo" readonly />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-light">
+                            <i class="fas fa-envelope me-2"></i> Email
+                        </label>
+                        <input formControlName="email" class="form-control" placeholder="correo@ejemplo.com" readonly />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-light">
+                        <i class="fas fa-question-circle me-2"></i> Motivo
+                    </label>
+                    <input formControlName="motivo" class="form-control" readonly />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-light">
+                        <i class="fas fa-comment-dots me-2"></i> Comentarios
+                    </label>
+                    <textarea formControlName="comentarios" class="form-control" readonly></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-light">
+                        <i class="fas fa-reply me-2"></i> Respuesta
+                    </label>
+                    <textarea formControlName="respuesta" class="form-control" rows="3"
+                        placeholder="Escribe tu respuesta..."></textarea>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-secondary" (click)="cancelar()">
+                        <i class="fas fa-times me-1"></i> Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-success" [disabled]="form.invalid">
+                        <i class="fas fa-paper-plane me-1"></i> Enviar
                     </button>
                 </div>
             </form>

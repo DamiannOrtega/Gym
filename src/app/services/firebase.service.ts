@@ -6,7 +6,10 @@ import {
   collectionData,
   CollectionReference,
   query,
-  where
+  where,
+  doc,
+  updateDoc,
+  deleteDoc
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
@@ -21,10 +24,28 @@ export class FirebaseService {
   }
 
   // Obtiene todos los documentos de una colección
-  obtenerDatos(nombreColeccion: string): Observable<any[]> {
-    const ref = collection(this.firestore, nombreColeccion);
-    return collectionData(ref, { idField: 'id' });
+  // obtenerDatos(nombreColeccion: string): Observable<any[]> {
+  //   const ref = collection(this.firestore, nombreColeccion);
+  //   return collectionData(ref, { idField: 'id' });
+  // }
+  obtenerDatos(coleccion: string): Observable<any[]> {
+  return collectionData(collection(this.firestore, coleccion), { idField: 'id' }) as Observable<any[]>;
+}
+
+
+  // Obtiene documentos filtrados por campo usando where()
+  actualizarDato(nombreColeccion: string, id: string, data: any) {
+    const ref = doc(this.firestore, `${nombreColeccion}/${id}`);
+    return updateDoc(ref, data);
   }
+
+  // Elimina un documento de la colección
+  eliminarDato(nombreColeccion: string, id: string) {
+    const ref = doc(this.firestore, `${nombreColeccion}/${id}`);
+    return deleteDoc(ref);
+  }
+
+  
 
   // Obtiene documentos filtrados por campo usando where()
   getPorCampo(coleccion: string, campo: string, valor: any): Observable<any[]> {

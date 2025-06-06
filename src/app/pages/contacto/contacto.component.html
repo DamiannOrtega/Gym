@@ -116,6 +116,9 @@
               @else if (form.get('telefono')?.errors?.['telefonoInvalido']) {
                 El número debe tener exactamente 10 dígitos.
               }
+              @else if(form.get('telefono')?.errors?.['required']){
+                El teléfono es obligatorio.
+              }
             </div>
           }
         </div>
