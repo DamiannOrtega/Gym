@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FirebaseService } from '../../services/firebase.service';
 import CryptoJS from 'crypto-js';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber, signInWithPopup, UserCredential } from 'firebase/auth';
 import Swal from 'sweetalert2';
 import { RecaptchaModule } from 'ng-recaptcha'; // Import RecaptchaModule
 declare var grecaptcha: any;
@@ -18,19 +18,27 @@ declare var grecaptcha: any;
 })
 export class LoginComponent {
   username = '';
+  confirmationResult: any;
   password = '';
   errorMessage = '';
   captchaResponse: string = '';  // Almacena la respuesta del reCaptcha
   captchaCompleted = false;      // Bandera para saber si el reCaptcha ha sido completado
-
-
+  contrasenaValida: boolean = true;
+  contrasenaCoinciden: boolean = true;
+  modoTelefono: boolean = false; 
+  telefono: string = ''; 
   registro = {
     nombre: '',
     usuario: '',
     correo: '',
     contrasena: '',
-    confirmar: ''
+    confirmar: '',
+    telefono:''
   };
+
+
+
+
   registroError = '';
 
   modoRegistro = true;
@@ -38,6 +46,7 @@ export class LoginComponent {
 
   private inputOculto = '';
   private timeout: any;
+  telefonoValido!: boolean;
 
   constructor(
     private authService: AuthService,
@@ -65,23 +74,21 @@ export class LoginComponent {
   registrarUsuario(): void {
     const { nombre, usuario, correo, contrasena, confirmar } = this.registro;
 
-    const patron = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d_]{8,12}$/;
+    this.validarContrasenas();
 
-    // Verifica si el reCaptcha ha sido completado
-    if (!this.captchaCompleted) {
-      this.registroError = '❌ Debes completar el reCaptcha.';
-      return;
-    }
-
-    // Verifica si la contraseña cumple con el patrón
-    if (!patron.test(contrasena)) {
+    if (!this.contrasenaValida) {
       this.registroError = '❌ La contraseña debe tener entre 8 y 12 caracteres, al menos una mayúscula, un número y solo letras, números y el carácter "_".';
       return;
     }
 
-    // Verifica si las contraseñas coinciden
-    if (contrasena !== confirmar) {
+    if (!this.contrasenaCoinciden) {
       this.registroError = '❌ Las contraseñas no coinciden.';
+      return;
+    }
+
+    // Verifica si el reCaptcha ha sido completado
+    if (!this.captchaCompleted) {
+      this.registroError = '❌ Debes completar el reCaptcha.';
       return;
     }
 
@@ -104,9 +111,11 @@ export class LoginComponent {
         contrasena: contrasenaHash
       }).then(() => {
         if (this.mostrarFormularioAdmin) {
-          this.authService.setAdmin(nombre);
+          this.authService.setAdmin(usuario);
+          
         } else {
-          this.authService.setUsuario(nombre);
+          this.authService.setUsuario(usuario);
+
         }
 
         Swal.fire({
@@ -117,7 +126,7 @@ export class LoginComponent {
           showConfirmButton: false
         });
 
-        this.registro = { nombre: '', usuario: '', correo: '', contrasena: '', confirmar: '' };
+        this.registro = { nombre: '',telefono:'', usuario: '', correo: '', contrasena: '', confirmar: '' };
         this.registroError = '';
         this.router.navigate(['/']);
       }).catch(() => {
@@ -129,6 +138,13 @@ export class LoginComponent {
       });
     });
   }
+
+    // Método para validar contraseña
+    validarContrasenas() {
+      const patron = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d_]{8,12}$/;
+      this.contrasenaValida = patron.test(this.registro.contrasena);
+      this.contrasenaCoinciden = this.registro.contrasena === this.registro.confirmar;
+    }
 
 
   login(): void {
@@ -147,9 +163,9 @@ export class LoginComponent {
 
       if (usuario) {
         if (this.mostrarFormularioAdmin) {
-          this.authService.setAdmin(usuario.nombre);
+          this.authService.setAdmin(usuario.usuario);
         } else {
-          this.authService.setUsuario(usuario.nombre);
+          this.authService.setUsuario(usuario.usuario);
         }
 
         this.errorMessage = '';
@@ -163,28 +179,38 @@ export class LoginComponent {
   iniciarSesionConGoogle() {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
-
+  
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        const nombreGoogle = user.displayName || 'Usuario';
-
-        if (this.mostrarFormularioAdmin) {
-          this.authService.setAdmin(nombreGoogle);
-        } else {
-          this.authService.setUsuario(nombreGoogle);
-        }
-
-
-        Swal.fire({
-          icon: 'success',
-          title: 'Inicio de sesión correcto',
-          text: `Bienvenido, ${nombreGoogle} `,
-          timer: 2000,
-          showConfirmButton: false
+        const nombre = user.displayName || 'Usuario';
+        const correo = user.email || '';
+        const usuario = correo.split('@')[0]; // ⚠️ esto se usará como clave en Firebase
+  
+        // Verificamos si ya existe en Firebase
+        this.firebase.getPorCampo('usuarios', 'usuario', usuario).subscribe(async datos => {
+          if (datos.length === 0) {
+            // Si no existe, lo agregamos
+            await this.firebase.agregarDato('usuarios', {
+              nombre,
+              correo,
+              usuario
+            });
+          }
+  
+          // Guardamos el usuario (clave) correctamente
+          this.authService.setUsuario(nombre); 
+  
+          Swal.fire({
+            icon: 'success',
+            title: 'Inicio de sesión con Google',
+            text: `Bienvenido, ${nombre}`,
+            timer: 2000,
+            showConfirmButton: false
+          });
+  
+          this.router.navigate(['/']);
         });
-
-        this.router.navigate(['/']);
       })
       .catch(() => {
         Swal.fire({
@@ -193,8 +219,10 @@ export class LoginComponent {
           text: '❌ No se pudo iniciar sesión con Google'
         });
       });
+      
   }
-
+  
+  
   @HostListener('document:keydown', ['$event'])
   detectarComando(event: KeyboardEvent) {
     clearTimeout(this.timeout);
@@ -216,4 +244,90 @@ export class LoginComponent {
     this.modoRegistro = !this.modoRegistro;
   }
 
+  toggleModoTelefono() {
+    this.modoTelefono = !this.modoTelefono;
+    this.modoRegistro = false; 
+  }
+
+// Enviar el código de verificación
+enviarCodigo() {
+  const auth = getAuth();
+  this.validarTelefono();
+
+  console.log('Teléfono ingresado:', this.registro.telefono);
+
+  if (!this.telefonoValido) {
+    this.registroError = '❌ Número de teléfono inválido';
+    return;
+  }
+
+  const appVerifier = new RecaptchaVerifier(
+    auth,
+    'recaptcha-container',
+    {
+      size: 'invisible',
+      callback: (response: any) => {
+        console.log('reCAPTCHA verificado automáticamente:', response);
+      }
+    }
+  );
+
+  signInWithPhoneNumber(auth, this.registro.telefono, appVerifier)
+    .then((confirmationResult) => {
+      this.confirmationResult = confirmationResult;
+      this.registroError = 'Código enviado. Ingresa el código para continuar.';
+      console.log('Código enviado con éxito:', confirmationResult);
+    })
+    .catch((error) => {
+      console.error('❌ Error al enviar el código de verificación:', error);
+      this.registroError = '❌ Error al enviar el código. Revisa el número o el reCAPTCHA.';
+    });
+}
+
+// Confirmar el código de verificación
+confirmarCodigo() {
+  if (!this.confirmationResult) {
+    this.registroError = '❌ Debes enviar el código primero.';
+    return;
+  }
+
+  this.firebase.getPorCampo('usuarios', 'telefono', this.registro.telefono).subscribe(datos => {
+    if (datos.length === 0) {
+      // Si no existe, lo agregamos
+      this.firebase.agregarDato('usuarios', {
+        nombre: this.registro.nombre,
+        usuario: this.registro.usuario,
+        telefono: this.registro.telefono
+      }).then(() => {
+        this.authService.setUsuario(this.registro.usuario);
+        Swal.fire({
+          icon: 'success',
+          title: 'Usuario registrado con teléfono',
+          text: `Bienvenido ${this.registro.nombre}`,
+          timer: 2000,
+          showConfirmButton: false
+        });
+      });
+    } else {
+      const usuario = datos[0].usuario || 'usuario'; 
+      this.authService.setUsuario(usuario); 
+      Swal.fire({
+        icon: 'success',
+        title: 'Inicio de sesión exitoso',
+        text: `Bienvenido ${datos[0].nombre || 'Usuario'}`,
+        timer: 2000,
+        showConfirmButton: false
+      });
+    }
+  
+    this.router.navigate(['/']);
+  });
+  
+}
+
+  validarTelefono() {
+    // Validar con una expresión regular que permita lada internacional
+    console.log('Teléfono ingresado:', this.registro.telefono);
+    this.telefonoValido = /^\+\d{11,15}$/.test(this.registro.telefono);
+  }
 }

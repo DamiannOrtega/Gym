@@ -49,6 +49,7 @@ body {
     background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%) !important;
     color: var(--color-texto-claro);
     font-family: 'Poppins', 'Segoe UI', sans-serif;
+    
 }
 
 /* Personalización de elementos Bootstrap */
@@ -598,6 +599,54 @@ body {
     line-height: 1;
 
 }
+
+/* === Estilo global para los enlaces del menú y los íconos === */
+
+/* Tiempos de transición para un cambio de tamaño suave */
+.navbar-nav .nav-link {
+    font-size: 1rem;
+    /* Tamaño base que cambiará según el tamaño de la fuente */
+    padding: 0.75rem 1rem;
+    /* Asegura que el padding sea adecuado */
+    transition: font-size 0.3s ease-in-out;
+    /* Transición suave al cambiar el tamaño */
+}
+
+.fas,
+.material-icons {
+    font-size: 1.5rem;
+    /* Tamaño de íconos que se agranda proporcionalmente */
+    transition: font-size 0.3s ease-in-out;
+    /* Transición suave al cambiar el tamaño */
+}
+
+/* Ajuste de tamaño de los botones */
+.btn {
+    font-size: 1rem;
+    /* Tamaño ajustado */
+    padding: 8px 14px;
+    /* Aumenta el padding de los botones */
+}
+
+/* Ajustar el tamaño de la marca */
+.navbar-brand {
+    font-size: 1.5rem;
+    /* Tamaño adecuado para la marca */
+}
+
+/* Menú desplegable de accesibilidad */
+.dropdown-menu[aria-labelledby="accesibilidadDropdown"] {
+    font-size: 1.2rem;
+    /* Aumentar el tamaño del texto en el menú de accesibilidad */
+    padding: 20px;
+    min-width: 280px;
+    background: rgba(30, 30, 30, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid #4a90e2;
+    border-radius: 16px;
+    color: #f1f1f1;
+}
+
 
 /* Fuentes */
 body.fuente-arial,

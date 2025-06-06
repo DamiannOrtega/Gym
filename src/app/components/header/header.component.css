@@ -1,57 +1,109 @@
-/* === FUENTES ACCESIBILIDAD === */
-body.fuente-arial,
-body.fuente-arial *:not(mat-icon):not(i.fa):not(span.fa) {
-  font-family: Arial, sans-serif !important;
+/* Contenedor de la barra de navegación */
+.navbar-container {
+  font-size: var(--font-size-base, 16px);
+  display: flex;
+  align-items: center; /* Alinear los elementos al centro */
+  justify-content: space-between; /* Distribuir los elementos de manera equitativa */
 }
 
-body.fuente-verdana,
-body.fuente-verdana *:not(mat-icon):not(i.fa):not(span.fa) {
-  font-family: Verdana, sans-serif !important;
+/* Estilo de los enlaces */
+.navbar-nav .nav-link {
+  display: flex;
+  align-items: center; /* Asegurar que iconos y texto estén alineados */
+  font-size: 0.9rem; /* Reducir el tamaño de la fuente para hacer el menú más compacto */
+  padding: 0.1rem 0.8rem; /* Reducir el padding para que las opciones no sean tan altas */
+  margin-right: 1px; /* Reducir el margen entre los enlaces */
+  transition: background-color 0.3s ease;
 }
 
-body.fuente-roboto,
-body.fuente-roboto *:not(mat-icon):not(i.fa):not(span.fa) {
-  font-family: 'Roboto', sans-serif !important;
+/* Estilo de los iconos */
+.fas {
+  font-size: 1rem; /* Reducir el tamaño de los iconos */
+  margin-right: 0.5rem; /* Espacio entre el icono y el texto */
+  transition: transform 0.3s ease;
 }
 
-body[class*="fuente-"] mat-icon,
-body[class*="fuente-"] i.fa,
-body[class*="fuente-"] span.fa {
-  font-family: 'Material Icons', 'Font Awesome 6 Free', sans-serif !important;
-  font-weight: normal !important;
+/* Efecto hover sobre los enlaces */
+.nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Fondo sutil al pasar el mouse */
+  color: #4a90e2; /* Cambiar color al pasar el mouse */
+  border-radius: 8px; /* Redondear bordes */
 }
 
-/* === CONTENEDOR DEL MENÚ DE ACCESIBILIDAD === */
+/* Ajustes del dropdown para administración y accesibilidad */
+.navbar-nav .dropdown-menu {
+  padding: 0.5rem; /* Reducir padding para el dropdown */
+}
+
+.navbar-nav .dropdown-item {
+  font-size: 0.9rem; /* Reducir tamaño de la fuente en los elementos del dropdown */
+  padding: 0.25rem 1rem; /* Reducir el padding de los items en el dropdown */
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-nav .dropdown-item:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #4a90e2;
+}
+
+/* Ajustes generales para el menú de accesibilidad */
 .dropdown-menu[aria-labelledby="accesibilidadDropdown"] {
   background: rgba(30, 30, 30, 0.95);
   backdrop-filter: blur(8px);
   border: 1px solid #4a90e2;
-  border-radius: 16px;
-  padding: 20px;
-  min-width: 280px;
+  border-radius: 10px; /* Redondear bordes */
+  padding: 15px; /* Reducir padding */
+  min-width: 250px; /* Establecer un ancho mínimo adecuado */
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
   animation: fadeIn 0.3s ease-in-out;
   z-index: 1050;
   color: #f1f1f1;
   font-family: 'Poppins', sans-serif;
+  position: absolute; /* Para asegurar que el menú no se desborde */
+  top: 100%; /* Posicionar el menú justo debajo del icono de accesibilidad */
+  right: 0;
 }
 
-/* === ENCABEZADO DEL BLOQUE === */
-.dropdown-menu strong {
-  display: block;
-  color: #4a90e2;
-  font-size: 15px;
-  margin-bottom: 10px;
+/* Animación suave de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* === BOTONES DE LECTOR DE PANTALLA === */
+/* Estilos para los elementos dentro del menú de accesibilidad */
+.dropdown-menu .form-label {
+  color: #9ec8ff;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.dropdown-menu select,
+.dropdown-menu input[type="range"] {
+  background-color: #252525;
+  color: #f1f1f1;
+  border: 1px solid #4a90e2;
+  border-radius: 8px;
+  padding: 8px;
+  width: 100%;
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+
+/* Estilos para los botones de lector de pantalla */
 .dropdown-menu .btn-icon {
   background-color: transparent;
   border: 2px solid #4a90e2;
   color: #4a90e2;
   border-radius: 10px;
   font-size: 1.1rem;
-  padding: 6px 10px;
+  padding: 8px 12px;
   margin: 0 5px 10px 0;
   transition: all 0.3s ease;
 }
@@ -72,37 +124,29 @@ body[class*="fuente-"] span.fa {
   color: white;
 }
 
-/* === SELECTS Y SLIDER === */
-.dropdown-menu .form-label {
-  color: #9ec8ff;
-  font-weight: 500;
-  margin-bottom: 4px;
+/* Ajuste de la posición y visibilidad de los íconos */
+.navbar-nav .dropdown-toggle {
+  display: flex;
+  align-items: center;
+  padding-right: 10px; /* Ajustar para que no quede tan pegado al borde */
 }
 
-.dropdown-menu select,
-.dropdown-menu input[type="range"] {
-  background-color: #252525;
-  color: #f1f1f1;
-  border: 1px solid #4a90e2;
+/* Mejorar el estilo de los enlaces dentro del menú de accesibilidad */
+.navbar-nav .dropdown-item {
+  font-size: 0.9rem;
+  padding: 0.25rem 1rem;
+  margin-bottom: 5px;
   border-radius: 8px;
-  padding: 6px;
-  width: 100%;
-  margin-bottom: 14px;
-  font-size: 14px;
+  transition: background-color 0.3s ease;
 }
 
-.dropdown-menu input[type="range"] {
-  accent-color: #4a90e2;
+.navbar-nav .dropdown-item:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #4a90e2;
 }
 
-/* === ANIMACIÓN SUAVE === */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Asegurarse de que el menú de accesibilidad se vea bien alineado */
+.dropdown-menu[aria-labelledby="accesibilidadDropdown"] .form-group {
+  margin-bottom: 10px;
 }
+

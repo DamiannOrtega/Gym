@@ -1,14 +1,16 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, computed, HostListener, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MatIconModule } from '@angular/material/icon';
+import { PauseService } from '../../services/pause.service';
 
 @Component({
   standalone: true,
   selector: 'app-header',
   imports: [CommonModule, RouterModule, MatIconModule],
   templateUrl: './header.component.html',
+  styleUrl: './header.component.css'
 })
 export class HeaderComponent {
   logo = 'assets/img/Logo2.png';
@@ -19,10 +21,14 @@ export class HeaderComponent {
   utterance: SpeechSynthesisUtterance | null = null;
   isSpeaking = false;
   isPaused = false;
+  nombreUsuario = computed(() => this.authService.nombreUsuario());
+  
   hoverLecturaActiva = true;
 
+  
 
-  constructor(public authService: AuthService) {
+
+  constructor(public authService: AuthService, private pauseService: PauseService) {
     speechSynthesis.onvoiceschanged = () => {
       const voces = speechSynthesis.getVoices();
       console.log('VOCES DISPONIBLES:');
@@ -30,9 +36,10 @@ export class HeaderComponent {
         console.log(`${i}: ${v.name} - ${v.lang}`);
       });
     };
-
   }
 
+  
+ 
   logout() {
     this.authService.logout();
   }
@@ -44,9 +51,7 @@ export class HeaderComponent {
     return this.authService.getRol() === 'admin';
   }
 
-  get nombreUsuario(): string {
-    return this.authService.getNombreMostrado();
-  }
+ 
 
   // Toggle menú accesibilidad
   toggleAccMenu() {
@@ -54,56 +59,53 @@ export class HeaderComponent {
   }
 
   // Lector de pantalla
-  async startOrPauseReading() {
+  startOrPauseReading() {
     if (!this.utterance) {
-      // Elimina íconos del texto antes de leer
       const bodyClone = document.body.cloneNode(true) as HTMLElement;
       bodyClone.querySelectorAll('mat-icon, i').forEach(icon => icon.remove());
       const texto = bodyClone.innerText;
 
       this.utterance = new SpeechSynthesisUtterance(texto);
-
-      const vocesDisponibles = await this.getVocesCargadas();
+      const vocesDisponibles = speechSynthesis.getVoices();
       const vozFemenina = vocesDisponibles.find(v => v.name === 'Microsoft Sabina');
       this.utterance.voice = vozFemenina || vocesDisponibles.find(v => v.lang.startsWith('es')) || null;
 
       this.utterance.rate = 1;
       this.utterance.pitch = 1.1;
 
-      // Cuando termina la lectura completa
       this.utterance.onend = () => {
         this.isSpeaking = false;
         this.isPaused = false;
         this.utterance = null;
-        this.hoverLecturaActiva = true; // ✅ Reactiva lectura por mouse al terminar
+        this.hoverLecturaActiva = true; // Reactivar lectura por mouse al terminar
       };
 
       speechSynthesis.cancel();
       speechSynthesis.speak(this.utterance);
       this.isSpeaking = true;
       this.isPaused = false;
-      this.hoverLecturaActiva = false; // ❌ Desactiva lectura por mouse mientras habla
-
+      this.hoverLecturaActiva = false;
     } else if (this.isPaused) {
       speechSynthesis.resume();
       this.isPaused = false;
-      this.hoverLecturaActiva = false; // ❌ Sigue desactivado mientras reanuda
-
+      this.hoverLecturaActiva = false;
     } else {
       speechSynthesis.pause();
       this.isPaused = true;
-      this.hoverLecturaActiva = false; // ✅ NO permitir hover cuando está pausado
+      this.hoverLecturaActiva = false;
     }
+
+    // Cambiar el estado de la pausa
+    this.pauseService.togglePause(this.isPaused);
   }
 
-
   restartReading() {
-    speechSynthesis.cancel(); // Detiene y limpia
+    speechSynthesis.cancel();
     this.utterance = null;
     this.isSpeaking = false;
     this.isPaused = false;
-    this.hoverLecturaActiva = false; // ❌ Se desactiva hover al reiniciar
-    this.startOrPauseReading(); // Inicia de nuevo
+    this.hoverLecturaActiva = false;
+    this.startOrPauseReading();
   }
 
   setContraste(contraste: string) {
@@ -137,13 +139,14 @@ export class HeaderComponent {
 
   setFontSize(size: string) {
     this.fontSize = +size;
-    document.documentElement.style.setProperty('--font-size-base', this.fontSize + 'px');
+    document.documentElement.style.setProperty('--font-size-base', this.fontSize + 'px'); // Cambia el tamaño de la fuente globalmente
     document.body.style.fontSize = this.fontSize + 'px';
     const appHome = document.querySelector('.app-home') as HTMLElement | null;
     if (appHome) {
       appHome.style.fontSize = this.fontSize + 'px';
     }
   }
+
 
   onFuenteChange(event: Event) {
     const value = (event.target as HTMLSelectElement).value;
@@ -175,14 +178,14 @@ export class HeaderComponent {
 
   @HostListener('document:mouseover', ['$event'])
   leerElementoConMouse(event: MouseEvent) {
-    if (this.isPaused) return; // ❗️Esto es lo importante
+    if (this.isPaused || !this.isSpeaking) return; // Solo leer si está activo el lector de pantalla
 
     const target = event.target as HTMLElement;
     if (!target) return;
 
-    if (target.tagName === 'MAT-ICON' || target.tagName === 'I') return;
+    if (target.tagName === 'MAT-ICON' || target.tagName === 'I') return; // Evitar íconos
 
-    const elemento = target.closest('a, button');
+    const elemento = target.closest('a, button'); // Verificar que el target sea un enlace o botón
 
     if (elemento) {
       const texto = Array.from(elemento.childNodes)
