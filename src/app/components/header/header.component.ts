@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, computed, HostListener, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -12,7 +12,7 @@ import { PauseService } from '../../services/pause.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent {
   logo = 'assets/img/Logo2.png';
 
   // Variables para accesibilidad
@@ -21,7 +21,8 @@ export class HeaderComponent implements OnInit{
   utterance: SpeechSynthesisUtterance | null = null;
   isSpeaking = false;
   isPaused = false;
-  nombreUsuario: string = '';
+  nombreUsuario = computed(() => this.authService.nombreUsuario());
+  
   hoverLecturaActiva = true;
 
   
@@ -37,11 +38,8 @@ export class HeaderComponent implements OnInit{
     };
   }
 
-  ngOnInit(): void {
-    this.authService.getNombreDesdeFirestore().then(nombre => {
-      this.nombreUsuario = nombre;
-    });
-  }
+  
+ 
   logout() {
     this.authService.logout();
   }

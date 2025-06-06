@@ -219,6 +219,7 @@ export class LoginComponent {
           text: '❌ No se pudo iniciar sesión con Google'
         });
       });
+      
   }
   
   
