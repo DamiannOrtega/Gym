@@ -15,16 +15,14 @@ export class AuthService {
     localStorage.setItem('rol', 'usuario');
     localStorage.setItem('idUsuario', usuarioId);
     this.usuarioActual.set(usuarioId);
-    const nombre = await this.getNombreDesdeFirestore();
-    this.nombreUsuario.set(nombre);
+    this.nombreUsuario.set(usuarioId);
   }
   
   async setAdmin(usuarioId: string): Promise<void> {
     localStorage.setItem('rol', 'admin');
     localStorage.setItem('idUsuario', usuarioId);
     this.currentAdmin.set(usuarioId);
-    const nombre = await this.getNombreDesdeFirestore();
-    this.nombreUsuario.set(nombre);
+    this.nombreUsuario.set(usuarioId);
   }
   
 
@@ -44,15 +42,5 @@ export class AuthService {
     return localStorage.getItem('rol') || '';
   }
 
-  // 🔎 Carga el nombre desde Firebase según el usuario actual (usuarioId guardado en localStorage)
-  async getNombreDesdeFirestore(): Promise<string> {
-    const id = localStorage.getItem('idUsuario');
-    const rol = localStorage.getItem('rol');
-    if (!id || !rol) return '';
 
-    const coleccion = rol === 'admin' ? 'admins' : 'usuarios';
-    const usuarios = await firstValueFrom(this.firebase.getPorCampo(coleccion, 'usuario', id));
-    return usuarios[0]?.nombre ?? '';
-
-  }
 }

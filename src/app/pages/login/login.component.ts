@@ -199,7 +199,7 @@ export class LoginComponent {
           }
   
           // Guardamos el usuario (clave) correctamente
-          this.authService.setUsuario(usuario); 
+          this.authService.setUsuario(nombre); 
   
           Swal.fire({
             icon: 'success',
