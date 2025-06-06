@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -12,7 +12,7 @@ import { PauseService } from '../../services/pause.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
   logo = 'assets/img/Logo2.png';
 
   // Variables para accesibilidad
@@ -21,7 +21,10 @@ export class HeaderComponent {
   utterance: SpeechSynthesisUtterance | null = null;
   isSpeaking = false;
   isPaused = false;
+  nombreUsuario: string = '';
   hoverLecturaActiva = true;
+
+  
 
 
   constructor(public authService: AuthService, private pauseService: PauseService) {
@@ -34,6 +37,11 @@ export class HeaderComponent {
     };
   }
 
+  ngOnInit(): void {
+    this.authService.getNombreDesdeFirestore().then(nombre => {
+      this.nombreUsuario = nombre;
+    });
+  }
   logout() {
     this.authService.logout();
   }
@@ -45,9 +53,7 @@ export class HeaderComponent {
     return this.authService.getRol() === 'admin';
   }
 
-  get nombreUsuario(): string {
-    return this.authService.getNombreMostrado();
-  }
+ 
 
   // Toggle menú accesibilidad
   toggleAccMenu() {

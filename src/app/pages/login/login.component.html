@@ -75,20 +75,20 @@
         @else {
           <div class="mb-3">
             <label class="form-label text-light">Nombre completo</label>
-            <input [(ngModel)]="registrotel.nombre" name="telefono" type="tel" class="form-control" required />
+            <input [(ngModel)]="registro.nombre" name="nombreTel" type="tel" class="form-control" required />
           </div>
           <div class="mb-3">
             <label class="form-label text-light">Usuario</label>
-            <input [(ngModel)]="registrotel.usuario" name="telefono" type="tel" class="form-control" required />
+            <input [(ngModel)]="registro.usuario" name="usuarioTel" type="tel" class="form-control" required />
           </div>
           <div class="mb-3">
             <label class="form-label text-light">Número de teléfono</label>
-            <input [(ngModel)]="registrotel.telefono" name="telefono" type="tel" class="form-control" required />
+            <input [(ngModel)]="registro.telefono" name="telefonoTel" type="tel" class="form-control" required />
           </div>
           <button (click)="enviarCodigo()" class="btn btn-primary">Enviar código</button>
         <div class="mb-3">
           <label class="form-label text-light">Código de verificación</label>
-          <input [(ngModel)]="registrotel.codigo" name="codigo" type="text" class="form-control" required />
+          <input [(ngModel)]="registro.contrasena" name="codigo" type="text" class="form-control" required />
         </div>
         <button (click)="confirmarCodigo()" class="btn btn-primary">Confirmar código</button>
      
@@ -142,3 +142,6 @@
     </div>
   </div>
 </div>
+
+<div id="recaptcha-container"></div>
+
