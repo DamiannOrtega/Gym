@@ -211,6 +211,7 @@ export class InscripcionComponent {
       this.firebaseService.agregarDato('inscripciones', inscripcionConFecha)
         .then(() => {
           Swal.fire('¡Registro exitoso!', 'Tu inscripción ha sido guardada en Firebase.', 'success');
+          this.generarCodigoQR(); 
           form.resetForm();
           this.inscripcion.dias = [];
           this.pagoCompletado = false;
