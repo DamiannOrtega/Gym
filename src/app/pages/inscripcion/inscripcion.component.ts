@@ -7,6 +7,7 @@ import { OpinionesComponent } from '../../components/opiniones/opiniones.compone
 import { FaqComponent } from '../../shared/faq/faq.component';
 import { FirebaseService } from '../../services/firebase.service';
 import { QrService } from '../../services/qr.service';
+import { QrPdfService } from '../../services/qr-pdf.service';
 
 
 @Component({
@@ -20,6 +21,10 @@ export class InscripcionComponent {
   // Señal para el mensaje de notificación (vacío = no mostrar)
   notificacion = signal<string>('');
   private timeoutId?: ReturnType<typeof setTimeout>;
+  mostrarBotonDescargaPDF = false;
+  datosParaPDF: any = null;
+  qrBase64: string = '';
+
 
 
   errorDias = "";
@@ -112,7 +117,7 @@ export class InscripcionComponent {
   }
 
   // Inyección de servicios de almacenamiento y ruta activa
-  constructor(private firebaseService: FirebaseService, private route: ActivatedRoute,private qrService: QrService) { }
+  constructor(private firebaseService: FirebaseService, private route: ActivatedRoute,private qrService: QrService,private qrPdf: QrPdfService) { }
 
   // Retorna la fecha actual en formato YYYY-MM-DD para usar como fecha mínima en el campo de fecha
   hoy(): string {
@@ -475,9 +480,18 @@ export class InscripcionComponent {
   
     this.qrService.generarQR(datos).subscribe(res => {
       const img = new Image();
-      img.src = res.qr; // data:image/png;base64,...
+      img.src = res.qr;
+      this.qrBase64 = res.qr;
+      this.datosParaPDF = datos;
       document.querySelector('#contenedorQR')?.appendChild(img);
+      this.mostrarBotonDescargaPDF = true;
     });
   }
+  descargarPDF() {
+    if (this.datosParaPDF && this.qrBase64) {
+      this.qrPdf.generarPDF(this.datosParaPDF, this.qrBase64);
+    }
+  }
+  
 
 }

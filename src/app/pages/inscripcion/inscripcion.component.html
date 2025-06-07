@@ -170,6 +170,13 @@
 
 
 <div id="contenedorQR" class="text-center my-4"></div>
+@if (mostrarBotonDescargaPDF) {
+  <div class="text-center mt-3">
+    <button class="btn btn-outline-light" (click)="descargarPDF()">
+      <i class="fas fa-download me-2"></i>Descargar comprobante en PDF
+    </button>
+  </div>
+}
 
 <app-opiniones></app-opiniones>
 
