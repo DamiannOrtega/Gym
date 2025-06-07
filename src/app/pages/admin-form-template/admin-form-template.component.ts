@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { StorageService } from '../../services/storage.service';
+import { FirebaseService } from '../../services/firebase.service';
+
 
 @Component({
   standalone: true,
@@ -27,10 +28,12 @@ export class AdminFormTemplateComponent implements OnInit {
     fecha: ''
   };
 
-  constructor(private storage: StorageService) {}
+  constructor(private firebaseService: FirebaseService) {}
 
   ngOnInit(): void {
-    this.datosArray = this.storage.get<any>('formularioTemplate');
+    this.firebaseService.obtenerDatos('inscripciones').subscribe(data => {
+      this.datosArray = data;
+    });
   }
 
   hoy(): string {
@@ -38,9 +41,10 @@ export class AdminFormTemplateComponent implements OnInit {
   }
 
   eliminar(index: number) {
-    this.datosArray.splice(index, 1);
-    this.storage.set('formularioTemplate', this.datosArray);
-    this.cancelarEdicion();
+    const id = this.datosArray[index].id;
+    this.firebaseService.eliminarDato('inscripciones', id).then(() => {
+      this.cancelarEdicion();
+    });
   }
 
   editar(index: number) {
@@ -73,9 +77,10 @@ export class AdminFormTemplateComponent implements OnInit {
 
   guardarEdicion() {
     if (this.editIndex !== null) {
-      this.datosArray[this.editIndex] = { ...this.editForm };
-      this.storage.set('formularioTemplate', this.datosArray);
-      this.cancelarEdicion();
+      const id = this.datosArray[this.editIndex].id;
+      this.firebaseService.actualizarDato('inscripciones', id, this.editForm).then(() => {
+        this.cancelarEdicion();
+      });
     }
   }
 
