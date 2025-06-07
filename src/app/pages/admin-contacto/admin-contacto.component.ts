@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { FirebaseService } from '../../services/firebase.service';
+
 import Swal from 'sweetalert2';
+import { EmailService } from '../../services/email.service';
 
 @Component({
   standalone: true,
@@ -17,7 +19,12 @@ export class AdminContactoComponent implements OnInit {
   respuestaIndex: number | null = null;
   form!: ReturnType<FormBuilder['group']>;
 
-  constructor(private firebaseService: FirebaseService, private fb: FormBuilder) { }
+  constructor(
+    private firebaseService: FirebaseService, 
+    private fb: FormBuilder,
+    private emailService: EmailService
+  
+  ) { }
 
   ngOnInit(): void {
     // Cargar los mensajes desde Firestore
@@ -89,27 +96,39 @@ export class AdminContactoComponent implements OnInit {
     this.editIndex = null; // Desactivar el formulario de edición al responder
   }
 
-  // Guardar cambios en la edición
-  guardar(): void {
-    if (this.editIndex !== null) {
-      // Obtener el mensaje actualizado
-      const updatedData = this.form.value;
+  // Guardar cambios en la edición & respuesta de correo
+ guardar(): void {
+  const formData = this.form.value;
 
-      // Obtener el id del mensaje que estamos editando
-      const id = this.datosArray[this.editIndex].id;
-
-      // Llamar al servicio para actualizar el mensaje en Firestore
-      this.firebaseService.actualizarDato('contactos', id, updatedData)
-        .then(() => {
-          Swal.fire('Cambios guardados', '', 'success');
-          this.cancelar();
-        })
-        .catch((error) => {
-          console.error('Error al actualizar el mensaje:', error);
-          Swal.fire('Error', 'Hubo un problema al guardar los cambios.', 'error');
-        });
-    }
+  // Verifica si estás respondiendo
+  if (this.respuestaIndex !== null) {
+    this.emailService.enviarCorreo(formData).subscribe({
+      next: () => {
+        Swal.fire('Correo enviado con éxito', '', 'success');
+        this.cancelar();
+      },
+      error: (error) => {
+        console.error('Error al enviar el correo:', error);
+        Swal.fire('Error', 'No se pudo enviar el correo.', 'error');
+      }
+    });
   }
+
+  // Si estás editando el mensaje, actualizar en Firestore
+  if (this.editIndex !== null) {
+    const id = this.datosArray[this.editIndex].id;
+    this.firebaseService.actualizarDato('contactos', id, formData)
+      .then(() => {
+        Swal.fire('Cambios guardados', '', 'success');
+        this.cancelar();
+      })
+      .catch((error) => {
+        console.error('Error al actualizar el mensaje:', error);
+        Swal.fire('Error', 'Hubo un problema al guardar los cambios.', 'error');
+      });
+  }
+}
+
 
   // Cancelar la edición o la respuesta
   cancelar(): void {
