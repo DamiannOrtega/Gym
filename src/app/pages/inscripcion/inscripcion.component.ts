@@ -214,9 +214,12 @@ export class InscripcionComponent {
       };
 
       this.firebaseService.agregarDato('inscripciones', inscripcionConFecha)
-        .then(() => {
+        .then((docRef) => {
           Swal.fire('¡Registro exitoso!', 'Tu inscripción ha sido guardada en Firebase.', 'success');
-          this.generarCodigoQR(); 
+          setTimeout(() => {
+            console.log('Nuevo ID:', docRef.id);
+            this.generarCodigoQRDesdeFirebase(docRef.id);
+          }, 1000);
           form.resetForm();
           this.inscripcion.dias = [];
           this.pagoCompletado = false;
@@ -274,6 +277,8 @@ export class InscripcionComponent {
         this.mostrandoBotonPaypal = false;
       }
     }).render(this.paypalElement.nativeElement);
+
+    
   }
 
   // Notificación que se muestra al inscribirse
@@ -465,28 +470,32 @@ export class InscripcionComponent {
     this.notificacion.set('');
   }
 
-
-  generarCodigoQR() {
-    const datos = {
-      nombre: this.inscripcion.nombre,
-      email: this.inscripcion.email,
-      clase: this.inscripcion.clase,
-      turno: this.inscripcion.turno,
-      dias: this.inscripcion.dias.join(', '),
-      fecha: this.inscripcion.fecha,
-      precio: this.precioSeleccionado,
-      fechaRegistro: new Date().toLocaleDateString()
-    };
-  
-    this.qrService.generarQR(datos).subscribe(res => {
-      const img = new Image();
-      img.src = res.qr;
-      this.qrBase64 = res.qr;
-      this.datosParaPDF = datos;
-      document.querySelector('#contenedorQR')?.appendChild(img);
-      this.mostrarBotonDescargaPDF = true;
+  generarCodigoQRDesdeFirebase(idDoc: string) {
+    this.qrService.generarQRDesdeFirebase(idDoc).subscribe({
+      next: (res) => {
+        this.qrBase64 = res.qr;
+        this.datosParaPDF = res.datos;
+        const img = new Image();
+        img.src = this.qrBase64;
+        document.querySelector('#contenedorQR')?.appendChild(img);
+        this.mostrarBotonDescargaPDF = true;
+      },
+      error: (err) => {
+        Swal.fire('Error', 'No se pudo generar el código QR. Verifica tu conexión o inténtalo más tarde.', 'error');
+        console.error('Error al generar QR:', err);
+      }
     });
   }
+
+  notificacionTexto = '';
+  mostrarNotificacion(mensaje: string) {
+    this.notificacionTexto = mensaje;
+    setTimeout(() => {
+      this.notificacionTexto = '';
+    }, 4000);
+  }
+  
+  
   descargarPDF() {
     if (this.datosParaPDF && this.qrBase64) {
       this.qrPdf.generarPDF(this.datosParaPDF, this.qrBase64);
