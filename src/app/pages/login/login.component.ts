@@ -170,13 +170,9 @@ export class LoginComponent {
 
       const passwordHash = CryptoJS.SHA256(this.password).toString();
 
-      console.log('Hash ingresado:', passwordHash);
-      console.log('Hash en Firebase:', user.contrasena);
-
       const loginCorrecto = user.contrasena === passwordHash;
 
       if (loginCorrecto) {
-        console.log('✅ Login correcto');
         this.firebase.actualizarDato(coleccion, user.id, {
           intentosFallidos: 0
         });
