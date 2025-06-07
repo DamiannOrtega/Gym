@@ -198,14 +198,15 @@ export class InscripcionComponent {
     if (form.invalid || this.inscripcion.dias.length === 0) {
       return;
     }
-  
+
     // Si el pago ya se completó, guarda en Firebase
     if (this.pagoCompletado) {
       const inscripcionConFecha = {
         ...this.inscripcion,
+        precio: this.precioSeleccionado,
         fechaRegistro: new Date().toISOString()
       };
-  
+
       this.firebaseService.agregarDato('inscripciones', inscripcionConFecha)
         .then(() => {
           Swal.fire('¡Registro exitoso!', 'Tu inscripción ha sido guardada en Firebase.', 'success');
@@ -218,15 +219,15 @@ export class InscripcionComponent {
           console.error('Error al guardar en Firestore:', error);
           Swal.fire('Error', 'No se pudo guardar la inscripción.', 'error');
         });
-  
+
       return;
     }
-  
+
     // Si no ha pagado, mostramos el botón PayPal
     this.mostrandoBotonPaypal = true;
     setTimeout(() => this.renderizarBotonPaypal(), 0);
   }
-  
+
 
   // Función que maneja el pago a través de PayPal
   renderizarBotonPaypal() {
@@ -248,7 +249,7 @@ export class InscripcionComponent {
       onApprove: (data: any, actions: any) => {
         return actions.order.capture().then((details: any) => {
           Swal.fire('Pago completado', `Gracias, ${details.payer.name.given_name}!`, 'success');
-          
+
           // Mostrar la notificación solo después de que se haya completado el pago
           this.notificacionInscripcion();
 
