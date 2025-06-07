@@ -33,7 +33,7 @@ export class InscripcionComponent {
   clases = ['Zumba', 'CrossFit', 'Yoga', 'Pilates', 'Spinning', 'Body Pump', 'Boxeo', 'KickBoxing', 'Pesos libres y máquinas'];
 
   // Lista de días disponibles para seleccionar
-  diasDisponibles = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+  diasDisponibles = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
 
   // Lista de turnos disponibles para seleccionar
   turnosDisponibles = ['Mañana', 'Tarde'];
