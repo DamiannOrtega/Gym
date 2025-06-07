@@ -46,7 +46,7 @@ export class GraficaComponent implements OnInit {
       },
       title: {
         display: true,
-        text: 'Usuarios no Administradores',
+        text: 'Inscripciones por clase',
         color: '#fff'
       },
       datalabels: {
@@ -69,24 +69,23 @@ export class GraficaComponent implements OnInit {
   constructor(private firebaseService: FirebaseService) { }
 
   ngOnInit(): void {
-    this.firebaseService.obtenerDatos('usuarios').subscribe(usuarios => {
-      const usuariosFiltrados = usuarios.filter(u => u.admin !== true);
-      const conteoPorNombre: Record<string, number> = {};
+    this.firebaseService.obtenerDatos('inscripciones').subscribe(inscripciones => {
+      const conteoPorClase: Record<string, number> = {};
 
-      usuariosFiltrados.forEach(usuario => {
-        const nombre = usuario.nombre ?? 'Sin nombre';
-        conteoPorNombre[nombre] = (conteoPorNombre[nombre] || 0) + 1;
+      inscripciones.forEach(inscripcion => {
+        const clase = inscripcion.clase ?? 'Sin clase';
+        conteoPorClase[clase] = (conteoPorClase[clase] || 0) + 1;
       });
 
-      this.pieChartData.labels = Object.keys(conteoPorNombre);
-      this.pieChartData.datasets[0].data = Object.values(conteoPorNombre);
+      this.pieChartData.labels = Object.keys(conteoPorClase);
+      this.pieChartData.datasets[0].data = Object.values(conteoPorClase);
 
-      // 👇 Forzar actualización del gráfico
       setTimeout(() => {
         this.chart?.update();
       }, 0);
     });
   }
+
 
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
