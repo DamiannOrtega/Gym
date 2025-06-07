@@ -11,6 +11,7 @@ import { AdminContactoComponent } from './pages/admin-contacto/admin-contacto.co
 import { RulesComponent } from './pages/rules/rules.component';
 import { GraficaComponent } from './pages/grafica/grafica.component';
 import { BloqueoComponent } from './shared/bloqueo/bloqueo.component';
+import { RecoveryComponent } from './components/recovery/recovery.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,6 +22,7 @@ export const routes: Routes = [
   { path: 'acceso-denegado', component: BloqueoComponent },
   { path: 'videos', loadComponent: () => import('./pages/videos/videos.component').then(m => m.VideosComponent) },
   { path: 'reglas', component: RulesComponent},
+  { path: 'recovery', component: RecoveryComponent },
   { path: 'login', component: LoginComponent },
   { path: 'admin/grafica', component: GraficaComponent},
   { path: 'admin/form-template', component: AdminFormTemplateComponent, canActivate: [authGuard] },

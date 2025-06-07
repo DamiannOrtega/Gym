@@ -36,13 +36,15 @@
 
         <div class="mb-3">
           <label class="form-label text-light">Contraseña</label>
-          <input [(ngModel)]="registro.contrasena" name="contrasena" type="password" class="form-control" required minlength="8" />
+          <input [(ngModel)]="registro.contrasena" name="contrasena" type="password" class="form-control" required
+            minlength="8" />
           <div class="form-text text-light">
             Mínimo 8 caracteres, máximo 12, una mayúscula, un número y el carácter "_".
           </div>
           @if (!contrasenaValida) {
           <div class="text-danger">
-            La contraseña debe tener entre 8 y 12 caracteres, al menos una mayúscula, un número y solo letras, números y el carácter "_".
+            La contraseña debe tener entre 8 y 12 caracteres, al menos una mayúscula, un número y solo letras, números y
+            el carácter "_".
           </div>
           }
         </div>
@@ -73,26 +75,26 @@
 
         <!-- FORMULARIO DE INICIO DE SESIÓN CON TELÉFONO -->
         @else {
-          <div class="mb-3">
-            <label class="form-label text-light">Nombre completo</label>
-            <input [(ngModel)]="registro.nombre" name="nombreTel" type="tel" class="form-control" required />
-          </div>
-          <div class="mb-3">
-            <label class="form-label text-light">Usuario</label>
-            <input [(ngModel)]="registro.usuario" name="usuarioTel" type="tel" class="form-control" required />
-          </div>
-          <div class="mb-3">
-            <label class="form-label text-light">Número de teléfono</label>
-            <input [(ngModel)]="registro.telefono" name="telefonoTel" type="tel" class="form-control" required />
-          </div>
-          <button (click)="enviarCodigo()" class="btn btn-primary">Enviar código</button>
+        <div class="mb-3">
+          <label class="form-label text-light">Nombre completo</label>
+          <input [(ngModel)]="registro.nombre" name="nombreTel" type="tel" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label class="form-label text-light">Usuario</label>
+          <input [(ngModel)]="registro.usuario" name="usuarioTel" type="tel" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label class="form-label text-light">Número de teléfono</label>
+          <input [(ngModel)]="registro.telefono" name="telefonoTel" type="tel" class="form-control" required />
+        </div>
+        <button (click)="enviarCodigo()" class="btn btn-primary">Enviar código</button>
         <div class="mb-3">
           <label class="form-label text-light">Código de verificación</label>
           <input [(ngModel)]="registro.contrasena" name="codigo" type="text" class="form-control" required />
         </div>
         <button (click)="confirmarCodigo()" class="btn btn-primary">Confirmar código</button>
-     
-      
+
+
         }
 
         <!-- ERRORES -->
@@ -103,8 +105,18 @@
         </div>
         }
 
+        @if (!modoRegistro && errorMessage.includes('bloqueada')) {
+        <div class="text-center mt-2">
+          <a routerLink="/recovery" class="btn btn-outline-warning btn-sm">
+            <i class="fas fa-unlock-alt me-1"></i> Recuperar cuenta
+          </a>
+        </div>
+        }
+
+
         <div class=" mt-4 mb-4 d-flex justify-content-center align-items-center" *ngIf="modoRegistro || !modoRegistro">
-          <re-captcha (resolved)="resolved($event)" siteKey="6LdN91MrAAAAADNDxiuaWHDz2qAkgPTOTDHnuqm5" [theme]="'light'"></re-captcha>
+          <re-captcha (resolved)="resolved($event)" siteKey="6LdN91MrAAAAADNDxiuaWHDz2qAkgPTOTDHnuqm5"
+            [theme]="'light'"></re-captcha>
         </div>
 
         <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
@@ -115,7 +127,8 @@
 
       <!-- LOGIN CON GOOGLE -->
       <div class="text-center">
-        <button class="btn btn-light rounded-circle p-2" (click)="iniciarSesionConGoogle()" title="Iniciar sesión con Google">
+        <button class="btn btn-light rounded-circle p-2" (click)="iniciarSesionConGoogle()"
+          title="Iniciar sesión con Google">
           <i class="fab fa-google fa-lg text-danger"></i>
         </button>
         <p class="text-light mt-2" style="font-size: 0.9rem;">Iniciar sesión con Google</p>
@@ -123,7 +136,8 @@
 
       <!-- LOGIN CON TELÉFONO -->
       <div class="text-center mt-3">
-        <button class="btn btn-light rounded-circle p-2" (click)="toggleModoTelefono()" title="Iniciar sesión con teléfono">
+        <button class="btn btn-light rounded-circle p-2" (click)="toggleModoTelefono()"
+          title="Iniciar sesión con teléfono">
           <i class="fas fa-phone-alt fa-lg text-primary"></i>
         </button>
         <p class="text-light mt-2" style="font-size: 0.9rem;">Iniciar sesión con teléfono</p>
@@ -131,7 +145,7 @@
 
       <!-- CAMBIO DE MODO -->
       <div class="text-center mt-3">
-        <button class="btn btn-outline-light btn-sm" (click)="toggleModoRegistro()" >
+        <button class="btn btn-outline-light btn-sm" (click)="toggleModoRegistro()">
           @if (modoRegistro) {
           ¿Ya tienes cuenta? Inicia sesión
           } @else {
@@ -144,4 +158,3 @@
 </div>
 
 <div id="recaptcha-container"></div>
-

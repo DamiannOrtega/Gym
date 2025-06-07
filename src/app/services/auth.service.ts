@@ -23,7 +23,7 @@ export class AuthService {
     }
   }
   
-
+  
   async setUsuario(usuarioId: string): Promise<void> {
     localStorage.setItem('rol', 'usuario');
     localStorage.setItem('idUsuario', usuarioId);
