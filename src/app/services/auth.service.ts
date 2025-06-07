@@ -9,7 +9,20 @@ export class AuthService {
   nombreUsuario = signal<string>('');
   usuarioActual = signal<string | null>(null);
 
-  constructor(private router: Router, private firebase: FirebaseService) {}
+  constructor(private router: Router, private firebase: FirebaseService) {
+    const idUsuario = localStorage.getItem('idUsuario');
+    const rol = localStorage.getItem('rol');
+  
+    if (idUsuario && rol) {
+      this.nombreUsuario.set(idUsuario);
+      if (rol === 'admin') {
+        this.currentAdmin.set(idUsuario);
+      } else {
+        this.usuarioActual.set(idUsuario);
+      }
+    }
+  }
+  
 
   async setUsuario(usuarioId: string): Promise<void> {
     localStorage.setItem('rol', 'usuario');
@@ -42,5 +55,6 @@ export class AuthService {
     return localStorage.getItem('rol') || '';
   }
 
+  
 
 }

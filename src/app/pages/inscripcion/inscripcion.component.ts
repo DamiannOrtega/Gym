@@ -1,11 +1,11 @@
 import { Component, ElementRef, ViewChild, Signal, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { StorageService } from '../../services/storage.service';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { OpinionesComponent } from '../../components/opiniones/opiniones.component';
 import { FaqComponent } from '../../shared/faq/faq.component';
+import { FirebaseService } from '../../services/firebase.service';
 
 
 @Component({
@@ -111,7 +111,7 @@ export class InscripcionComponent {
   }
 
   // Inyección de servicios de almacenamiento y ruta activa
-  constructor(private storage: StorageService, private route: ActivatedRoute) { }
+  constructor(private firebaseService: FirebaseService, private route: ActivatedRoute) { }
 
   // Retorna la fecha actual en formato YYYY-MM-DD para usar como fecha mínima en el campo de fecha
   hoy(): string {
@@ -192,32 +192,41 @@ export class InscripcionComponent {
     return !!form.valid && this.inscripcion.dias.length > 0;
   }
 
-  // Método para guardar los datos del formulario en local storage
-   // Método para guardar los datos del formulario
+  // Método para guardar los datos del formulario en la base de datos
   guardar(form: NgForm) {
     // Verifica si el formulario es inválido o si no se seleccionaron días
     if (form.invalid || this.inscripcion.dias.length === 0) {
       return;
     }
-
-    // Si el pago ya se completó, muestra la notificación y guarda los datos
+  
+    // Si el pago ya se completó, guarda en Firebase
     if (this.pagoCompletado) {
-      const datos = this.storage.get<any>('formularioTemplate') || [];
-      datos.push(this.inscripcion);
-      this.storage.set('formularioTemplate', datos);
-
-      Swal.fire('¡Registro exitoso!', 'Tu inscripción ha sido guardada.', 'success');
-      form.resetForm();
-      this.inscripcion.dias = [];
-      this.pagoCompletado = false;
-      this.mostrandoBotonPaypal = false;
+      const inscripcionConFecha = {
+        ...this.inscripcion,
+        fechaRegistro: new Date().toISOString()
+      };
+  
+      this.firebaseService.agregarDato('inscripciones', inscripcionConFecha)
+        .then(() => {
+          Swal.fire('¡Registro exitoso!', 'Tu inscripción ha sido guardada en Firebase.', 'success');
+          form.resetForm();
+          this.inscripcion.dias = [];
+          this.pagoCompletado = false;
+          this.mostrandoBotonPaypal = false;
+        })
+        .catch(error => {
+          console.error('Error al guardar en Firestore:', error);
+          Swal.fire('Error', 'No se pudo guardar la inscripción.', 'error');
+        });
+  
       return;
     }
-
+  
     // Si no ha pagado, mostramos el botón PayPal
     this.mostrandoBotonPaypal = true;
     setTimeout(() => this.renderizarBotonPaypal(), 0);
   }
+  
 
   // Función que maneja el pago a través de PayPal
   renderizarBotonPaypal() {
