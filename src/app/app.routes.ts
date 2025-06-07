@@ -10,13 +10,15 @@ import { AdminFormTemplateComponent } from './pages/admin-form-template/admin-fo
 import { AdminContactoComponent } from './pages/admin-contacto/admin-contacto.component';
 import { RulesComponent } from './pages/rules/rules.component';
 import { GraficaComponent } from './pages/grafica/grafica.component';
+import { BloqueoComponent } from './shared/bloqueo/bloqueo.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'clases', component: ClasesComponent },
   { path: 'clases/:id', component: ClaseDetalleComponent },
-  { path: 'inscripcion', component: InscripcionComponent },
-  { path: 'contacto', component: ContactoComponent },
+  { path: 'inscripcion', component: InscripcionComponent,canActivate: [authGuard]  },
+  { path: 'contacto', component: ContactoComponent, canActivate: [authGuard]  },
+  { path: 'acceso-denegado', component: BloqueoComponent },
   { path: 'videos', loadComponent: () => import('./pages/videos/videos.component').then(m => m.VideosComponent) },
   { path: 'reglas', component: RulesComponent},
   { path: 'login', component: LoginComponent },
