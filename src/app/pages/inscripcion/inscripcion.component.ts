@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { OpinionesComponent } from '../../components/opiniones/opiniones.component';
 import { FaqComponent } from '../../shared/faq/faq.component';
 import { FirebaseService } from '../../services/firebase.service';
+import { QrService } from '../../services/qr.service';
 
 
 @Component({
@@ -111,7 +112,7 @@ export class InscripcionComponent {
   }
 
   // Inyección de servicios de almacenamiento y ruta activa
-  constructor(private firebaseService: FirebaseService, private route: ActivatedRoute) { }
+  constructor(private firebaseService: FirebaseService, private route: ActivatedRoute,private qrService: QrService) { }
 
   // Retorna la fecha actual en formato YYYY-MM-DD para usar como fecha mínima en el campo de fecha
   hoy(): string {
@@ -458,5 +459,24 @@ export class InscripcionComponent {
     this.notificacion.set('');
   }
 
+
+  generarCodigoQR() {
+    const datos = {
+      nombre: this.inscripcion.nombre,
+      email: this.inscripcion.email,
+      clase: this.inscripcion.clase,
+      turno: this.inscripcion.turno,
+      dias: this.inscripcion.dias.join(', '),
+      fecha: this.inscripcion.fecha,
+      precio: this.precioSeleccionado,
+      fechaRegistro: new Date().toLocaleDateString()
+    };
+  
+    this.qrService.generarQR(datos).subscribe(res => {
+      const img = new Image();
+      img.src = res.qr; // data:image/png;base64,...
+      document.querySelector('#contenedorQR')?.appendChild(img);
+    });
+  }
 
 }
