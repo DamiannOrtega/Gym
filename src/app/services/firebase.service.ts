@@ -9,7 +9,8 @@ import {
   where,
   doc,
   updateDoc,
-  deleteDoc
+  deleteDoc,
+  docData
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
@@ -51,6 +52,20 @@ export class FirebaseService {
   getPorCampo(coleccion: string, campo: string, valor: any): Observable<any[]> {
     const ref = collection(this.firestore, coleccion);
     const q = query(ref, where(campo, '==', valor));
+    return collectionData(q, { idField: 'id' });
+  }
+
+  getPorId(nombreColeccion: string, id: string): Observable<any> {
+    const ref = doc(this.firestore, `${nombreColeccion}/${id}`);
+    return docData(ref);
+  }
+
+
+
+  // Busca documentos por dos campos
+  getPorDosCampos(coleccion: string, campo1: string, valor1: any, campo2: string, valor2: any): Observable<any[]> {
+    const ref = collection(this.firestore, coleccion);
+    const q = query(ref, where(campo1, '==', valor1), where(campo2, '==', valor2));
     return collectionData(q, { idField: 'id' });
   }
 }
