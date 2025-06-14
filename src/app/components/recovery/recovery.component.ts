@@ -13,10 +13,14 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./recovery.component.css']
 })
 export class RecoveryComponent {
-  usuario = '';
+  correo = '';
+  usuario='';
+  codigo = '';
   nueva = '';
   confirmar = '';
   mensaje = '';
+  mostrarCodigo = false;
+  codigoVerificado = false;
 
   constructor(private firebase: FirebaseService, private router: Router) {}
 
@@ -25,28 +29,66 @@ export class RecoveryComponent {
       this.mensaje = '❌ Las contraseñas no coinciden.';
       return;
     }
-
+  
     const patron = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d_]{8,12}$/;
     if (!patron.test(this.nueva)) {
-      this.mensaje = '❌ La nueva contraseña debe tener entre 8 y 12 caracteres, incluir mayúsculas, números y el carácter "_".';
+      this.mensaje = '❌ La contraseña debe tener entre 8 y 12 caracteres, incluir mayúsculas, números y el carácter "_".';
       return;
     }
-
+  
     ['usuarios', 'admins'].forEach(col => {
-      this.firebase.getPorCampo(col, 'usuario', this.usuario).subscribe(data => {
+      this.firebase.getPorDosCampos(col, 'correo', this.correo, 'usuario', this.usuario).subscribe(data => {
         if (data.length > 0) {
           const user = data[0];
           const nuevaHash = CryptoJS.SHA256(this.nueva).toString();
+  
           this.firebase.actualizarDato(col, user.id, {
             contrasena: nuevaHash,
             intentosFallidos: 0,
             bloqueado: false
           }).then(() => {
+            this.firebase.eliminarPorId('codigos', this.correo)
+              .then(() => console.log('Código eliminado'));
+  
             this.mensaje = '✅ Contraseña actualizada. Puedes iniciar sesión.';
             setTimeout(() => this.router.navigate(['/login']), 2000);
           });
+        } else {
+          this.mensaje = '❌ No se encontró una cuenta con ese usuario y correo.';
         }
       });
     });
   }
+  
+  
+
+  enviarCodigo() {
+    fetch('http://localhost:3000/api/enviar-codigo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ correo: this.correo })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok) {
+          this.mensaje = 'Código enviado al correo.';
+          this.mostrarCodigo = true;
+        } else {
+          this.mensaje = '❌ Error al enviar el código.';
+        }
+      })
+      .catch(() => this.mensaje = '❌ No se pudo conectar con el servidor.');
+  }
+  
+  verificarCodigo() {
+    this.firebase.getPorId('codigos', this.correo).subscribe(doc => {
+      if (doc && doc.codigo === this.codigo) {
+        this.codigoVerificado = true;
+        this.mensaje = '✅ Código correcto. Ingresa tu nueva contraseña.';
+      } else {
+        this.mensaje = '❌ Código incorrecto.';
+      }
+    });
+  }
+  
 }

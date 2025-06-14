@@ -1,24 +1,51 @@
 <div class="container mt-5 text-light" style="max-width: 450px;">
   <h3 class="text-center mb-4"><i class="fas fa-unlock-alt me-2"></i>Recuperar cuenta</h3>
-  <form (ngSubmit)="recuperar()">
+
+  <!-- Paso 1: Correo y usuario -->
+  @if (!mostrarCodigo) {
+    <div class="mb-3">
+      <label class="form-label">Correo electrónico</label>
+      <input [(ngModel)]="correo" name="correo" type="email" class="form-control" required />
+    </div>
     <div class="mb-3">
       <label class="form-label">Usuario</label>
       <input [(ngModel)]="usuario" name="usuario" class="form-control" required />
     </div>
-    <div class="mb-3">
-      <label class="form-label">Nueva contraseña</label>
-      <input [(ngModel)]="nueva" name="nueva" type="password" class="form-control" required />
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Confirmar contraseña</label>
-      <input [(ngModel)]="confirmar" name="confirmar" type="password" class="form-control" required />
-    </div>
-    <button class="btn btn-primary w-100" type="submit">Actualizar</button>
+    <button class="btn btn-secondary w-100" type="button" (click)="enviarCodigo()">Enviar código</button>
+  }
 
-    @if (mensaje) {
+  <!-- Paso 2: Código recibido -->
+  @if (mostrarCodigo && !codigoVerificado) {
+    <div class="mb-3">
+      <label class="form-label">Código recibido</label>
+      <input [(ngModel)]="codigo" name="codigo" class="form-control" />
+    </div>
+    <button class="btn btn-warning w-100" type="button" (click)="verificarCodigo()">Verificar código</button>
+  }
+
+  <!-- Paso 3: Nueva contraseña -->
+  @if (codigoVerificado) {
+    <form (ngSubmit)="recuperar()" class="mt-4">
+      <div class="mb-3">
+        <label class="form-label">Usuario</label>
+        <input [(ngModel)]="usuario" name="usuario" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Nueva contraseña</label>
+        <input [(ngModel)]="nueva" name="nueva" type="password" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Confirmar contraseña</label>
+        <input [(ngModel)]="confirmar" name="confirmar" type="password" class="form-control" required />
+      </div>
+      <button class="btn btn-primary w-100" type="submit">Actualizar</button>
+    </form>
+  }
+
+  <!-- Mensaje -->
+  @if (mensaje) {
     <div class="alert alert-info mt-3 text-center">
       {{ mensaje }}
     </div>
-    }
-  </form>
+  }
 </div>
