@@ -68,4 +68,9 @@ export class FirebaseService {
     const q = query(ref, where(campo1, '==', valor1), where(campo2, '==', valor2));
     return collectionData(q, { idField: 'id' });
   }
+
+  eliminarPorId(nombreColeccion: string, id: string) {
+    const ref = doc(this.firestore, `${nombreColeccion}/${id}`);
+    return deleteDoc(ref);
+  }
 }

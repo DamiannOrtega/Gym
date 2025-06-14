@@ -4,6 +4,8 @@ import { Router, RouterModule } from '@angular/router';
 import CryptoJS from 'crypto-js';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-recovery',
@@ -46,13 +48,22 @@ export class RecoveryComponent {
             intentosFallidos: 0,
             bloqueado: false
           }).then(() => {
-            this.mensaje = '✅ Contraseña actualizada. Puedes iniciar sesión.';
+            this.mensaje = 'Contraseña actualizada. Puedes iniciar sesión.';
             
           });
+
         }
       });
     });
-    this.router.navigate(['/login']);
+    Swal.fire({
+      icon: 'success',
+      title: 'Contraseña actualizada',
+      text: 'Puedes iniciar sesión con tu nueva contraseña',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Ir al login'
+    }).then(() => {
+      this.router.navigate(['/login']);
+    });
   }
   
   
@@ -66,7 +77,7 @@ export class RecoveryComponent {
       .then(res => res.json())
       .then(data => {
         if (data.ok) {
-          this.mensaje = '📩 Código enviado al correo.';
+          this.mensaje = 'Código enviado al correo.';
           this.mostrarCodigo = true;
         } else {
           this.mensaje = `❌ ${data.mensaje || 'Error al enviar el código.'}`;
@@ -75,11 +86,21 @@ export class RecoveryComponent {
       .catch(() => this.mensaje = '❌ No se pudo conectar con el servidor.');
   }
     
+
   verificarCodigo() {
-    this.firebase.getPorId('codigos', this.correo).subscribe(doc => {
-      if (doc && doc.codigo === this.codigo) {
+    this.firebase.getPorId('codigos', this.correo).pipe(first()).subscribe(doc => {
+      console.log('Documento obtenido:', doc);
+      console.log('Código ingresado:', this.codigo);
+      console.log('Código guardado:', doc?.codigo);
+  
+      if (doc && String(doc.codigo) === String(this.codigo)) {
         this.codigoVerificado = true;
-        this.mensaje = '✅ Código correcto. Ingresa tu nueva contraseña.';
+        this.mensaje = 'Código correcto. Ingresa tu nueva contraseña.';
+  
+        this.firebase.eliminarPorId('codigos', this.correo)
+          .then(() => console.log('Código eliminado'))
+          .catch(err => console.error('❌ Error al eliminar código:', err));
+  
       } else {
         this.mensaje = '❌ Código incorrecto.';
       }
