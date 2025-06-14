@@ -47,17 +47,15 @@ export class RecoveryComponent {
             intentosFallidos: 0,
             bloqueado: false
           }).then(() => {
-            this.firebase.eliminarPorId('codigos', this.correo)
-              .then(() => console.log('Código eliminado'));
-  
             this.mensaje = '✅ Contraseña actualizada. Puedes iniciar sesión.';
-            setTimeout(() => this.router.navigate(['/login']), 2000);
+            
           });
         } else {
           this.mensaje = '❌ No se encontró una cuenta con ese usuario y correo.';
         }
       });
     });
+    this.router.navigate(['/login']);
   }
   
   
@@ -66,20 +64,20 @@ export class RecoveryComponent {
     fetch('http://localhost:3000/api/enviar-codigo', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ correo: this.correo })
+      body: JSON.stringify({ correo: this.correo, usuario: this.usuario })
     })
       .then(res => res.json())
       .then(data => {
         if (data.ok) {
-          this.mensaje = 'Código enviado al correo.';
+          this.mensaje = '📩 Código enviado al correo.';
           this.mostrarCodigo = true;
         } else {
-          this.mensaje = '❌ Error al enviar el código.';
+          this.mensaje = `❌ ${data.mensaje || 'Error al enviar el código.'}`;
         }
       })
       .catch(() => this.mensaje = '❌ No se pudo conectar con el servidor.');
   }
-  
+    
   verificarCodigo() {
     this.firebase.getPorId('codigos', this.correo).subscribe(doc => {
       if (doc && doc.codigo === this.codigo) {
