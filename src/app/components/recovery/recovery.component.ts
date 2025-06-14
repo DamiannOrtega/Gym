@@ -13,10 +13,14 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./recovery.component.css']
 })
 export class RecoveryComponent {
-  usuario = '';
+  correo = '';
+  usuario='';
+  codigo = '';
   nueva = '';
   confirmar = '';
   mensaje = '';
+  mostrarCodigo = false;
+  codigoVerificado = false;
 
   constructor(private firebase: FirebaseService, private router: Router) {}
 
@@ -43,10 +47,43 @@ export class RecoveryComponent {
             bloqueado: false
           }).then(() => {
             this.mensaje = '✅ Contraseña actualizada. Puedes iniciar sesión.';
-            setTimeout(() => this.router.navigate(['/login']), 2000);
+            
           });
         }
       });
     });
+    this.router.navigate(['/login']);
   }
+  
+  
+
+  enviarCodigo() {
+    fetch('http://localhost:3000/api/enviar-codigo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ correo: this.correo, usuario: this.usuario })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok) {
+          this.mensaje = '📩 Código enviado al correo.';
+          this.mostrarCodigo = true;
+        } else {
+          this.mensaje = `❌ ${data.mensaje || 'Error al enviar el código.'}`;
+        }
+      })
+      .catch(() => this.mensaje = '❌ No se pudo conectar con el servidor.');
+  }
+    
+  verificarCodigo() {
+    this.firebase.getPorId('codigos', this.correo).subscribe(doc => {
+      if (doc && doc.codigo === this.codigo) {
+        this.codigoVerificado = true;
+        this.mensaje = '✅ Código correcto. Ingresa tu nueva contraseña.';
+      } else {
+        this.mensaje = '❌ Código incorrecto.';
+      }
+    });
+  }
+  
 }
