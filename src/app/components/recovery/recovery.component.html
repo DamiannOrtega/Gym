@@ -1,7 +1,7 @@
 <div class="container mt-5 text-light" style="max-width: 450px;">
   <h3 class="text-center mb-4"><i class="fas fa-unlock-alt me-2"></i>Recuperar cuenta</h3>
 
-  <!-- Paso 1: Correo y usuario -->
+  <!-- Correo y usuario -->
   @if (!mostrarCodigo) {
     <div class="mb-3">
       <label class="form-label">Correo electrónico</label>
@@ -14,7 +14,7 @@
     <button class="btn btn-secondary w-100" type="button" (click)="enviarCodigo()">Enviar código</button>
   }
 
-  <!-- Paso 2: Código recibido -->
+  <!-- Código recibido -->
   @if (mostrarCodigo && !codigoVerificado) {
     <div class="mb-3">
       <label class="form-label">Código recibido</label>
@@ -23,7 +23,7 @@
     <button class="btn btn-warning w-100" type="button" (click)="verificarCodigo()">Verificar código</button>
   }
 
-  <!-- Paso 3: Nueva contraseña -->
+  <!--  Nueva contraseña -->
   @if (codigoVerificado) {
     <form (ngSubmit)="recuperar()" class="mt-4">
       <div class="mb-3">
