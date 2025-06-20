@@ -1,0 +1,20 @@
+{
+  "name": "FitZone",
+  "short_name": "FitZone",
+  "description": "App oficial de FitZone: entrena, motívate y transforma tu cuerpo. Consulta clases, videos, contacto e inscripción.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "blue",
+  "background_color": "blue",
+  "lang": "es-MX",
+  "icons": [
+    {
+      "src": "/assets/img/logoP.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
