@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1750445365995,
+  "timestamp": 1750445804275,
   "index": "https://DamiannOrtega.github.io/Gym/index.html",
   "assetGroups": [
     {
@@ -20,7 +20,7 @@
         "https://DamiannOrtega.github.io/Gym/chunk-ZSK5I6R5.js",
         "https://DamiannOrtega.github.io/Gym/favicon.ico",
         "https://DamiannOrtega.github.io/Gym/index.html",
-        "https://DamiannOrtega.github.io/Gym/main-EAEZW7XV.js",
+        "https://DamiannOrtega.github.io/Gym/main-OZS4PU4Q.js",
         "https://DamiannOrtega.github.io/Gym/manifest.webmanifest",
         "https://DamiannOrtega.github.io/Gym/polyfills-FFHMD2TL.js",
         "https://DamiannOrtega.github.io/Gym/scripts-EEEIPNC3.js",
@@ -154,8 +154,8 @@
     "https://DamiannOrtega.github.io/Gym/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
     "https://DamiannOrtega.github.io/Gym/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
     "https://DamiannOrtega.github.io/Gym/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
-    "https://DamiannOrtega.github.io/Gym/index.html": "cbf1e73c94afa0ab16cb2a35917e928094b03100",
-    "https://DamiannOrtega.github.io/Gym/main-EAEZW7XV.js": "36c15537970ffed04770739643c59bc9252c4f15",
+    "https://DamiannOrtega.github.io/Gym/index.html": "d320a9a25eedf431f87f25b2776eff4fdc7cbe17",
+    "https://DamiannOrtega.github.io/Gym/main-OZS4PU4Q.js": "442fc16b3c183708c3b96af7021a4c5c2b7e05ec",
     "https://DamiannOrtega.github.io/Gym/manifest.webmanifest": "ffb41e5e1584b4df351da207d916d7a62cb4e279",
     "https://DamiannOrtega.github.io/Gym/polyfills-FFHMD2TL.js": "f49b49a155bc7d192db62a4c15d0a612b460a667",
     "https://DamiannOrtega.github.io/Gym/scripts-EEEIPNC3.js": "2318ded8c885787a1645385a82c1ca883c359034",
