@@ -7,8 +7,9 @@ import { environment } from './environments/environments';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
 import { HttpClientModule } from '@angular/common/http';
-import { importProvidersFrom } from '@angular/core';
+import { importProvidersFrom, isDevMode } from '@angular/core';
 import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideServiceWorker } from '@angular/service-worker';
 
 
 bootstrapApplication(AppComponent, {
@@ -17,7 +18,10 @@ bootstrapApplication(AppComponent, {
     provideFirestore(() => getFirestore()),
     provideRouter(routes),
     provideAuth(() => getAuth()),
-    importProvidersFrom(HttpClientModule)
+    importProvidersFrom(HttpClientModule), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          })
   ],
 
 });

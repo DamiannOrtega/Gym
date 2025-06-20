@@ -45,6 +45,18 @@ export class MyContactoComponent {
         { class: 'fa-brands fa-twitter',url: 'https://x.com/Pushezz?t=ldCh7fwYbCVt8S8N8IcVVg&s=09' },
         { class: 'fa-brands fa-whatsapp', url: 'https://wa.me/1234567890' }
       ]
+    },
+    { 
+      id: 4, 
+      titulo: 'Alicia Jazmin Diaz Laguna',  
+      textoFrente: 'Entrenadora Profesional', 
+      trasera: 'Encuéntrame en línea', 
+      imagen: 'assets/img/alicia.jpg',
+      icons: [
+        { class: 'fa-brands fa-instagram', url: 'https://www.instagram.com/jazmin.d.laguna/' },
+        { class: 'fa-brands fa-twitter',url: 'https://x.com/' },
+        { class: 'fa-brands fa-whatsapp', url: 'https://wa.me/4494567829' }
+      ]
     }
   ];
 
