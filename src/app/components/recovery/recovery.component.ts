@@ -69,7 +69,7 @@ export class RecoveryComponent {
   
 
   enviarCodigo() {
-    fetch('http://localhost:3000/api/enviar-codigo', {
+    fetch('https://gymnodejs-2.onrender.com/api/enviar-codigo', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ correo: this.correo, usuario: this.usuario })

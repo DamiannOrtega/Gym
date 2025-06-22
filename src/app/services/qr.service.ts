@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class QrService {
-  private apiUrl = 'http://localhost:3000/api/generar-qr'; // Asegúrate que esta URL coincida con tu backend
+  private apiUrl = 'https://gymnodejs-2.onrender.com/api/generar-qr'; // Asegúrate que esta URL coincida con tu backend
 
   constructor(private http: HttpClient) {}
 

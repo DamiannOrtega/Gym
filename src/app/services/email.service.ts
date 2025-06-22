@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class EmailService {
-  private apiUrl = 'http://localhost:3000/api/enviar-correo';
+  private apiUrl = 'https://gymnodejs-2.onrender.com/api/enviar-correo';
 
   constructor(private http: HttpClient) {}
 
